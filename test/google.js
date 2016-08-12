@@ -1,6 +1,6 @@
 'use strict';
 
-const ENDPOINT = '/api/index';
+const ENDPOINT = '/api/google';
 
 describe(ENDPOINT, function () {
   describe('get', function () {
