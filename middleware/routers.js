@@ -27,7 +27,7 @@ glob.sync('api/**/*.js', {cwd: CWD}).map((file) => {
 });
 
 // 抛出API接口的404错误
-router.use('/api/*', function () {
+router.use('/api', function () {
   throw new errors.NotFound('page not found');
 });
 
