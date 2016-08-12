@@ -23,7 +23,7 @@ module.exports = {
     let result = {
       status: 'ok',
       time: `${diff}ms`
-    }
+    };
     res.send(result);
   }
 };
