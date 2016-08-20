@@ -3,7 +3,7 @@
 const moment = require('moment');
 const request = require('co-request');
 
-const errors = require('../lib/errors');
+const errors = require('../../lib/errors');
 
 module.exports = {
   *get(req, res) {
