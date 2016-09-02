@@ -7,7 +7,7 @@ const errors = require('../../lib/errors');
 module.exports = {
   *get(req, res) {
     let url = req.query.url;
-    let timeout = req.query.timeout || 2000;
+    let timeout = Number(req.query.timeout) || 2000;
 
     let t1 = new Date().getTime();
     let options = {url, timeout};
