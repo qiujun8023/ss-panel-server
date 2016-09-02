@@ -1,0 +1,31 @@
+swagger: "2.0"
+info:
+  version:
+  title: 零碎代码
+# during dev, should point to your local machine
+host:
+# basePath prefixes all resource paths
+basePath: /
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+  - application/x-www-form-urlencoded
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+tags:
+  - name: blog
+    description: 博客
+  - name: network
+    description: 网络
+securityDefinitions:
+  oauth:
+    type: apiKey
+    name: auth
+    in: header
+    x-securityHandler: oauth
+    description: 使用 Google OAuth 2.0 进行登陆，登陆后会设置 session-cookie，后续请求带上 session-cookie 即可

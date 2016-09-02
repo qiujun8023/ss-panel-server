@@ -4,8 +4,9 @@ const ENDPOINT = '/api/network/google';
 
 describe(ENDPOINT, function () {
   describe('get', function () {
-    it('should return 200', function* () {
-      yield api.get(ENDPOINT).expect(200);
+    it('should get success', function* () {
+      this.timeout(5000);
+      yield api.get(ENDPOINT);
     });
   });
 });

@@ -1,0 +1,18 @@
+type: object
+title: ErrorResponse
+required:
+  - type
+  - message
+properties:
+  type:
+    type: string
+    description: 错误类型
+    example: NotFound
+  message:
+    type: string
+    description: 错误详情
+    example: page not found
+  request:
+    type: string
+    description: 当前请求 url
+    example: /api/demo

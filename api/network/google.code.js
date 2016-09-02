@@ -21,7 +21,7 @@ module.exports = {
 
     let diff = moment().format('x') - t1;
     let result = {
-      status: 'ok',
+      result: true,
       time: `${diff}ms`
     };
     res.send(result);
