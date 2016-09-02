@@ -22,12 +22,6 @@ module.exports = function () {
     answer.type = err.type;
     answer.message = err.message;
     answer.request = err.request || req.path;
-    if (err.auth_url) {
-      answer.auth_url = err.auth_url;
-    }
-
-    res.status(err.status || 500);
-
-    res.send(answer);
+    res.status(err.status || 500).send(answer);
   };
 };

@@ -13,27 +13,8 @@ let router = express.Router();
 
 // 返回完整的spec文件
 router.get('/api', function (req, res) {
-  res.send(patternPropertiesToProperties(_.clone(req.swagger.spec)));
+  res.send(req.swagger.spec);
 });
-
-function patternPropertiesToProperties(schema) {
-  if (typeof schema === 'object') {
-    _.forEach(schema, function (value, key) {
-      patternPropertiesToProperties(value);
-
-      if (key === 'patternProperties') {
-        schema.properties = schema.properties || {};
-        _.forEach(schema.patternProperties, (innerValue, innerKey) => {
-          schema.properties[`pattern ${innerKey}`] = innerValue;
-          patternPropertiesToProperties(innerValue);
-        });
-      }
-
-    });
-  }
-
-  return schema;
-}
 
 // 加载 API 目录下所有路由
 for (let uri in spec.paths) {

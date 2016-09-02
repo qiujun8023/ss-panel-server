@@ -1,7 +1,20 @@
 get:
   tags: [ network ]
-  summary: Google
-  description: 判断 Google 是否可以访问
+  summary: 请求时间
+  description: 返回给定网址的请求时间
+  parameters:
+    - name: url
+      in: query
+      required: true
+      type: string
+      description: 带 http 或者 https 完整网址
+    - name: timeout
+      in: query
+      required: false
+      type: integer
+      minimum: 1
+      maximum: 10000
+      description: 超时时间(单位： ms)
   responses:
     200:
       description: 返回访问耗时
@@ -23,8 +36,8 @@ get:
       x-examples:
         {
           type: "BadGateway",
-          message: "Get google timeout after 3000ms",
-          request: "/api/network/google"
+          message: "Get google timeout after 2000ms",
+          request: "/api/network/time"
         }
       schema:
         $ref: "#/definitions/ErrorResponse"

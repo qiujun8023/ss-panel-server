@@ -1,25 +1,24 @@
 'use strict';
 
-const moment = require('moment');
 const request = require('co-request');
 
 const errors = require('../../lib/errors');
 
 module.exports = {
   *get(req, res) {
-    let t1 = moment().format('x');
-    let options = {
-      url: 'https://www.google.com',
-      timeout: 3000
-    };
+    let url = req.query.url;
+    let timeout = req.query.timeout || 2000;
+
+    let t1 = new Date().getTime();
+    let options = {url, timeout};
 
     try {
       yield request(options);
     } catch (e) {
-      throw new errors.BadGateway('Get google timeout after 3000ms');
+      throw new errors.BadGateway(e.message);
     }
 
-    let diff = moment().format('x') - t1;
+    let diff = new Date().getTime() - t1;
     let result = {
       result: true,
       time: `${diff}ms`

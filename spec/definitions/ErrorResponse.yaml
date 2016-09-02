@@ -3,6 +3,7 @@ title: ErrorResponse
 required:
   - type
   - message
+  - request
 properties:
   type:
     type: string

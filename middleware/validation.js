@@ -3,7 +3,7 @@
 const config = require('config');
 const shimmer = require('shimmer');
 const ZSchema = require('z-schema');
-const debug = require('debug')('ng-admin');
+const debug = require('debug')('shard');
 
 const errors = require('../lib/errors');
 const logger = require('../lib/logger');
