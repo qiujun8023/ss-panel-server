@@ -2,7 +2,7 @@
 
 let config = {
   env: 'test',
-  debug: false
+  debug: false,
 };
 
 module.exports = config;

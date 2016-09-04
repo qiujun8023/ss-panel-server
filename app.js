@@ -20,7 +20,7 @@ let server = http.createServer(app);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
 }));
 
 // 加载 Session

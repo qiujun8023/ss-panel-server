@@ -8,11 +8,11 @@ properties:
   type:
     type: string
     description: 错误类型
-    example: NotFound
+    example: BadRequest
   message:
     type: string
     description: 错误详情
-    example: page not found
+    example: something error
   request:
     type: string
     description: 当前请求 url

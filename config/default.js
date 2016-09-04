@@ -25,7 +25,7 @@ let config = {
 
   session: {
     secret: 'shard_secret',
-    name: 'session'
+    name: 'session',
   },
 
   redis: {
@@ -36,13 +36,31 @@ let config = {
     },
   },
 
+  mysql: {
+    network: {
+      poolSize: 5,
+      host: '127.0.0.1',
+      user: 'shard',
+      password: 'FhfLaS4uzv5qwnPh',
+      database: 'shard',
+    },
+  },
+
+  upyun: {
+    blog: {
+      bucket: 'blog-hexo',
+      operator: 'shard',
+      password: 'az6h6nyk',
+    },
+  },
+
   logger: {
     file: {
       filename: '/tmp/shard.log',
-    }
+    },
   },
 
-  client_dir: path.join(__dirname, '../../client')
+  client_dir: path.join(__dirname, '../../client'),
 };
 
 module.exports = config;
