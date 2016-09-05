@@ -1,35 +1,37 @@
 'use strict';
 
+const expect = require('chai').expect;
+
 const ENDPOINT = '/api/network/info';
 
 describe(ENDPOINT, function () {
-  describe('post', function () {
-    it('should return error without url', function* () {
-      yield api.post(ENDPOINT).expect(400);
+  describe('get', function () {
+    it('should request failure with invalid date', function* () {
+      yield api.get(ENDPOINT)
+        .query({
+          year: 2016,
+          month: 2,
+          day: 31,
+        })
+        .expect(400);
     });
 
-    it('should request failure with invalid url', function* () {
-      yield api.post(ENDPOINT)
-        .send({
-          url: 'invalid url',
+    it('should returns daily statistics', function* () {
+      let res = yield api.get(ENDPOINT)
+        .query({
+          month: 12,
         })
-        .expect(502);
+        .expect(200);
+      expect(res.body.type).to.equal('day');
     });
 
-    it('should request success', function* () {
-      yield api.post(ENDPOINT)
-        .send({
-          url: 'https://www.baidu.com',
+    it('should returns hourly statistics', function* () {
+      let res = yield api.get(ENDPOINT)
+        .query({
+          day: 1,
         })
         .expect(200);
-    });
-    it('should record success', function* () {
-      yield api.post(ENDPOINT)
-        .send({
-          url: 'https://www.baidu.com',
-          record: 'Y',
-        })
-        .expect(200);
+      expect(res.body.type).to.equal('hour');
     });
   });
 });
