@@ -7,4 +7,6 @@ require('moder')(__dirname, {
   filter: translate.isTest,
 });
 
+exports.Time.sync();
+exports.Speed.sync();
 exports.FlowRemind.sync();

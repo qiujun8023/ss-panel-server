@@ -9,11 +9,7 @@ const config = require('config');
 const bodyParser = require('body-parser');
 
 const express = require('./lib/express');
-const session = require('./middleware/session');
-const swagger = require('./middleware/swagger');
-const validation = require('./middleware/validation');
-const routers = require('./middleware/routers');
-const error_handle = require('./middleware/error_handle');
+const mws = require('./middleware');
 
 let app = express();
 let server = http.createServer(app);
@@ -24,20 +20,20 @@ app.use(bodyParser.urlencoded({
 }));
 
 // 加载 Session
-app.use(session());
+app.use(mws.session());
 
 // 加载swagger
-app.use(swagger());
+app.use(mws.swagger());
 
 // 加载参数与返回值校验
-app.use(validation.request());
-app.use(validation.response());
+app.use(mws.validation.request());
+app.use(mws.validation.response());
 
 // 加载路由
-app.use(routers());
+app.use(mws.routers());
 
 // 错误处理
-app.use(error_handle());
+app.use(mws.errorHandle());
 
 if (!module.parent) {
   let port = process.env.PORT || config.port;
