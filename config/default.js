@@ -46,14 +46,6 @@ let config = {
     },
   },
 
-  upyun: {
-    blog: {
-      bucket: 'blog-hexo',
-      operator: 'shard',
-      password: 'az6h6nyk',
-    },
-  },
-
   logger: {
     file: {
       filename: '/tmp/shard.log',

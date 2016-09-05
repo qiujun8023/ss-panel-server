@@ -18,8 +18,6 @@ consumes:
 produces:
   - application/json
 tags:
-  - name: blog
-    description: 博客
   - name: network
     description: 网络
 securityDefinitions:
