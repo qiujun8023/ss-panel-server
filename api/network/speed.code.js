@@ -27,9 +27,9 @@ module.exports = {
       time: time + ' ms',
       size: size + ' bytes',
       speed: speed + ' bps',
-      speed_format: network.format(speed),
+      speed_format: network.format('speed', speed),
     };
 
-    res.send(result);
+    res.json(result);
   },
 };

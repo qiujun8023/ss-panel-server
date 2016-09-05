@@ -25,6 +25,6 @@ module.exports = {
       time: time + ' ms',
     };
 
-    res.send(result);
+    res.json(result);
   },
 };

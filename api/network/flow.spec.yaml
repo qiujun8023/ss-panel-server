@@ -1,0 +1,27 @@
+post:
+  tags: [ network ]
+  summary: 流量监控
+  description: 监控流量是否出现异常，当平均网速达到阀值时将报警
+  parameters:
+    - name: threshold
+      in: formData
+      type: integer
+      minimum: 0
+      required: false
+      description: 报警阈值，如不传递将使用默认值
+  responses:
+    200:
+      description: 返回是否出现异常
+      schema:
+        type: object
+        required:
+          - status
+        properties:
+          status:
+            type: string
+            enum: ['normal', 'abnormal', 'error']
+            example: normal
+    default:
+      description: 错误
+      schema:
+        $ref: "#/definitions/ErrorResponse"

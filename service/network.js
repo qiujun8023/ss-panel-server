@@ -1,17 +1,28 @@
 'use strict';
 
 const _ = require('lodash');
+const Promise = require('bluebird');
+const procfs = Promise.promisifyAll(require('procfs-stats'));
 
 const networkModel = require('../model/network');
+const redis = require('../lib/redis')('network');
 const sequelize = require('../lib/sequelize')('network');
 
 let network = module.exports = {};
 
 // 格式化
-network.format = function (bps) {
-  let s = ['bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps', 'Pbps'];
-  let e = Math.floor(Math.log(bps) / Math.log(1024));
-  return (bps / Math.pow(1024, Math.floor(e))).toFixed(2) + ' ' + s[e];
+network.format = function (type, value) {
+  let s = {
+    size: ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB'],
+    speed: ['bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps', 'Pbps'],
+  };
+
+  if (!value) {
+    return 0 + ' ' + s[type][0];
+  }
+
+  let e = Math.floor(Math.log(value) / Math.log(1024));
+  return (value / Math.pow(1024, Math.floor(e))).toFixed(2) + ' ' + s[type][e];
 };
 
 // 插入一条数据
@@ -28,11 +39,6 @@ network.addTimeAsync = function* (options) {
 // 插入一条网速数据
 network.addSpeedAsync = function* (options) {
   return yield this._addAsync(networkModel.Speed, options);
-};
-
-// 插入一条流量数据
-network.addFlowAsync = function* (options) {
-  return yield this._addAsync(networkModel.Flow, options);
 };
 
 // 填充空白数据
@@ -104,4 +110,46 @@ network.getSpeedByHourAsync = function* (date) {
 // 按天统计速度
 network.getSpeedByDayAsync = function* (date) {
   return yield this._getCountAsync(networkModel.Speed, date, 'speed', '%e', 'months', 1, date.daysInMonth());
+};
+
+// 获取流量提醒用户列表
+network.getFlowRemindAsync = function* () {
+  let users = yield networkModel.FlowRemind.findAll();
+
+  let res = [];
+  for (let user of users) {
+    res.push(user.user_id);
+  }
+  return res;
+};
+
+// 判断流量是否超过阀值
+network.isFlowAbnormalAsync = function* (Interface) {
+  let data = yield procfs.netAsync();
+
+  let new_data;
+  for (let item of data) {
+    if (item.Interface === Interface) {
+      new_data = {
+        time: _.now(),
+        receive: item.bytes.Receive,
+        transmit: item.bytes.Receive,
+      };
+      break;
+    }
+  }
+
+  let old_data = JSON.parse(yield redis.get(`flow:${Interface}`));
+  yield redis.set(`flow:${Interface}`, JSON.stringify(new_data));
+  if (!old_data) {
+    return false;
+  }
+
+  return {
+    time_diff: new_data.time - old_data.time,
+    receive_diff: new_data.receive - old_data.receive,
+    transmit_diff: new_data.transmit - old_data.transmit,
+    receive_total: new_data.receive,
+    transmit_total: new_data.transmit,
+  };
 };

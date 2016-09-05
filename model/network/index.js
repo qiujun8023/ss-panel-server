@@ -6,3 +6,5 @@ require('moder')(__dirname, {
   exports,
   filter: translate.isTest,
 });
+
+exports.FlowRemind.sync();

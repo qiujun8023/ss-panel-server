@@ -34,6 +34,16 @@ let config = {
       port: 6379,
       keyPrefix: 'shard:session:',
     },
+    wechat: {
+      host: '127.0.0.1',
+      port: 6379,
+      keyPrefix: 'shard:wechat:',
+    },
+    network: {
+      host: '127.0.0.1',
+      port: 6379,
+      keyPrefix: 'shard:network:',
+    },
   },
 
   mysql: {
@@ -46,9 +56,33 @@ let config = {
     },
   },
 
+  wechat: {
+    tick: {
+      corpid: 'wx1eedf3f9bb7f47b0',
+      secret: 'fWOjVeC5lfjSezwAv8W6r2OT-s8ZlxGZyXsVaX4AexSG2VTgGhI-Dr66pSPoJnJW',
+      apps: {
+        system: {
+          agentid: 0,
+        },
+        birthday: {
+          agentid: 9,
+          token: 'qbiWQA3OYSmpeXuhiJ',
+          aeskey: 'zoCYCqo61fLUUycvgNPAU3f6nORUUIblvY9NpCQkXoJ',
+        },
+      },
+    },
+  },
+
   logger: {
     file: {
       filename: '/tmp/shard.log',
+    },
+  },
+
+  network: {
+    flow: {
+      threshold: 2500000,
+      Interface: 'eth0:',
     },
   },
 

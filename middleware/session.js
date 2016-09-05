@@ -5,10 +5,10 @@ const config = require('config');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 
-const redis_client = require('../lib/redis')('session');
+const redis = require('../lib/redis')('session');
 
 let store = new RedisStore({
-  client: redis_client,
+  client: redis,
   prefix: '',
 });
 

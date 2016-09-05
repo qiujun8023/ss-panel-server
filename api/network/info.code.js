@@ -31,6 +31,6 @@ module.exports = {
       result = _.assign({type: 'hour'}, time, speed);
     }
 
-    res.send(result);
+    res.json(result);
   },
 };
