@@ -8,6 +8,7 @@ const http = require('http');
 const config = require('config');
 const bodyParser = require('body-parser');
 
+require('./cron'); // 执行计划任务
 const express = require('./lib/express');
 const mws = require('./middleware');
 

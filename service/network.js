@@ -139,9 +139,15 @@ network.isFlowAbnormalAsync = function* (Interface) {
     }
   }
 
-  let old_data = JSON.parse(yield redis.get(`flow:${Interface}`));
+  // 读取旧流量数据
+  let old_data;
+  try {
+    old_data = JSON.parse(yield redis.get(`flow:${Interface}`));
+  } catch (e) {
+    old_data = false;
+  }
   yield redis.set(`flow:${Interface}`, JSON.stringify(new_data));
-  if (!old_data) {
+  if (!old_data || !new_data) {
     return false;
   }
 
