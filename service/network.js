@@ -133,7 +133,7 @@ network.isFlowAbnormalAsync = function* (Interface) {
       new_data = {
         time: _.now(),
         receive: item.bytes.Receive,
-        transmit: item.bytes.Receive,
+        transmit: item.bytes.Transmit,
       };
       break;
     }
