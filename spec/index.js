@@ -33,7 +33,8 @@ spec.definitions = glob.sync('server/spec/definitions/*.yaml', {cwd: CWD}).reduc
 }, {});
 
 // merge config.swagger and swagger.yaml
-_.merge(spec, config.swagger);
+let host = `${config.host}:${config.port}`;
+_.merge(spec, config.swagger, {host});
 
 /**
  * - require responses.default.schema

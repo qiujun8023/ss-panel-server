@@ -4,14 +4,10 @@ const path = require('path');
 
 const pkg = require('../../package');
 
-let host = '127.0.0.1';
-let port = '8001';
-let protocol = 'http';
-
 let config = {
-  protocol: protocol,
-  host: host,
-  port: port,
+  protocol: 'http',
+  host: '127.0.0.1',
+  port: '8001',
 
   env: 'development',
   debug: true,
@@ -20,7 +16,6 @@ let config = {
     info: {
       version: pkg.version,
     },
-    host: `${host}:${port}`,
   },
 
   session: {
