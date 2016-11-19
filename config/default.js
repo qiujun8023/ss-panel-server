@@ -47,7 +47,7 @@ let config = {
   },
 
   mysql: {
-    network: {
+    shard: {
       poolSize: 5,
       host: '127.0.0.1',
       user: 'shard',
