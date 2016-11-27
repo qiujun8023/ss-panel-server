@@ -2,7 +2,7 @@
 
 const expect = require('chai').expect;
 
-const ENDPOINT = '/api/network/info';
+const ENDPOINT = '/api/birthday/birth';
 
 describe(ENDPOINT, function () {
   describe('get', function () {

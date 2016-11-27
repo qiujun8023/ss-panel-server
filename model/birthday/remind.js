@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 
 const sequelize = require('../../lib/sequelize')('shard');
 
-module.exports = sequelize.define('birthday_remind', {
+module.exports = sequelize.define('remind', {
   remind_id: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -12,10 +12,10 @@ module.exports = sequelize.define('birthday_remind', {
     autoIncrement: true,
     comment: '提醒 Id',
   },
-  birth_id: {
+  setting_id: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    comment: '生日 Id',
+    comment: '设置 Id',
   },
   time: {
     type: Sequelize.DATE,
@@ -39,4 +39,5 @@ module.exports = sequelize.define('birthday_remind', {
 }, {
   underscored: true,
   freezeTableName: true,
+  tableName: 'birthday_remind',
 });

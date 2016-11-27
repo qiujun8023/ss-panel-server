@@ -56,13 +56,10 @@ let config = {
       corpid: 'wx1eedf3f9bb7f47b0',
       secret: 'fWOjVeC5lfjSezwAv8W6r2OT-s8ZlxGZyXsVaX4AexSG2VTgGhI-Dr66pSPoJnJW',
       apps: {
-        system: {
-          agentid: 0,
-        },
-        birthday: {
+        shard: {
           agentid: 9,
-          token: 'qbiWQA3OYSmpeXuhiJ',
-          aeskey: 'zoCYCqo61fLUUycvgNPAU3f6nORUUIblvY9NpCQkXoJ',
+          token: 'fwBsDyTJHpfgw5StNNCaEpb9oZ',
+          aeskey: 'Z8KHa1fXSXkVnA86IXaMzWCFD5rCxBkT7pzuxlEMP8A',
         },
       },
     },

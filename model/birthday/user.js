@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 
 const sequelize = require('../../lib/sequelize')('shard');
 
-module.exports = sequelize.define('birthday_user', {
+module.exports = sequelize.define('user', {
   user_id: {
     type: Sequelize.STRING(30),
     allowNull: false,
@@ -62,4 +62,5 @@ module.exports = sequelize.define('birthday_user', {
   updatedAt: 'login_at',
   underscored: true,
   freezeTableName: true,
+  tableName: 'birthday_user',
 });

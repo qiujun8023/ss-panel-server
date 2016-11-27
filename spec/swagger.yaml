@@ -21,8 +21,6 @@ produces:
 tags:
   - name: birthday
     description: 生日
-  - name: network
-    description: 网络
 securityDefinitions:
   oauth:
     type: apiKey

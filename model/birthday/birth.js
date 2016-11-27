@@ -1,10 +1,11 @@
 'use strict';
 
+const moment = require('moment');
 const Sequelize = require('sequelize');
 
 const sequelize = require('../../lib/sequelize')('shard');
 
-module.exports = sequelize.define('birthday_birth', {
+module.exports = sequelize.define('birth', {
   birth_id: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -32,23 +33,13 @@ module.exports = sequelize.define('birthday_birth', {
     type: Sequelize.DATEONLY,
     allowNull: false,
     comment: '日期',
-  },
-  age: {
-    type: Sequelize.INTEGER(2),
-    allowNull: false,
-    comment: '年龄',
-  },
-  zodiac: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    comment: '生肖',
-  },
-  constellation: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    comment: '星座',
+    get: function () {
+      let date = this.getDataValue('date');
+      return moment(date).format('YYYY-MM-DD');
+    },
   },
 }, {
   underscored: true,
   freezeTableName: true,
+  tableName: 'birthday_birth',
 });

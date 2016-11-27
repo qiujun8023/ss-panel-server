@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 
 const sequelize = require('../../lib/sequelize')('shard');
 
-module.exports = sequelize.define('birthday_log', {
+module.exports = sequelize.define('log', {
   log_id: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -41,4 +41,5 @@ module.exports = sequelize.define('birthday_log', {
   updatedAt: false,
   underscored: true,
   freezeTableName: true,
+  tableName: 'birthday_log',
 });

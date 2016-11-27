@@ -1,7 +1,6 @@
 post:
   tags: [ birthday ]
-  summary: 生日提醒
-  description: 提醒家人、同学、朋友等生日的到来
+  summary: 生日提醒-微信
   responses:
     default:
       description: 返回 xml 结构体

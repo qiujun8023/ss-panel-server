@@ -3,7 +3,7 @@
 const config = require('config');
 
 const cron = require('../lib/cron');
-const wechat = require('../lib/wechat')('tick', 'system');
+const wechat = require('../lib/wechat')('tick', 'shard');
 const network = require('../service/network');
 
 module.exports = cron('0 */3 * * * *', function* (threshold) {

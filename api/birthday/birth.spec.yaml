@@ -1,0 +1,178 @@
+get:
+  tags: [ birthday ]
+  summary: 获取生日提醒
+  responses:
+    200:
+      description: 生日列表
+      schema:
+        type: array
+        items:
+          type: object
+          required:
+            - birth_id
+            - title
+            - type
+            - date
+            - zodiac
+            - constellation
+          properties:
+            birth_id:
+              type: integer
+              example: 1
+            title:
+              type: string
+              example: XXX
+            type:
+              type: string
+              enum: [SOLAR, LUNAR]
+              example: SOLAR
+            date:
+              type: string
+              example: 1996-10-01
+            zodiac:
+              type: string
+              example: 鼠
+            constellation:
+              type: string
+              example: 双子
+    default:
+      description: 错误
+      schema:
+        $ref: "#/definitions/ErrorResponse"
+post:
+  tags: [ birthday ]
+  summary: 新增生日提醒
+  parameters:
+    - name: title
+      in: formData
+      type: string
+      maxLength: 255
+      required: true
+      description: 姓名/标题
+    - name: type
+      in: formData
+      type: string
+      enum: [SOLAR, LUNAR]
+      required: true
+      description: 阴历/阳历
+    - name: date
+      in: formData
+      type: string
+      required: true
+      description: 日期
+  responses:
+    200:
+      description: 生日
+      schema:
+        type: object
+        required:
+          - birth_id
+          - title
+          - type
+          - date
+          - zodiac
+          - constellation
+        properties:
+          birth_id:
+            type: integer
+            example: 1
+          title:
+            type: string
+            example: XXX
+          type:
+            type: string
+            enum: [SOLAR, LUNAR]
+            example: SOLAR
+          date:
+            type: string
+            example: 1996-10-01
+          zodiac:
+            type: string
+            example: 鼠
+          constellation:
+            type: string
+            example: 双子
+    default:
+      description: 错误
+      schema:
+        $ref: "#/definitions/ErrorResponse"
+put:
+  tags: [ birthday ]
+  summary: 修改生日提醒
+  parameters:
+    - name: birth_id
+      in: formData
+      type: integer
+      required: true
+      description: 生日 Id
+    - name: title
+      in: formData
+      type: string
+      maxLength: 255
+      required: true
+      description: 姓名/标题
+    - name: type
+      in: formData
+      type: string
+      enum: [SOLAR, LUNAR]
+      required: true
+      description: 阴历/阳历
+    - name: date
+      in: formData
+      type: string
+      required: true
+      description: 日期
+  responses:
+    200:
+      description: 生日
+      schema:
+        type: object
+        required:
+          - birth_id
+          - title
+          - type
+          - date
+          - zodiac
+          - constellation
+        properties:
+          birth_id:
+            type: integer
+            example: 1
+          title:
+            type: string
+            example: XXX
+          type:
+            type: string
+            enum: [SOLAR, LUNAR]
+            example: SOLAR
+          date:
+            type: string
+            example: 1996-10-01
+          zodiac:
+            type: string
+            example: 鼠
+          constellation:
+            type: string
+            example: 双子
+    default:
+      description: 错误
+      schema:
+        $ref: "#/definitions/ErrorResponse"
+delete:
+  tags: [ birthday ]
+  summary: 删除生日提醒
+  parameters:
+    - name: birth_id
+      in: query
+      type: integer
+      required: true
+      description: 生日 Id
+  responses:
+    200:
+      description: 删除完成
+      schema:
+        $ref: "#/definitions/SuccessResponse"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/definitions/ErrorResponse"
