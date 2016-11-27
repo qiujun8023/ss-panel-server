@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const moment = require('moment');
-const solarLunar = require('solarLunar');
+const solarLunar = require('solarlunar');
 const constellation = require('node-constellation');
 
 const birthdayModel = require('../model/birthday');
