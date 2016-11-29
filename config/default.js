@@ -53,13 +53,13 @@ let config = {
 
   wechat: {
     tick: {
-      corpid: 'wx1eedf3f9bb7f47b0',
-      secret: 'fWOjVeC5lfjSezwAv8W6r2OT-s8ZlxGZyXsVaX4AexSG2VTgGhI-Dr66pSPoJnJW',
+      corpid: 'wechat corpid',
+      secret: 'wechat secret',
       apps: {
         shard: {
-          agentid: 9,
-          token: 'fwBsDyTJHpfgw5StNNCaEpb9oZ',
-          aeskey: 'Z8KHa1fXSXkVnA86IXaMzWCFD5rCxBkT7pzuxlEMP8A',
+          agentid: 0,
+          token: 'shard app token',
+          aeskey: 'shard app aeskey',
         },
       },
     },
@@ -75,6 +75,12 @@ let config = {
     flow: {
       threshold: 2500000,
       Interface: 'eth0:',
+    },
+  },
+
+  birthday: {
+    wechat: {
+      top_pic: 'https://cdn.qiujun.me/161129/105133.png!wechat',
     },
   },
 

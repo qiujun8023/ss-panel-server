@@ -17,7 +17,7 @@ let router = module.exports = {};
 
 let getRecent = function* (user_id) {
   let answer = [{
-    picurl: 'http://oejwo825b.bkt.clouddn.com/161127/105133.png!wechat',
+    picurl: config.birthday.wechat.top_pic,
   }];
 
   let births = yield birthday.findBirthAsync(user_id);
