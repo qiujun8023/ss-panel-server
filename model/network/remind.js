@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 
 const sequelize = require('../../lib/sequelize')('shard');
 
-module.exports = sequelize.define('network_flow_remind', {
+module.exports = sequelize.define('network_remind', {
   user_id: {
     type: Sequelize.INTEGER,
     primaryKey: true,

@@ -26,7 +26,7 @@ network.format = function (type, value) {
 
 // 获取流量提醒用户列表
 network.getFlowRemindAsync = function* () {
-  let users = yield networkModel.FlowRemind.findAll();
+  let users = yield networkModel.Remind.findAll();
 
   let res = [];
   for (let user of users) {
