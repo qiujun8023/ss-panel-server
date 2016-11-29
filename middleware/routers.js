@@ -3,6 +3,7 @@
 const path = require('path');
 
 const _ = require('lodash');
+const config = require('config');
 
 const spec = require('../spec');
 const errors = require('../lib/errors');
@@ -37,13 +38,15 @@ router.use('/api', function () {
   throw new errors.NotFound('page not found');
 });
 
+// 设置前端路径
+router.use('/', express.static(config.client_dir));
 
 // API文档
 router.use('/doc', express.static(path.resolve(__dirname, '../resource/swagger-renderer')));
 
-// 使用前端路由，后端只发送首页文件
-router.get('/doc/*', function (req, res) {
-  res.sendFile(path.resolve(__dirname, '../resource/swagger-renderer/index.html'));
+// 使用前端路由，所以默认发送前端index页面
+router.get('/*', function (req, res) {
+  res.sendFile(path.resolve(config.client_dir, 'index.html'));
 });
 
 module.exports = () => router;
