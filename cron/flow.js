@@ -36,7 +36,10 @@ module.exports = cron('0 */3 * * * *', function* (threshold) {
       articles: [{title, description}],
     },
   };
-  yield wechat.sendAsync(to, message);
+
+  if (config.env === 'production' && to && message) {
+    yield wechat.sendAsync(to, message);
+  }
 
   return true;
 });
