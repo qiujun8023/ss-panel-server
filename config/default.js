@@ -53,13 +53,13 @@ let config = {
 
   wechat: {
     tick: {
-      corpid: 'wechat corpid',
-      secret: 'wechat secret',
+      corpid: 'wx4e2c2b771c467c9f',
+      secret: 'k7TGD8xJLDU6-sPH3NwY0eTs2oBPyAINMdbSbGN80fuEt01UK0Z8dWzhm7crgkz7',
       apps: {
         shard: {
           agentid: 0,
-          token: 'shard app token',
-          aeskey: 'shard app aeskey',
+          token: 'mRoQySqj2XBEORdnuOh9wei17',
+          aeskey: '6mRfWp9o1dfXHnmRBCFmTlpM3IIY377wy2iDJJjx4lM',
         },
       },
     },
