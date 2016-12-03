@@ -6,7 +6,7 @@ const cron = require('../lib/cron');
 const wechat = require('../lib/wechat')('tick', 'shard');
 const network = require('../service/network');
 
-module.exports = cron('0 */3 * * * *', function* (threshold) {
+let _flow = function* (threshold) {
   if (threshold === undefined) {
     threshold = config.network.flow.threshold;
   }
@@ -42,4 +42,10 @@ module.exports = cron('0 */3 * * * *', function* (threshold) {
   }
 
   return true;
-});
+};
+let flow = cron('0 */3 * * * *', _flow);
+
+module.exports = {
+  _flow,
+  flow,
+};

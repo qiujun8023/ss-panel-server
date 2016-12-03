@@ -17,11 +17,6 @@ module.exports = sequelize.define('remind', {
     allowNull: false,
     comment: '设置 Id',
   },
-  time: {
-    type: Sequelize.DATE,
-    allowNull: false,
-    comment: '提醒时间',
-  },
   is_remind: {
     type: Sequelize.ENUM,
     values: ['Y', 'N'],
@@ -29,11 +24,11 @@ module.exports = sequelize.define('remind', {
     allowNull: false,
     comment: '是否已经提醒',
     get: function () {
-      let is_paused = this.getDataValue('is_paused');
-      return is_paused === 'Y';
+      let is_remind = this.getDataValue('is_remind');
+      return is_remind === 'Y';
     },
-    set: function (is_paused) {
-      this.setDataValue('is_paused', is_paused ? 'Y' : 'N');
+    set: function (is_remind) {
+      this.setDataValue('is_remind', is_remind ? 'Y' : 'N');
     },
   },
 }, {

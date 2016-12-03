@@ -10,11 +10,23 @@ const birthdayModel = require('../model/birthday');
 
 const UserModel = birthdayModel.User;
 const BirthModel = birthdayModel.Birth;
-// const SettingModel = birthdayModel.Setting;
-// const RemindModel = birthdayModel.Remind;
-// const LogModel = birthdayModel.Log;
+const SettingModel = birthdayModel.Setting;
+const RemindModel = birthdayModel.Remind;
+const LogModel = birthdayModel.Log;
 
 let birthday = module.exports = {};
+
+// 生日排序
+birthday.sortBirths = function (births) {
+  births.sort(function (a, b) {
+    if (a.countdown !== b.countdown) {
+      return a.countdown - b.countdown;
+    }
+    return a.age - b.age;
+  });
+
+  return births;
+};
 
 // 日期大小比较
 birthday.dateCompare = function (today, birth, type) {
@@ -121,6 +133,17 @@ birthday.addBirthAsync = function* (user_id, data) {
   return birth.get({plain: true});
 };
 
+// 获取生日
+birthday.getBirthAsync = function* (birth_id) {
+  let birth = yield BirthModel.findById(birth_id);
+  if (!birth) {
+    return false;
+  }
+
+  birth = birth.get({plain: true});
+  return this.formartBirth(birth);
+};
+
 // 查询生日
 birthday.findBirthAsync = function* (user_id) {
   let births = yield BirthModel.findAll({
@@ -133,12 +156,7 @@ birthday.findBirthAsync = function* (user_id) {
     res.push(this.formartBirth(birth));
   }
 
-  // 排序
-  res.sort(function (a, b) {
-    return a.countdown - b.countdown;
-  });
-
-  return res;
+  return this.sortBirths(res);
 };
 
 // 更新生日
@@ -161,6 +179,24 @@ birthday.deleteBirthAsync = function* (birth_id) {
   return birth_id;
 };
 
+// 查询设置/生日
+birthday.findBirthWithSettingAsync = function* (offset, limit) {
+  let births = yield BirthModel.findAll({
+    include: [ SettingModel ],
+    offset,
+    limit,
+  });
+
+
+  let res = [];
+  for (let birth of births) {
+    birth = birth.get({plain: true});
+    res.push(this.formartBirth(birth));
+  }
+
+  return res;
+};
+
 // 添加设置
 birthday.addSettingAsync = function* (birth_id, data) {
   let birth = yield UserModel.findById(birth_id);
@@ -178,11 +214,6 @@ birthday.findSettingAsync = function* (setting_id) {
   return setting_id;
 };
 
-// 查询设置/生日
-birthday.findSettingWithBirthAsync = function* (setting_id) {
-  return setting_id;
-};
-
 // 更新设置
 birthday.updateSettingAsync = function* (setting_id, data) {
   return data;
@@ -196,17 +227,53 @@ birthday.deleteSettingAsync = function* (setting_id) {
 
 // 添加提醒
 birthday.addRemindAsync = function* (setting_id, data) {
-  return data;
+  let setting = yield SettingModel.findById(setting_id);
+  if (!setting) {
+    return false;
+  }
+
+  data = _.pick(data, ['time']);
+  let remind = yield setting.createRemind(data);
+  return remind.get({plain: true});
 };
 
 // 获取未完成提醒
 birthday.findNowRemindAsync = function* () {
-  return [];
+  let reminds = yield RemindModel.findAll({
+    include: [{
+      model: SettingModel,
+      where: {
+        time: {
+          $lte: moment().format('HH:mm:ss'),
+        },
+      },
+    }],
+    where: {
+      is_remind: 'N',
+      created_at: {
+        $gte: moment().subtract(1, 'day').toDate(),
+      },
+    },
+  });
+
+  let res = [];
+  for (let remind of reminds) {
+    remind = remind.get({plain: true});
+    res.push(remind);
+  }
+  return res;
 };
 
 // 更新提醒
 birthday.updateRemindAsync = function* (remind_id, data) {
-  return data;
+  let remind = yield RemindModel.findById(remind_id);
+  if (!remind) {
+    return false;
+  }
+
+  data = _.pick(data, ['is_remind']);
+  remind = yield remind.update(data);
+  return remind.get({plain: true});
 };
 
 // 添加日志

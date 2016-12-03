@@ -2,7 +2,7 @@
 
 const expect = require('chai').expect;
 
-const flow = require('./flow')._action;
+const flow = require('./network')._flow;
 
 describe('server/cron/flow', function () {
   it('should not remind', function* () {
