@@ -12,7 +12,7 @@ const UserModel = birthdayModel.User;
 const BirthModel = birthdayModel.Birth;
 const SettingModel = birthdayModel.Setting;
 const RemindModel = birthdayModel.Remind;
-const LogModel = birthdayModel.Log;
+// const LogModel = birthdayModel.Log;
 
 let birthday = module.exports = {};
 
