@@ -1,43 +1,69 @@
 'use strict';
 
-// const _ = require('lodash');
-// const moment = require('moment');
-//
-// const errors = require('../../lib/errors');
+const _ = require('lodash');
+
+const errors = require('../../lib/errors');
 const birthday = require('../../service/birthday');
 
-// 获取生日列表
-
-// 修改生日
-
-// 删除生日
-
-// 添加生日
-
-// 获取设置列表
-
-// 添加设置
-
-// 删除设置
-
-// 每天计划从设置中列表计算并放到提醒中
-
-// 每分钟从提醒中拿出来计算判断是否提醒并写入日志
-
+let format = function (birth) {
+  let filter = [
+    'birth_id',
+    'title',
+    'type',
+    'date',
+    'zodiac',
+    'age',
+    'countdown',
+    'constellation',
+  ];
+  return _.pick(birth, filter);
+};
 
 module.exports = {
   *get(req, res) {
     let user_id = req.session.user.user_id;
     let births = yield birthday.findBirthAsync(user_id);
-    res.json(births);
+
+    let result = [];
+    for (let birth of births) {
+      result.push(format(birth));
+    }
+    res.json(result);
   },
+
   *post(req, res) {
-    res.json({});
+    let user_id = req.session.user.user_id;
+    let data = _.pick(req.body, ['title', 'type', 'date']);
+    let birth = yield birthday.addBirthAsync(user_id, data);
+    res.json(format(birth));
   },
+
   *put(req, res) {
-    res.json({});
+    let user_id = req.session.user.user_id;
+    let birth_id = req.body.birth_id;
+    let data = _.pick(req.body, ['title', 'type', 'date']);
+
+    // 判断所有权
+    let birth = yield birthday.getBirthAsync(birth_id);
+    if (!birth || birth.user_id !== user_id) {
+      throw new errors.NotFound('未找到相关生日');
+    }
+
+    birth = yield birthday.updateBirthAsync(birth_id, data);
+    res.json(format(birth));
   },
+
   *delete(req, res) {
-    res.json({});
+    let user_id = req.session.user.user_id;
+    let birth_id = req.query.birth_id;
+
+    // 判断所有权
+    let birth = yield birthday.getBirthAsync(birth_id);
+    if (!birth || birth.user_id !== user_id) {
+      throw new errors.NotFound('未找到相关生日');
+    }
+
+    yield birthday.deleteBirthAsync(birth_id);
+    res.json({result: true});
   },
 };

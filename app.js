@@ -29,6 +29,9 @@ app.use(mws.swagger());
 app.use(mws.validation.request());
 app.use(mws.validation.response());
 
+// 加载权限校验
+app.use(mws.auth());
+
 // 加载路由
 app.use(mws.routers());
 

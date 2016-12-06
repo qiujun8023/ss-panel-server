@@ -12,8 +12,8 @@ properties:
   message:
     type: string
     description: 错误详情
-    example: something error
+    example: Something Error
   request:
     type: string
-    description: 当前请求 url
+    description: 当前请求 Url
     example: /api/demo

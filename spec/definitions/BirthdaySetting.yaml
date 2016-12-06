@@ -1,0 +1,11 @@
+type: object
+required:
+  - advance
+  - time
+properties:
+  advance:
+    type: integer
+    example: 0
+  time:
+    type: string
+    example: 08:00:00

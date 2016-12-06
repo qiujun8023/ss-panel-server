@@ -22,9 +22,9 @@ tags:
   - name: birthday
     description: 生日
 securityDefinitions:
-  oauth:
+  wechat:
     type: apiKey
     name: auth
     in: header
-    x-securityHandler: oauth
-    description: 使用 Google OAuth 2.0 进行登陆，登陆后会设置 session-cookie，后续请求带上 session-cookie 即可
+    x-securityHandler: wechat
+    description: 使用 Wechat OAuth 2.0 进行登陆，登陆后会设置 session，后续请求带上 session 即可

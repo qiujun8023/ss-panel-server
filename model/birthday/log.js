@@ -17,25 +17,10 @@ module.exports = sequelize.define('log', {
     allowNull: false,
     comment: '用户 Id',
   },
-  title: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    comment: '标题',
-  },
   content: {
     type: Sequelize.TEXT,
     allowNull: false,
     comment: '内容',
-  },
-  picture: {
-    type: Sequelize.TEXT,
-    allowNull: true,
-    comment: '图片地址',
-  },
-  url: {
-    type: Sequelize.TEXT,
-    allowNull: true,
-    comment: '网页地址',
   },
 }, {
   updatedAt: false,

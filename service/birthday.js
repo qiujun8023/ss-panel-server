@@ -1,12 +1,13 @@
 'use strict';
 
 const _ = require('lodash');
+const co = require('co');
 const moment = require('moment');
 const solarLunar = require('solarlunar');
 const constellation = require('node-constellation');
 
 const birthdayModel = require('../model/birthday');
-// const sequelize = require('../lib/sequelize')('birthday');
+const sequelize = require('../lib/sequelize')('shard');
 
 const UserModel = birthdayModel.User;
 const BirthModel = birthdayModel.Birth;
@@ -115,9 +116,9 @@ birthday.formartBirth = function (birth) {
 
 // 添加或更新用户
 birthday.addOrUpdateUserAsync = function* (data) {
-  let filter = ['user_id', 'name', 'gender', 'mobile', 'email', 'avatar'];
-  data = _.pick(data, filter);
-  let user = yield UserModel.upsert(data);
+  let user = yield UserModel.upsert(data, {
+    fields: ['user_id', 'name', 'gender', 'mobile', 'email', 'avatar'],
+  });
   return user.get({plain: true});
 };
 
@@ -128,12 +129,13 @@ birthday.addBirthAsync = function* (user_id, data) {
     return false;
   }
 
-  data = _.pick(data, ['title', 'type', 'date']);
-  let birth = yield user.createBirth(data);
-  return birth.get({plain: true});
+  let birth = yield user.createBirth(data, {
+    fields: ['title', 'type', 'date'],
+  });
+  return this.formartBirth(birth.get({plain: true}));
 };
 
-// 获取生日
+// 查询生日
 birthday.getBirthAsync = function* (birth_id) {
   let birth = yield BirthModel.findById(birth_id);
   if (!birth) {
@@ -144,7 +146,7 @@ birthday.getBirthAsync = function* (birth_id) {
   return this.formartBirth(birth);
 };
 
-// 查询生日
+// 获取生日
 birthday.findBirthAsync = function* (user_id) {
   let births = yield BirthModel.findAll({
     where: {user_id},
@@ -161,22 +163,41 @@ birthday.findBirthAsync = function* (user_id) {
 
 // 更新生日
 birthday.updateBirthAsync = function* (birth_id, data) {
-  let birth = yield UserModel.findById(birth_id);
+  let birth = yield BirthModel.findById(birth_id);
   if (!birth) {
     return false;
   }
 
-  data = _.pick(data, ['title', 'type', 'date']);
-  birth = yield birth.update(data);
-  return birth.get({plain: true});
+  birth = yield birth.update(data, {
+    fields: ['title', 'type', 'date'],
+  });
+  birth = birth.get({plain: true});
+  return this.formartBirth(birth);
 };
 
 // 删除生日
 birthday.deleteBirthAsync = function* (birth_id) {
-  // 删除提醒
-  // 删除设置
-  // 删除生日
-  return birth_id;
+  let birth = yield BirthModel.findById(birth_id);
+  if (!birth) {
+    return false;
+  }
+
+  return yield sequelize.transaction(function (t) {
+    return co(function* () {
+      let settings = yield birth.getSettings();
+      for (let setting of settings) {
+        // 删除提醒
+        yield RemindModel.destroy({
+          where: {setting_id: setting.setting_id},
+          transaction: t,
+        });
+        // 删除设置
+        yield setting.destroy({transaction: t});
+      }
+      // 删除生日
+      return birth.destroy({transaction: t});
+    });
+  });
 };
 
 // 查询设置/生日
@@ -186,7 +207,6 @@ birthday.findBirthWithSettingAsync = function* (offset, limit) {
     offset,
     limit,
   });
-
 
   let res = [];
   for (let birth of births) {
@@ -199,30 +219,58 @@ birthday.findBirthWithSettingAsync = function* (offset, limit) {
 
 // 添加设置
 birthday.addSettingAsync = function* (birth_id, data) {
-  let birth = yield UserModel.findById(birth_id);
+  let birth = yield BirthModel.findById(birth_id);
   if (!birth) {
     return false;
   }
 
   data = _.pick(data, ['advance', 'time']);
-  let setting = yield birth.createBirth(data);
+  let setting = yield birth.createSetting(data);
+  return setting.get({plain: true});
+};
+
+// 获取设置
+birthday.getSettingAsync = function* (setting_id) {
+  let setting = yield SettingModel.findById(setting_id);
+  if (!setting) {
+    return false;
+  }
+
   return setting.get({plain: true});
 };
 
 // 查询设置
-birthday.findSettingAsync = function* (setting_id) {
-  return setting_id;
-};
+birthday.findSettingAsync = function* (birth_id) {
+  let settings = yield SettingModel.findAll({
+    where: {birth_id},
+  });
 
-// 更新设置
-birthday.updateSettingAsync = function* (setting_id, data) {
-  return data;
+  let res = [];
+  for (let setting of settings) {
+    setting = setting.get({plain: true});
+    res.push(setting);
+  }
+
+  return res;
 };
 
 // 删除设置
 birthday.deleteSettingAsync = function* (setting_id) {
-  // 删除提醒 删除设置
-  return setting_id;
+  let setting = yield SettingModel.findById(setting_id);
+  if (!setting) {
+    return false;
+  }
+
+  return yield sequelize.transaction(function (t) {
+    // 删除提醒
+    return RemindModel.destroy({
+      where: {setting_id: setting.setting_id},
+      transaction: t,
+    }).then(function () {
+      // 删除设置
+      return setting.destroy({transaction: t});
+    });
+  });
 };
 
 // 添加提醒
@@ -278,5 +326,12 @@ birthday.updateRemindAsync = function* (remind_id, data) {
 
 // 添加日志
 birthday.addLogAsync = function* (user_id, data) {
-  return data;
+  let user = yield BirthModel.findById(user_id);
+  if (!user) {
+    return false;
+  }
+
+  data = _.pick(data, ['content']);
+  let log = yield user.createLog(data);
+  return log.get({plain: true});
 };
