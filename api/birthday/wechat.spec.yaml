@@ -1,8 +1,0 @@
-post:
-  tags: [ birthday ]
-  summary: 生日提醒-微信
-  responses:
-    default:
-      description: 返回 xml 结构体
-      schema:
-        type: string

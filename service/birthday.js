@@ -13,7 +13,6 @@ const UserModel = birthdayModel.User;
 const BirthModel = birthdayModel.Birth;
 const SettingModel = birthdayModel.Setting;
 const RemindModel = birthdayModel.Remind;
-// const LogModel = birthdayModel.Log;
 
 let birthday = module.exports = {};
 
@@ -116,10 +115,25 @@ birthday.formartBirth = function (birth) {
 
 // 添加或更新用户
 birthday.addOrUpdateUserAsync = function* (data) {
-  let user = yield UserModel.upsert(data, {
+  yield UserModel.upsert(data, {
     fields: ['user_id', 'name', 'gender', 'mobile', 'email', 'avatar'],
   });
+  return yield this.getUserAsync(data.user_id);
+};
+
+// 获取用户
+birthday.getUserAsync = function* (user_id) {
+  let user = yield UserModel.findById(user_id);
+  if (!user) {
+    return false;
+  }
+
   return user.get({plain: true});
+};
+
+// 删除生日
+birthday.removeUserAsync = function* () {
+  return true;
 };
 
 // 添加生日
@@ -176,7 +190,7 @@ birthday.updateBirthAsync = function* (birth_id, data) {
 };
 
 // 删除生日
-birthday.deleteBirthAsync = function* (birth_id) {
+birthday.removeBirthAsync = function* (birth_id) {
   let birth = yield BirthModel.findById(birth_id);
   if (!birth) {
     return false;
@@ -255,7 +269,7 @@ birthday.findSettingAsync = function* (birth_id) {
 };
 
 // 删除设置
-birthday.deleteSettingAsync = function* (setting_id) {
+birthday.removeSettingAsync = function* (setting_id) {
   let setting = yield SettingModel.findById(setting_id);
   if (!setting) {
     return false;

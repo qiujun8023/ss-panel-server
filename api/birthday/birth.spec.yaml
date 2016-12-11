@@ -38,7 +38,7 @@ post:
       required: true
       description: 日期
   responses:
-    200:
+    201:
       description: 生日
       schema:
         $ref: "#/definitions/BirthdayBirth"

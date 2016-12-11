@@ -24,6 +24,7 @@ let getRecent = function* (user_id) {
   if (!births.length) {
     articles[0].title = '生日提醒';
     articles[0].description = '哟！少年，你居然还没记录过生日。';
+    return articles;
   }
 
   let birth_today = 0;
@@ -80,4 +81,16 @@ let handler = function* (req, res) {
   res.reply(answer);
 };
 
-router.post = router.get = wechat(wechat_config, ko(handler));
+router.post = router.get = function* (req, res, next) {
+  if (req.isSwitchOn('wechat')) {
+    req.weixin = req.body;
+    // 防止返回值检查
+    res.reply = function (data) {
+      res.set('Content-Type', 'application/json');
+      res.send(JSON.stringify(data));
+    };
+    yield handler(req, res);
+    return;
+  }
+  wechat(wechat_config, ko(handler))(req, res, next);
+};

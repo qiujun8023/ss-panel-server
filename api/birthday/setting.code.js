@@ -41,7 +41,7 @@ module.exports = {
     }
 
     let setting = yield birthday.addSettingAsync(birth_id, data);
-    res.json(format(setting));
+    res.status(201).json(format(setting));
   },
 
   *delete(req, res) {
@@ -51,19 +51,17 @@ module.exports = {
     // 获取设置信息
     let setting = yield birthday.getSettingAsync(setting_id);
     if (!setting) {
-      res.json({result: true});
-      return;
+      throw new errors.NotFound('未找到相关设置');
     }
 
     // 获取设置对应的生日
     let birth = yield birthday.getBirthAsync(setting.birth_id);
     if (!birth || birth.user_id !== user_id) {
-      res.json({result: true});
-      return;
+      throw new errors.NotFound('未找到相关设置');
     }
 
     // 删除设置
-    yield birthday.deleteSettingAsync(setting_id);
+    yield birthday.removeSettingAsync(setting_id);
     res.json({result: true});
   },
 };

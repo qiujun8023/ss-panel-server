@@ -35,7 +35,7 @@ module.exports = {
     let user_id = req.session.user.user_id;
     let data = _.pick(req.body, ['title', 'type', 'date']);
     let birth = yield birthday.addBirthAsync(user_id, data);
-    res.json(format(birth));
+    res.status(201).json(format(birth));
   },
 
   *put(req, res) {
@@ -63,7 +63,7 @@ module.exports = {
       throw new errors.NotFound('未找到相关生日');
     }
 
-    yield birthday.deleteBirthAsync(birth_id);
+    yield birthday.removeBirthAsync(birth_id);
     res.json({result: true});
   },
 };

@@ -1,0 +1,16 @@
+get:
+  tags: [ wechat ]
+  summary: 微信GET
+  responses:
+    default:
+      description: 返回 xml 结构体
+      schema:
+        type: string
+post:
+  tags: [ wechat ]
+  summary: 微信POST
+  responses:
+    default:
+      description: 返回 xml 结构体
+      schema:
+        type: string

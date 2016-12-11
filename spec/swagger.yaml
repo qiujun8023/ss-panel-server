@@ -21,6 +21,8 @@ produces:
 tags:
   - name: birthday
     description: 生日
+  - name: wechat
+    description: 微信
 securityDefinitions:
   wechat:
     type: apiKey
