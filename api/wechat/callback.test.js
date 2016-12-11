@@ -75,7 +75,7 @@ describe(base_path, function () {
         EventKey: 'recent',
       })
       .expect(200);
-    expect(res2.body.length).to.be.equal(2);
+    expect(res2.body.length).to.be.equal(3);
     expect(res2.body[0]).to.include.keys(['picurl', 'title']);
     expect(res2.body[0]).to.include.keys(['title']);
     yield utility.birthday.removeTestBirthAsync(birth1);
