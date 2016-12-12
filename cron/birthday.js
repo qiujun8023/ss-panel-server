@@ -153,7 +153,7 @@ let _now = function* () {
 };
 
 // 每天添加到列表中
-let today = cron('0 0 * * * *', _today);
+let today = cron('0 0 0 * * *', _today);
 
 // 每分钟获取列表、推送消息
 let now = cron('0 * * * * *', _now);
