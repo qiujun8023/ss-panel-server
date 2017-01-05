@@ -34,11 +34,6 @@ let config = {
       port: 6379,
       keyPrefix: 'shard:wechat:',
     },
-    network: {
-      host: '127.0.0.1',
-      port: 6379,
-      keyPrefix: 'shard:network:',
-    },
   },
 
   mysql: {
@@ -68,13 +63,6 @@ let config = {
   logger: {
     file: {
       filename: '/tmp/shard.log',
-    },
-  },
-
-  network: {
-    flow: {
-      threshold: 2500000,
-      Interface: 'eth0:',
     },
   },
 

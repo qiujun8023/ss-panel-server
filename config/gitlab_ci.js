@@ -15,11 +15,6 @@ let config = {
       port: 6379,
       keyPrefix: 'shard:wechat:',
     },
-    network: {
-      host: 'redis',
-      port: 6379,
-      keyPrefix: 'shard:network:',
-    },
   },
 
   mysql: {
