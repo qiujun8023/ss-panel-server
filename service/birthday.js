@@ -348,7 +348,7 @@ birthday.updateRemindAsync = function* (remind_id, data) {
 
 // 添加日志
 birthday.addLogAsync = function* (user_id, data) {
-  let user = yield BirthModel.findById(user_id);
+  let user = yield UserModel.findById(user_id);
   if (!user) {
     return false;
   }

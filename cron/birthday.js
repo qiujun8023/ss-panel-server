@@ -58,7 +58,7 @@ let _sendNewsMessage = function* (user_id, articles) {
     news: {articles},
   };
   yield wechat.sendAsync(to, message);
-  yield birthday.addLogAsync(user_id, {content: message});
+  yield birthday.addLogAsync(user_id, {content: JSON.stringify(message)});
   return true;
 };
 
