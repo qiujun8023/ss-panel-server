@@ -22,6 +22,9 @@ properties:
   date:
     type: string
     example: 1996-10-01
+  date_formart:
+    type: string
+    example: 一九九九正月初一
   zodiac:
     type: string
     example: 鼠

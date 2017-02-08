@@ -11,6 +11,7 @@ let format = function (birth) {
     'title',
     'type',
     'date',
+    'date_formart',
     'zodiac',
     'age',
     'countdown',

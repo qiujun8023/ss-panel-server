@@ -100,8 +100,16 @@ birthday.formartBirth = function (birth) {
   let birth_date = _.split(birth.date, '-').map(_.toInteger);
   if (birth.type === 'SOLAR') {
     data = solarLunar.solar2lunar.apply(this, birth_date);
+    birth.date_formart = `${birth_date[0]} 年 ${birth_date[1]} 月 ${birth_date[2]} 日`;
   } else {
     data = solarLunar.lunar2solar.apply(this, birth_date);
+    birth.date_formart = '';
+    let year = String(birth_date[0]);
+    let transform = '零一二三四五六七八九';
+    for (let i = 0; i < year.length; i++) {
+      birth.date_formart += transform[year[i]];
+    }
+    birth.date_formart += data.monthCn + data.dayCn;
   }
 
   // 设置属性/年龄/倒计时/星座
