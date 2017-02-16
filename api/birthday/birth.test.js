@@ -20,21 +20,8 @@ describe(base_path, function () {
   });
 
   describe('post', function () {
-    it('should return error with invalid type', function* () {
-      let res = yield api.post(base_path)
-        .use(user_plugin.plugin())
-        .send({
-          title: random.birthday.getBirthTitle(),
-          type: 'invalid type',
-          date: random.birthday.getBirthDate(),
-        })
-        .expect(400);
-
-      expect(res.body.type).to.equal('InvalidParameter');
-    });
-
     it('should add birth success', function* () {
-      let res = yield api.post(base_path)
+      let res = yield api.post('/api/birthday/list')
         .use(user_plugin.plugin())
         .send({
           title: random.birthday.getBirthTitle(),
@@ -48,10 +35,10 @@ describe(base_path, function () {
 
   describe('get', function () {
     it('should return birth list', function* () {
-      let res = yield api.get(base_path)
+      yield api.get(base_path)
         .use(user_plugin.plugin())
+        .query({birth_id: birth.birth_id})
         .expect(200);
-      expect(res.body.length).to.equal(1);
     });
   });
 
