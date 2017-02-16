@@ -2,6 +2,7 @@
 
 // eslint-disable-next-line
 process.env.NODE_CONFIG_DIR= __dirname +'/config';
+process.env.TZ = 'Asia/Shanghai';
 
 const http = require('http');
 
