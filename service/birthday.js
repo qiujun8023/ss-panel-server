@@ -90,7 +90,7 @@ birthday.getCountdown = function (today, birth, type) {
 };
 
 // 格式化生日
-birthday.formartBirth = function (birth) {
+birthday.formatBirth = function (birth) {
   let now = moment();
   let now_date = [now.year(), now.month() + 1, now.date()];
   let today = solarLunar.solar2lunar.apply(this, now_date);
@@ -100,10 +100,14 @@ birthday.formartBirth = function (birth) {
   let birth_date = _.split(birth.date, '-').map(_.toInteger);
   if (birth.type === 'SOLAR') {
     data = solarLunar.solar2lunar.apply(this, birth_date);
-    birth.date_formart = `${birth_date[1]}月${birth_date[2]}日`;
+    birth.year = data.cYear;
+    birth.month = data.cMonth;
+    birth.day = data.cDay;
   } else {
     data = solarLunar.lunar2solar.apply(this, birth_date);
-    birth.date_formart = data.monthCn + data.dayCn;
+    birth.year = data.lYear;
+    birth.month = data.monthCn;
+    birth.day = data.dayCn;
   }
 
   // 设置属性/年龄/倒计时/星座
@@ -111,6 +115,7 @@ birthday.formartBirth = function (birth) {
   birth.age = this.getAge(today, data, birth.type);
   birth.countdown = this.getCountdown(today, data, birth.type);
   birth.constellation = constellation(data.cMonth, data.cDay, 'zh-cn');
+  birth.days = moment().diff([data.cYear, data.cMonth - 1, data.cDay], 'days');
 
   return birth;
 };
@@ -148,7 +153,7 @@ birthday.addBirthAsync = function* (user_id, data) {
   let birth = yield user.createBirth(data, {
     fields: ['title', 'type', 'date'],
   });
-  return this.formartBirth(birth.get({plain: true}));
+  return this.formatBirth(birth.get({plain: true}));
 };
 
 // 查询生日
@@ -159,7 +164,7 @@ birthday.getBirthAsync = function* (birth_id) {
   }
 
   birth = birth.get({plain: true});
-  return this.formartBirth(birth);
+  return this.formatBirth(birth);
 };
 
 // 获取生日
@@ -171,7 +176,7 @@ birthday.findBirthAsync = function* (user_id) {
   let res = [];
   for (let birth of births) {
     birth = birth.get({plain: true});
-    res.push(this.formartBirth(birth));
+    res.push(this.formatBirth(birth));
   }
 
   return this.sortBirths(res);
@@ -188,7 +193,7 @@ birthday.updateBirthAsync = function* (birth_id, data) {
     fields: ['title', 'type', 'date'],
   });
   birth = birth.get({plain: true});
-  return this.formartBirth(birth);
+  return this.formatBirth(birth);
 };
 
 // 删除生日
@@ -227,7 +232,7 @@ birthday.findBirthWithSettingAsync = function* (offset, limit) {
   let res = [];
   for (let birth of births) {
     birth = birth.get({plain: true});
-    res.push(this.formartBirth(birth));
+    res.push(this.formatBirth(birth));
   }
 
   return res;
