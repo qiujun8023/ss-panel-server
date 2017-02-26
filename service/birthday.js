@@ -275,6 +275,18 @@ birthday.findSettingAsync = function* (birth_id) {
   return res;
 };
 
+// 修改提醒
+birthday.updateSettingAsync = function* (setting_id, data) {
+  let setting = yield SettingModel.findById(setting_id);
+  if (!setting) {
+    return false;
+  }
+
+  data = _.pick(data, ['advance', 'time']);
+  setting = yield setting.update(data);
+  return setting.get({plain: true});
+};
+
 // 删除设置
 birthday.removeSettingAsync = function* (setting_id) {
   let setting = yield SettingModel.findById(setting_id);

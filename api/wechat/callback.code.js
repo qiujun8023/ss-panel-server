@@ -40,7 +40,7 @@ let getRecent = function* (user_id) {
 
     // 最多添加五条记录
     if (i < 5) {
-      articles.push({title});
+      articles.push({title, url: `${config.base_url}birthday/${birth.birth_id}`});
     }
   }
 

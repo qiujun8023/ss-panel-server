@@ -81,6 +81,19 @@ describe(base_path, function () {
     });
   });
 
+  describe('put', function () {
+    it('should update setting success', function* () {
+      let advance = random.birthday.getSettingAdvance();
+      let time = random.birthday.getSettingTime();
+      let res = yield api.put(base_path)
+        .use(user_plugin.plugin())
+        .send({setting_id: setting.setting_id, advance, time})
+        .expect(200);
+      expect(res.body.advance).to.equal(advance);
+      expect(res.body.time).to.equal(time);
+    });
+  });
+
   describe('delete', function () {
     it('should return not found with invalid setting_id', function* () {
       yield api.delete(base_path)

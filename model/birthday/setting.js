@@ -26,6 +26,10 @@ module.exports = sequelize.define('setting', {
     type: Sequelize.TIME,
     allowNull: false,
     comment: '提醒的时间',
+    get: function () {
+      let time = this.getDataValue('time');
+      return time && time.slice(0, 5);
+    },
   },
 }, {
   underscored: true,

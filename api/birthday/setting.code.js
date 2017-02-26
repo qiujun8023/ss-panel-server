@@ -29,6 +29,28 @@ module.exports = {
     res.json(result);
   },
 
+  *put(req, res) {
+    let user_id = req.session.user.user_id;
+    let setting_id = req.body.setting_id;
+    let data = _.pick(req.body, ['advance', 'time']);
+
+    // 获取设置信息
+    let setting = yield birthday.getSettingAsync(setting_id);
+    if (!setting) {
+      throw new errors.NotFound('未找到相关设置');
+    }
+
+    // 获取设置对应的生日
+    let birth = yield birthday.getBirthAsync(setting.birth_id);
+    if (!birth || birth.user_id !== user_id) {
+      throw new errors.NotFound('未找到相关设置');
+    }
+
+    // 更新设置
+    setting = yield birthday.updateSettingAsync(setting_id, data);
+    res.json(format(setting));
+  },
+
   *post(req, res) {
     let user_id = req.session.user.user_id;
     let birth_id = req.body.birth_id;
