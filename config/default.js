@@ -61,6 +61,12 @@ let config = {
     },
   },
 
+  upyun: {
+    bucket: 'bucket',
+    operator: 'operator',
+    password: 'password',
+  },
+
   logger: {
     file: {
       filename: '/tmp/shard.log',

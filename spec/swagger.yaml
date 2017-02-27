@@ -19,6 +19,8 @@ consumes:
 produces:
   - application/json
 tags:
+  - name: cdn
+    description: CDN
   - name: birthday
     description: 生日
   - name: wechat
