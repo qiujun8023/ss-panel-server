@@ -139,8 +139,23 @@ birthday.getUserAsync = function* (user_id) {
 };
 
 // 删除用户
-birthday.removeUserAsync = function* () {
-  return true;
+birthday.removeUserAsync = function* (user_id) {
+  let user = yield UserModel.findById(user_id);
+  if (!user) {
+    return false;
+  }
+
+  return yield sequelize.transaction(function (t) {
+    return co(function* () {
+      // 删除设置
+      let births = yield user.getBirths();
+      for (let birth of births) {
+        yield birthday.removeBirthAsync(birth.birth_id, t);
+      }
+      // 删除生日
+      return user.destroy({transaction: t});
+    });
+  });
 };
 
 // 添加生日
@@ -197,27 +212,30 @@ birthday.updateBirthAsync = function* (birth_id, data) {
 };
 
 // 删除生日
-birthday.removeBirthAsync = function* (birth_id) {
+birthday.removeBirthAsync = function* (birth_id, transaction) {
   let birth = yield BirthModel.findById(birth_id);
   if (!birth) {
     return false;
   }
 
-  return yield sequelize.transaction(function (t) {
+  let remove = function (t) {
     return co(function* () {
+      // 删除设置
       let settings = yield birth.getSettings();
       for (let setting of settings) {
-        // 删除提醒
-        yield RemindModel.destroy({
-          where: {setting_id: setting.setting_id},
-          transaction: t,
-        });
-        // 删除设置
-        yield setting.destroy({transaction: t});
+        yield birthday.removeSettingAsync(setting.setting_id, t);
       }
       // 删除生日
       return birth.destroy({transaction: t});
     });
+  };
+
+  if (transaction) {
+    return yield remove(transaction);
+  }
+
+  return yield sequelize.transaction(function (t) {
+    return remove(t);
   });
 };
 
@@ -288,13 +306,13 @@ birthday.updateSettingAsync = function* (setting_id, data) {
 };
 
 // 删除设置
-birthday.removeSettingAsync = function* (setting_id) {
+birthday.removeSettingAsync = function* (setting_id, transaction) {
   let setting = yield SettingModel.findById(setting_id);
   if (!setting) {
     return false;
   }
 
-  return yield sequelize.transaction(function (t) {
+  let remove = function (t) {
     // 删除提醒
     return RemindModel.destroy({
       where: {setting_id: setting.setting_id},
@@ -303,18 +321,25 @@ birthday.removeSettingAsync = function* (setting_id) {
       // 删除设置
       return setting.destroy({transaction: t});
     });
+  };
+
+  if (transaction) {
+    return yield remove(transaction);
+  }
+
+  return yield sequelize.transaction(function (t) {
+    return remove(t);
   });
 };
 
 // 添加提醒
-birthday.addRemindAsync = function* (setting_id, data) {
+birthday.addRemindAsync = function* (setting_id) {
   let setting = yield SettingModel.findById(setting_id);
   if (!setting) {
     return false;
   }
 
-  data = _.pick(data, ['time']);
-  let remind = yield setting.createRemind(data);
+  let remind = yield setting.createRemind();
   return remind.get({plain: true});
 };
 

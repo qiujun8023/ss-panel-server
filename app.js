@@ -48,7 +48,7 @@ if (!module.parent) {
   server.listen(port, host);
 
   // eslint-disable-next-line
-  console.log(`Server listen on ${config.protocol}://${host}:${port}`);
+  console.log('Server listen on ' + config.base_url);
 } else {
   module.exports = server;
 }

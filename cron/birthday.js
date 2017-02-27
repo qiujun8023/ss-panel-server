@@ -46,7 +46,7 @@ let _today = function* () {
 // 设置已提醒
 let _setIsRemind = function* (remind_ids) {
   for (let remind_id of remind_ids) {
-    yield birthday.updateRemindAsync(remind_id, {is_remind: 'Y'});
+    yield birthday.updateRemindAsync(remind_id, {is_remind: true});
   }
 };
 
