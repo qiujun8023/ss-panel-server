@@ -32,17 +32,20 @@ module.exports = function (app) {
   return function* (req, res, next) {
     // 设置登陆用户、测试用
     if (config.env === 'test') {
+      let user;
       let user_id = req.get('x-user-id');
-      let user = yield getUserAsync(app, user_id);
-
-      // 如设置 user_id 则设置 session
-      if (app && user_id && !user) {
-        throw new errors.NotFound('用户不存在');
+      if (user_id) {
+        user = yield getUserAsync(app, user_id);
       }
 
-      req.session[app] = req.session[app] || {};
-      req.session[app]['user'] = user;
-      return next();
+      // 如设置 user_id 则设置 session
+      if (user) {
+        req.session[app] = req.session[app] || {};
+        req.session[app]['user'] = user;
+        return next();
+      } else if (app && user_id && !user) {
+        throw new errors.NotFound('用户不存在');
+      }
     }
 
     // 判断用户信息是否有效

@@ -8,7 +8,7 @@ let config = {
   protocol: 'http',
   host: '127.0.0.1',
   port: '8001',
-  base_url: 'http://qiujun.dev:8080/',
+  base_url: 'http://127.0.0.1:8080/',
 
   env: 'development',
   debug: true,

@@ -1,7 +1,7 @@
 get:
   x-app: birthday
   tags: [ birthday ]
-  summary: 微信授权
+  summary: 微信授权回调
   parameters:
     - name: code
       in: query
