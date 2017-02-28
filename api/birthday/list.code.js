@@ -24,7 +24,7 @@ let birthFormat = function (birth) {
 
 module.exports = {
   *get(req, res) {
-    let user_id = req.session.user.user_id;
+    let user_id = req.session.birthday.user.user_id;
     let births = yield birthday.findBirthAsync(user_id);
 
     let result = [];
@@ -35,7 +35,7 @@ module.exports = {
   },
 
   *post(req, res) {
-    let user_id = req.session.user.user_id;
+    let user_id = req.session.birthday.user.user_id;
     let data = _.pick(req.body, ['title', 'type', 'date']);
     let birth = yield birthday.addBirthAsync(user_id, data);
     res.status(201).json(birthFormat(birth));

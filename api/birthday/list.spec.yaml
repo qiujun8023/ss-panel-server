@@ -1,4 +1,5 @@
 get:
+  x-app: birthday
   tags: [ birthday ]
   summary: 获取生日列表
   security:
@@ -15,6 +16,7 @@ get:
       schema:
         $ref: "#/definitions/ErrorResponse"
 post:
+  x-app: birthday
   tags: [ birthday ]
   summary: 新增生日提醒
   security:

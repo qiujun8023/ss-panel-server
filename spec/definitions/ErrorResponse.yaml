@@ -17,3 +17,6 @@ properties:
     type: string
     description: 当前请求 Url
     example: /api/demo
+  extra:
+    type: object
+    description: 额外参数

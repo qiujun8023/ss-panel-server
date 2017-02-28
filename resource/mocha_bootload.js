@@ -4,9 +4,14 @@ const events = require('events');
 
 const supertest = require('supertest');
 
-const app = require('../app');
+const createServer = require('../app');
 
 // https://github.com/visionmedia/supertest/issues/307
 events.EventEmitter.defaultMaxListeners = Infinity;
 
-global.api = supertest(app);
+before(() => {
+  return createServer()
+    .then((server) => {
+      global.api = supertest(server);
+    });
+});

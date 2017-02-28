@@ -1,4 +1,5 @@
 get:
+  x-app: birthday
   tags: [ birthday ]
   summary: 获取生日提醒设置
   security:
@@ -21,6 +22,7 @@ get:
       schema:
         $ref: "#/definitions/ErrorResponse"
 post:
+  x-app: birthday
   tags: [ birthday ]
   summary: 新增生日提醒设置
   security:
@@ -52,6 +54,7 @@ post:
       schema:
         $ref: "#/definitions/ErrorResponse"
 put:
+  x-app: birthday
   tags: [ birthday ]
   summary: 修改生日提醒设置
   security:
@@ -81,6 +84,7 @@ put:
       schema:
         $ref: "#/definitions/ErrorResponse"
 delete:
+  x-app: birthday
   tags: [ birthday ]
   summary: 删除生日提醒设置
   security:

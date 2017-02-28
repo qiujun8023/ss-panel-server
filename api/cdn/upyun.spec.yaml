@@ -1,4 +1,5 @@
 get:
+  x-app: cdn
   tags: [ cdn ]
   summary: 获取又拍云文件
   parameters:

@@ -34,7 +34,7 @@ let getAsync = function* (user_id, birth_id) {
 
 module.exports = {
   *get(req, res) {
-    let user_id = req.session.user.user_id;
+    let user_id = req.session.birthday.user.user_id;
     let birth_id = req.query.birth_id;
 
     let birth = yield getAsync(user_id, birth_id);
@@ -42,7 +42,7 @@ module.exports = {
   },
 
   *put(req, res) {
-    let user_id = req.session.user.user_id;
+    let user_id = req.session.birthday.user.user_id;
     let birth_id = req.body.birth_id;
     let data = _.pick(req.body, ['title', 'type', 'date']);
 
@@ -52,7 +52,7 @@ module.exports = {
   },
 
   *delete(req, res) {
-    let user_id = req.session.user.user_id;
+    let user_id = req.session.birthday.user.user_id;
     let birth_id = req.query.birth_id;
 
     yield getAsync(user_id, birth_id);

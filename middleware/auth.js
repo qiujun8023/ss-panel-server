@@ -1,37 +1,44 @@
 'use strict';
 
-const config = require('config');
+const _ = require('lodash');
 
-const errors = require('../lib/errors');
-const birthdayService = require('../service/birthday');
+const ko = require('express-ko');
+const securities = require('./security');
 
-let getBirthdayUser = function* (user_id) {
-  return yield birthdayService.getUserAsync(user_id);
-};
-
-module.exports = function () {
-  return function* (req, res, next) {
-    // 设置登陆用户、测试用
-    if (config.env === 'test') {
-      let user;
-      let item = req.get('x-item');
-      let user_id = req.get('x-user-id');
-      switch (item) {
-        case 'birthday':
-          user = yield getBirthdayUser(user_id);
-          break;
-      }
-
-      // 如设置 user_id 则设置 session
-      if (item && user_id && !user) {
-        throw new errors.NotFound('用户不存在');
-      }
-
-      req.session.user = user;
-      return next();
+module.exports = function (api) {
+  const definition = api.definition;
+  const globalSecurityDef = definition.security || [];
+  const securityDefinitions = definition.securityDefinitions;
+  return function* (req, res, done) {
+    if (!req.swagger.operation) {
+      return done();
     }
 
-    req.session.user = {user_id: '1305010119'};
+    let app = req.swagger.operation['x-app'];
+    let securitiesDef = req.swagger.operation.security || [];
+    securitiesDef = securitiesDef.concat(globalSecurityDef);
+    let securityHandlers = securitiesDef.map((security) => {
+      security = Object.keys(security)[0];
+      return securityDefinitions[security]['x-securityHandler'];
+    });
+    securityHandlers = _.uniq(securityHandlers);
+
+    let index = 0;
+    let next = function (err) {
+      // return on first successful authentication
+      if (index !== 0 && !err) {
+        return done();
+      }
+
+      // return last authentication failure
+      if (index === securityHandlers.length) {
+        return done(err);
+      }
+
+      let securityHandler = securities[securityHandlers[index++]](app);
+      ko(securityHandler)(req, res, next);
+    };
+
     next();
   };
 };

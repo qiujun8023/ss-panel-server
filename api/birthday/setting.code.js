@@ -12,7 +12,7 @@ let format = function (setting) {
 
 module.exports = {
   *get(req, res) {
-    let user_id = req.session.user.user_id;
+    let user_id = req.session.birthday.user.user_id;
     let birth_id = req.query.birth_id;
 
     // 判断所有权
@@ -30,7 +30,7 @@ module.exports = {
   },
 
   *put(req, res) {
-    let user_id = req.session.user.user_id;
+    let user_id = req.session.birthday.user.user_id;
     let setting_id = req.body.setting_id;
     let data = _.pick(req.body, ['advance', 'time']);
 
@@ -52,7 +52,7 @@ module.exports = {
   },
 
   *post(req, res) {
-    let user_id = req.session.user.user_id;
+    let user_id = req.session.birthday.user.user_id;
     let birth_id = req.body.birth_id;
     let data = _.pick(req.body, ['advance', 'time']);
 
@@ -67,7 +67,7 @@ module.exports = {
   },
 
   *delete(req, res) {
-    let user_id = req.session.user.user_id;
+    let user_id = req.session.birthday.user.user_id;
     let setting_id = req.query.setting_id;
 
     // 获取设置信息

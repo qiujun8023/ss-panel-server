@@ -18,7 +18,7 @@ module.exports = function () {
       logger.error(err);
     }
 
-    let answer = {};
+    let answer = {extra: err.extra};
     answer.type = err.type;
     answer.message = err.message;
     answer.request = err.request || req.path;
