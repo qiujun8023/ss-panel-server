@@ -1,7 +1,7 @@
 get:
   x-app: upyun
   tags: [ upyun ]
-  summary: 获取又拍云文件
+  summary: 获取又拍云文件列表
   parameters:
     - name: path
       in: query

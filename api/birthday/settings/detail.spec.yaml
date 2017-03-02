@@ -1,7 +1,7 @@
 get:
   x-app: birthday
   tags: [ birthday ]
-  summary: 获取提醒设置详情
+  summary: 获取提醒设置详情详情
   security:
   - wechat: []
   parameters:
