@@ -2,27 +2,34 @@
 
 const config = require('config');
 
+const ss = require('../../service/ss');
+const birthday = require('../../service/birthday');
 const errors = require('../../lib/errors');
-const birthdayService = require('../../service/birthday');
 
 let getUserAsync = function* (app, user_id) {
   switch (app) {
+    case 'ss':
+      return yield ss.getUserAsync(user_id);
     case 'birthday':
-      return yield birthdayService.getUserAsync(user_id);
+      return yield birthday.getUserAsync(user_id);
     default:
       return false;
   }
 };
 
 let getExtra = function (app) {
+  let base = {
+    appid: config.wechat.tick.corpid,
+    response_type: 'code',
+    scope: 'snsapi_base',
+  };
   switch (app) {
+    case 'ss':
+      base.redirect_uri = config.base_url + 'api/ss/oauth';
+      return base;
     case 'birthday':
-      return {
-        appid: config.wechat.tick.corpid,
-        redirect_uri: config.base_url + 'api/birthday/oauth',
-        response_type: 'code',
-        scope: 'snsapi_base',
-      };
+      base.redirect_uri = config.base_url + 'api/birthday/oauth';
+      return base;
     default:
       return {};
   }

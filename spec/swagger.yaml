@@ -21,6 +21,8 @@ produces:
 tags:
   - name: upyun
     description: 又拍 CDN
+  - name: ss
+    description: 科学上网
   - name: birthday
     description: 生日提醒
   - name: wechat

@@ -1,0 +1,39 @@
+type: object
+required:
+  - node_id
+  - name
+  - server
+  - method
+  - sort
+  - description
+  - is_visible
+  - created_at
+  - updated_at
+properties:
+  node_id:
+    type: integer
+    example: 1
+  name:
+    type: string
+    example: 香港节点
+  server:
+    type: string
+    example: 1.2.3.4
+  method:
+    type: string
+    example: rc4-md5
+  sort:
+    type: integer
+    example: 0
+  description:
+    type: string
+    example: CN2 节点
+  is_visible:
+    type: boolean
+    example: true
+  created_at:
+    type: string
+    example: 2017-03-02T15:10:37.000Z
+  updated_at:
+    type: string
+    example: 2017-03-02T15:10:37.000Z

@@ -67,6 +67,13 @@ let config = {
     password: 'password',
   },
 
+  ss: {
+    min_port: 50001,
+    max_port: 50999,
+    init_transfer_enable: 10737418240, // 10G 流量
+    random_password_pool: '0123456789abcdefghijklmnopqrstuvwxyz', // 随机密码字符集
+  },
+
   logger: {
     file: {
       filename: '/tmp/shard.log',

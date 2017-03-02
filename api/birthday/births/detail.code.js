@@ -1,8 +1,7 @@
 'use strict';
 
-const _ = require('lodash');
-
 const errors = require('../../../lib/errors');
+const format = require('../../../lib/format').birthday;
 const birthday = require('../../../service/birthday');
 
 module.exports = {
@@ -15,20 +14,6 @@ module.exports = {
       throw new errors.NotFound('未找到相关生日');
     }
 
-    let filter = [
-      'birth_id',
-      'title',
-      'type',
-      'year',
-      'month',
-      'day',
-      'days',
-      'date',
-      'zodiac',
-      'age',
-      'countdown',
-      'constellation',
-    ];
-    res.json(_.pick(birth, filter));
+    res.json(format.birth(birth));
   },
 };

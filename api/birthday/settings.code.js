@@ -3,12 +3,8 @@
 const _ = require('lodash');
 
 const errors = require('../../lib/errors');
+const format = require('../../lib/format').birthday;
 const birthday = require('../../service/birthday');
-
-let format = function (setting) {
-  let filter = ['setting_id', 'advance', 'time'];
-  return _.pick(setting, filter);
-};
 
 module.exports = {
   *get(req, res) {
@@ -24,7 +20,7 @@ module.exports = {
     let result = [];
     let settings = yield birthday.findSettingAsync(birth_id);
     for (let setting of settings) {
-      result.push(format(setting));
+      result.push(format.setting(setting));
     }
     res.json(result);
   },
@@ -48,7 +44,7 @@ module.exports = {
 
     // 更新设置
     setting = yield birthday.updateSettingAsync(setting_id, data);
-    res.json(format(setting));
+    res.json(format.setting(setting));
   },
 
   *post(req, res) {
@@ -63,7 +59,7 @@ module.exports = {
     }
 
     let setting = yield birthday.addSettingAsync(birth_id, data);
-    res.status(201).json(format(setting));
+    res.status(201).json(format.setting(setting));
   },
 
   *delete(req, res) {

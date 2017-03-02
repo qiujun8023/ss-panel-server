@@ -3,25 +3,8 @@
 const _ = require('lodash');
 
 const errors = require('../../lib/errors');
+const format = require('../../lib/format').birthday;
 const birthday = require('../../service/birthday');
-
-let format = function (birth) {
-  let filter = [
-    'birth_id',
-    'title',
-    'type',
-    'year',
-    'month',
-    'day',
-    'days',
-    'date',
-    'zodiac',
-    'age',
-    'countdown',
-    'constellation',
-  ];
-  return _.pick(birth, filter);
-};
 
 // 判断所有权
 let getAsync = function* (user_id, birth_id) {
@@ -39,7 +22,7 @@ module.exports = {
 
     let result = [];
     for (let birth of births) {
-      result.push(format(birth));
+      result.push(format.birth(birth));
     }
     res.json(result);
   },
@@ -48,7 +31,7 @@ module.exports = {
     let user_id = req.session.birthday.user.user_id;
     let data = _.pick(req.body, ['title', 'type', 'date']);
     let birth = yield birthday.addBirthAsync(user_id, data);
-    res.status(201).json(format(birth));
+    res.status(201).json(format.birth(birth));
   },
 
   *put(req, res) {
@@ -58,7 +41,7 @@ module.exports = {
 
     yield getAsync(user_id, birth_id);
     let birth = yield birthday.updateBirthAsync(birth_id, data);
-    res.json(format(birth));
+    res.json(format.birth(birth));
   },
 
   *delete(req, res) {

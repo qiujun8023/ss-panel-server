@@ -1,8 +1,7 @@
 'use strict';
 
-const _ = require('lodash');
-
 const errors = require('../../../lib/errors');
+const format = require('../../../lib/format').birthday;
 const birthday = require('../../../service/birthday');
 
 module.exports = {
@@ -21,7 +20,6 @@ module.exports = {
       throw new errors.NotFound('未找到相关提醒');
     }
 
-    let filter = ['setting_id', 'advance', 'time'];
-    res.json(_.pick(setting, filter));
+    res.json(format.setting(setting));
   },
 };

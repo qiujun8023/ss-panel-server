@@ -1,0 +1,31 @@
+type: object
+required:
+  - node_id
+  - name
+  - server
+  - port
+  - method
+  - password
+  - description
+properties:
+  node_id:
+    type: integer
+    example: 1
+  name:
+    type: string
+    example: CN2 节点
+  server:
+    type: string
+    example: 1.2.3.4
+  port:
+    type: integer
+    example: 8388
+  method:
+    type: string
+    example: rc4-md5
+  password:
+    type: string
+    example: password
+  description:
+    type: string
+    example: 电信 CN2 节点

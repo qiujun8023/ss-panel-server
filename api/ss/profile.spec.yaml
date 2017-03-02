@@ -1,0 +1,36 @@
+get:
+  x-app: ss
+  tags: [ ss ]
+  summary: 获取个人信息
+  security:
+  - wechat: []
+  responses:
+    200:
+      description: 用户信息
+      schema:
+        $ref: "#/definitions/ssProfile"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/definitions/ErrorResponse"
+put:
+  x-app: ss
+  tags: [ ss ]
+  summary: 修改个人信息
+  security:
+  - wechat: []
+  parameters:
+    - name: password
+      in: formData
+      type: string
+      required: false
+      description: SS 密码
+  responses:
+    200:
+      description: 修改后的结果
+      schema:
+        $ref: "#/definitions/ssProfile"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/definitions/ErrorResponse"

@@ -25,7 +25,7 @@ spec.paths = glob.sync('server/api/**/*.spec.yaml', {cwd: CWD}).reduce((paths, f
   return paths;
 }, {});
 
-spec.definitions = glob.sync('server/spec/definitions/*.yaml', {cwd: CWD}).reduce((defs, file) => {
+spec.definitions = glob.sync('server/spec/definitions/**/*.yaml', {cwd: CWD}).reduce((defs, file) => {
   let location = path.join(CWD, file);
   let name = path.parse(file).name;
   defs[name] = YAML.load(fs.readFileSync(location, 'utf8'));

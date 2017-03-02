@@ -3,7 +3,7 @@
 const _ = require('lodash');
 const errors = require('../../lib/errors');
 const wechat = require('../../lib/wechat')('tick', 'shard');
-const birthdayService = require('../../service/birthday');
+const birthday = require('../../service/birthday');
 
 module.exports = {
   *get(req, res) {
@@ -34,7 +34,7 @@ module.exports = {
       throw new errors.BadGateway(err.message || '请求微信服务器失败');
     }
 
-    user = yield birthdayService.addOrUpdateUserAsync(user);
+    user = yield birthday.addOrUpdateUserAsync(user);
     req.session.birthday = req.session.birthday || {};
     req.session.birthday.user = user;
 
