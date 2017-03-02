@@ -45,7 +45,6 @@ describe(base_path, function () {
       })
       .expect(200);
     expect(res.body.length).to.be.equal(1);
-    expect(res.body[0]).to.include.keys(['picurl', 'title', 'description']);
   });
 
   it('should return with birth info', function* () {
@@ -60,8 +59,6 @@ describe(base_path, function () {
       })
       .expect(200);
     expect(res1.body.length).to.be.equal(2);
-    expect(res1.body[0]).to.include.keys(['picurl', 'title']);
-    expect(res1.body[0]).to.include.keys(['title']);
     let birth2 = yield utility.birthday.createTestBirthAsync(user.user_id, {
       type: 'SOLAR',
       date: moment().format('YYYY-MM-DD'),
@@ -76,8 +73,6 @@ describe(base_path, function () {
       })
       .expect(200);
     expect(res2.body.length).to.be.equal(3);
-    expect(res2.body[0]).to.include.keys(['picurl', 'title']);
-    expect(res2.body[0]).to.include.keys(['title']);
     yield utility.birthday.removeTestBirthAsync(birth1);
     yield utility.birthday.removeTestBirthAsync(birth2);
   });

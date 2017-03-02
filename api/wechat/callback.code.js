@@ -22,8 +22,11 @@ let getRecent = function* (user_id) {
 
   let births = yield birthday.findBirthAsync(user_id);
   if (!births.length) {
-    articles[0].title = '生日提醒';
-    articles[0].description = '哟！少年，你居然还没记录过生日。';
+    Object.assign(articles[0], {
+      title: '生日提醒',
+      description: '哟！少年，你居然还没记录过生日。',
+      url: `${config.base_url}birthday/add`,
+    });
     return articles;
   }
 

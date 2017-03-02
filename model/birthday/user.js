@@ -44,17 +44,17 @@ module.exports = sequelize.define('user', {
   },
   mobile: {
     type: Sequelize.STRING(20),
-    allowNull: false,
+    allowNull: true,
     comment: '手机',
   },
   email: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
     comment: '邮箱',
   },
   avatar: {
     type: Sequelize.TEXT,
-    allowNull: false,
+    allowNull: true,
     comment: '头像',
   },
 }, {
