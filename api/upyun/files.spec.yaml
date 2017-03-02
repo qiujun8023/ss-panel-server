@@ -1,6 +1,6 @@
 get:
-  x-app: cdn
-  tags: [ cdn ]
+  x-app: upyun
+  tags: [ upyun ]
   summary: 获取又拍云文件
   parameters:
     - name: path

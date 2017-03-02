@@ -6,7 +6,7 @@ const plugins = require('../../lib/test/plugin');
 const utility = require('../../lib/test/utility');
 const random = require('../../lib/test/random');
 
-let base_path = '/api/birthday/setting';
+let base_path = '/api/birthday/settings';
 let user_plugin = plugins.user();
 
 describe(base_path, function () {
@@ -19,8 +19,8 @@ describe(base_path, function () {
   });
 
   after(function* () {
-    yield user_plugin.after();
     yield utility.birthday.removeTestBirthAsync(birth);
+    yield user_plugin.after();
   });
 
   describe('post', function () {

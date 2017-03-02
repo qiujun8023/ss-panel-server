@@ -19,12 +19,12 @@ consumes:
 produces:
   - application/json
 tags:
-  - name: cdn
-    description: CDN
+  - name: upyun
+    description: 又拍 CDN
   - name: birthday
-    description: 生日
+    description: 生日提醒
   - name: wechat
-    description: 微信
+    description: 微信回调
 securityDefinitions:
   wechat:
     type: apiKey

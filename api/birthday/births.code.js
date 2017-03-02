@@ -35,10 +35,20 @@ let getAsync = function* (user_id, birth_id) {
 module.exports = {
   *get(req, res) {
     let user_id = req.session.birthday.user.user_id;
-    let birth_id = req.query.birth_id;
+    let births = yield birthday.findBirthAsync(user_id);
 
-    let birth = yield getAsync(user_id, birth_id);
-    res.json(format((birth)));
+    let result = [];
+    for (let birth of births) {
+      result.push(format(birth));
+    }
+    res.json(result);
+  },
+
+  *post(req, res) {
+    let user_id = req.session.birthday.user.user_id;
+    let data = _.pick(req.body, ['title', 'type', 'date']);
+    let birth = yield birthday.addBirthAsync(user_id, data);
+    res.status(201).json(format(birth));
   },
 
   *put(req, res) {

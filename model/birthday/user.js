@@ -6,7 +6,7 @@ const sequelize = require('../../lib/sequelize')('shard');
 
 module.exports = sequelize.define('user', {
   user_id: {
-    type: Sequelize.STRING(30),
+    type: Sequelize.STRING(32),
     allowNull: false,
     primaryKey: true,
     comment: '用户 Id',
