@@ -1,6 +1,7 @@
 type: object
 required:
   - user_id
+  - name
   - port
   - password
   - flow_up
@@ -19,6 +20,9 @@ properties:
   user_id:
     type: string
     example: 1301010101
+  name:
+    type: string
+    example: 张三
   port:
     type: integer
     example: 8388

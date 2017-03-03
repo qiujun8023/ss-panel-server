@@ -33,7 +33,7 @@ module.exports = {
     yield checkAuthAsync(user_id);
 
     let node_id = req.body.node_id;
-    let data = _.pick(req.body, ['name', 'server', 'description', 'method', 'is_visible', 'sort']);
+    let data = _.pick(req.body, ['name', 'avatar', 'server', 'description', 'method', 'is_visible', 'sort']);
 
     // 获取节点信息
     let node = yield ss.getNodeAsync(node_id);
@@ -51,7 +51,7 @@ module.exports = {
 
     yield checkAuthAsync(user_id);
 
-    let data = _.pick(req.body, ['name', 'server', 'description', 'method', 'is_visible', 'sort']);
+    let data = _.pick(req.body, ['name', 'avatar', 'server', 'description', 'method', 'is_visible', 'sort']);
     let node = yield ss.addNodeAsync(data);
     res.status(201).json(format.node(node));
   },

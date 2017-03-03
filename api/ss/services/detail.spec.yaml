@@ -5,11 +5,11 @@ get:
   security:
   - wechat: []
   parameters:
-    - name: node_id
+    - name: service_id
       in: query
       type: integer
       required: true
-      description: 节点 ID
+      description:  服务 ID
   responses:
     200:
       description: 服务详情

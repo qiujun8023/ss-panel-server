@@ -17,6 +17,11 @@ module.exports = sequelize.define('node', {
     allowNull: false,
     comment: '节点名称',
   },
+  avatar: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    comment: '节点头像',
+  },
   server: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -27,16 +32,16 @@ module.exports = sequelize.define('node', {
     allowNull: false,
     comment: '加密方式',
   },
+  description: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+    comment: '节点描述',
+  },
   sort: {
     type: Sequelize.INTEGER,
     allowNull: false,
     defaultValue: 0,
     comment: '排序',
-  },
-  description: {
-    type: Sequelize.TEXT,
-    allowNull: false,
-    comment: '节点描述',
   },
   is_visible: {
     type: Sequelize.ENUM,

@@ -8,7 +8,7 @@ get:
     200:
       description: 用户信息
       schema:
-        $ref: "#/definitions/ssProfile"
+        $ref: "#/definitions/ssUser"
     default:
       description: 错误
       schema:
@@ -20,6 +20,11 @@ put:
   security:
   - wechat: []
   parameters:
+    - name: port
+      in: formData
+      type: integer
+      required: false
+      description: SS 端口
     - name: password
       in: formData
       type: string
@@ -29,7 +34,7 @@ put:
     200:
       description: 修改后的结果
       schema:
-        $ref: "#/definitions/ssProfile"
+        $ref: "#/definitions/ssUser"
     default:
       description: 错误
       schema:

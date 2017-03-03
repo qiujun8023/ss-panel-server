@@ -24,7 +24,7 @@ ss.randUniquePort = function (exist_ports, min_port, max_port) {
   throw new errors.SystemError('未找到空闲端口');
 };
 
-ss.createUserAsync = function* (user_id) {
+ss.createUserAsync = function* (data) {
   return sequelize.transaction({
     isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE,
   }, function (t) {
@@ -43,9 +43,8 @@ ss.createUserAsync = function* (user_id) {
     .then(function (port) {
       let password = chance.string({length: 6, pool: config.ss.random_password_pool});
       let transfer_enable = config.ss.init_transfer_enable;
-      return UserModel.create({user_id, port, password, transfer_enable}, {
-        transaction: t,
-      });
+      Object.assign(data, {port, password, transfer_enable});
+      return UserModel.create(data, {transaction: t});
     })
     .then(function (user) {
       return user.get({plain: true});
@@ -80,7 +79,7 @@ ss.updateUserAsync = function* (user_id, data) {
   }
 
   user = yield user.update(data, {
-    fields: ['port', 'password', 'transfer_enable', 'is_admin', 'is_locked'],
+    fields: ['name', 'port', 'password', 'transfer_enable', 'is_admin', 'is_locked'],
   });
   return user.get({plain: true});
 };
@@ -139,7 +138,7 @@ ss.findServiceAsync = function* (user_id) {
 
   let res = [];
   let nodes = yield this.findNodeAsync();
-  let filter = ['node_id', 'name', 'server', 'description', 'method'];
+  let filter = ['node_id', 'name', 'avatar', 'server', 'description', 'method'];
   nodes.forEach(function (node) {
     if (node.is_visible) {
       node = _.pick(node, filter);
@@ -165,6 +164,7 @@ ss.getServiceAsync = function* (user_id, node_id) {
   return {
     node_id: node.node_id,
     name: node.name,
+    avatar: node.avatar,
     server: node.server,
     port: user.port,
     method: node.method,

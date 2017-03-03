@@ -17,10 +17,20 @@ module.exports = {
       throw new errors.BadRequest(err.message);
     }
 
+    let name;
+    try {
+      let user = yield wechat.getUserAsync(user_id);
+      name = user.name;
+    } catch (err) {
+      throw new errors.BadGateway(err.message || '请求微信服务器失败');
+    }
+
     // 获取用户信息
     let user = yield ssService.getUserAsync(user_id);
     if (!user) {
-      user = yield ssService.createUserAsync(user_id);
+      user = yield ssService.createUserAsync({user_id, name});
+    } else {
+      yield ssService.updateUserAsync(user_id, {name});
     }
 
     req.session.ss = req.session.ss || {};

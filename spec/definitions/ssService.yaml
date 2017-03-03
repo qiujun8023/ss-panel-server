@@ -1,19 +1,23 @@
 type: object
 required:
-  - node_id
+  - service_id
   - name
+  - avatar
   - server
   - port
   - method
   - password
   - description
 properties:
-  node_id:
+  service_id:
     type: integer
     example: 1
   name:
     type: string
     example: CN2 节点
+  avatar:
+    type: string
+    example: http://xx.xx
   server:
     type: string
     example: 1.2.3.4

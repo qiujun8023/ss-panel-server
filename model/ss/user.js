@@ -11,8 +11,14 @@ module.exports = sequelize.define('user', {
     primaryKey: true,
     comment: '用户 Id',
   },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    comment: '姓名',
+  },
   port: {
     type: Sequelize.INTEGER,
+    unique: true,
     allowNull: false,
     comment: 'SS 端口',
   },

@@ -2,6 +2,7 @@ type: object
 required:
   - node_id
   - name
+  - avatar
   - server
   - method
   - sort
@@ -16,6 +17,9 @@ properties:
   name:
     type: string
     example: 香港节点
+  avatar:
+    type: string
+    example: http://xx.xx
   server:
     type: string
     example: 1.2.3.4
