@@ -4,9 +4,13 @@ required:
   - port
   - password
   - flow_up
+  - flow_up_v
   - flow_down
+  - flow_down_v
   - transfer_used
+  - transfer_used_v
   - transfer_enable
+  - transfer_enable_v
   - is_admin
   - is_locked
   - active_at
@@ -22,15 +26,27 @@ properties:
     type: string
     example: password
   flow_up:
+    type: integer
+    example: 0
+  flow_up_v:
     type: string
     example: 0 B
   flow_down:
+    type: integer
+    example: 0
+  flow_down_v:
     type: string
     example: 0 B
   transfer_used:
+    type: integer
+    example: 0
+  transfer_used_v:
     type: string
     example: 0 B
   transfer_enable:
+    type: integer
+    example: 0
+  transfer_enable_v:
     type: string
     example: 0 B
   is_admin:
