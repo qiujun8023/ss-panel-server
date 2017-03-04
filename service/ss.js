@@ -11,6 +11,7 @@ const errors = require('../lib/errors');
 
 const UserModel = ssModel.User;
 const NodeModel = ssModel.Node;
+const OfferModel = ssModel.Offer;
 
 let ss = module.exports = {};
 
@@ -99,7 +100,7 @@ ss.getNodeAsync = function* (node_id) {
 };
 
 ss.findNodeAsync = function* () {
-  let nodes = yield NodeModel.findAll();
+  let nodes = yield NodeModel.findAll({order: 'sort'});
 
   let res = [];
   for (let node of nodes) {
@@ -171,4 +172,15 @@ ss.getServiceAsync = function* (user_id, node_id) {
     password: user.password,
     description: node.description,
   };
+};
+
+ss.findOfferAsync = function* () {
+  let offers = yield OfferModel.findAll();
+
+  let res = [];
+  for (let offer of offers) {
+    res.push(offer.get({plain: true}));
+  }
+
+  return res;
 };

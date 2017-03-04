@@ -7,7 +7,7 @@ get:
   parameters:
     - name: user_id
       in: query
-      type: integer
+      type: string
       required: true
       description: 用户 ID
   responses:
