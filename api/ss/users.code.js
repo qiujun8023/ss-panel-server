@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const config = require('config');
 
 const ss = require('../../service/ss');
 const format = require('../../lib/format').ss;
@@ -31,8 +32,20 @@ module.exports = {
 
     yield checkAuthAsync(user_id);
 
+    let min_port = config.ss.min_port;
+    let max_port = config.ss.max_port;
     let data = _.pick(req.body, ['port', 'password', 'transfer_enable', 'is_admin', 'is_locked']);
+    if (data.port && (data.port < min_port || data.port > max_port)) {
+      throw new errors.BadRequest(`端口号需在 ${min_port} - ${max_port} 范围内`);
+    } else if (data.transfer_enable <= 0) {
+      throw new errors.BadRequest('流量限额无效');
+    }
+
     let user = yield ss.updateUserAsync(req.body.user_id, data);
+    if (!user) {
+      throw new errors.NotFound('未找到相关用户');
+    }
+
     res.json(format.user(user));
   },
 };

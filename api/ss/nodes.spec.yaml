@@ -128,7 +128,7 @@ delete:
     200:
       description: 删除节点
       schema:
-        $ref: "#/definitions/ssNode"
+        $ref: "#/definitions/SuccessResponse"
     default:
       description: 错误
       schema:

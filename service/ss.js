@@ -85,6 +85,15 @@ ss.updateUserAsync = function* (user_id, data) {
   return user.get({plain: true});
 };
 
+ss.removeUserAsync = function* (user_id) {
+  let user = yield UserModel.findById(user_id);
+  if (!user) {
+    return false;
+  }
+
+  return yield user.destroy();
+};
+
 ss.addNodeAsync = function* (data) {
   let node = yield NodeModel.create(data);
   return node.get({plain: true});
@@ -125,7 +134,6 @@ ss.removeNodeAsync = function* (node_id) {
   if (!node) {
     return false;
   }
-
   return yield node.destroy();
 };
 
