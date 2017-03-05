@@ -4,7 +4,10 @@
 process.env.NODE_CONFIG_DIR= __dirname +'/config';
 process.env.TZ = 'Asia/Shanghai';
 
-let birthday = require('./cron/birthday');
+const birthday = require('./cron/birthday');
+const ss = require('./cron/ss');
 
 birthday.today.start();
 birthday.now.start();
+
+ss.clearTransfer.start();
