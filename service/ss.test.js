@@ -61,7 +61,7 @@ describe('server/service/ss', function () {
 
   describe('addNodeAsync', function () {
     it('should add node success', function* () {
-      node = yield utility.ss.createTestNodeAsync();
+      node = yield utility.ss.createTestNodeAsync({is_visible: true});
       expect(node).to.include.keys(['name', 'avatar', 'server', 'method', 'description', 'sort', 'is_visible']);
     });
   });
