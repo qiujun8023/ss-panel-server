@@ -25,7 +25,7 @@ module.exports = sequelize.define('offer', {
   sort: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    defaultValue: 0,
+    defaultValue: 1,
     comment: '排序',
   },
 }, {
