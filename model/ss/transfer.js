@@ -34,7 +34,14 @@ module.exports = sequelize.define('transfer', {
     defaultValue: 0,
     comment: '下载流量',
   },
+  active_at: {
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW,
+    allowNull: false,
+    comment: '活跃时间',
+  },
 }, {
+  createdAt: false,
   updatedAt: false,
   underscored: true,
   freezeTableName: true,
