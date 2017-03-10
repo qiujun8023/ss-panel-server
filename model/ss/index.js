@@ -9,4 +9,5 @@ require('moder')(__dirname, {
 
 exports.User.sync();
 exports.Node.sync();
+exports.Transfer.sync();
 exports.Offer.sync();
