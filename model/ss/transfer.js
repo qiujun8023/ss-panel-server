@@ -36,7 +36,7 @@ module.exports = sequelize.define('transfer', {
   },
   active_at: {
     type: Sequelize.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     allowNull: false,
     comment: '活跃时间',
   },
