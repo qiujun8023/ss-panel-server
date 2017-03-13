@@ -198,20 +198,24 @@ ss.getServiceAsync = function* (user_id, node_id) {
 };
 
 ss.findNodeUserAsync = function* (node_id) {
-  // // TODO 未找到对象实现方法
-  let sql = `
-    SELECT user_id, active_at FROM (
-      SELECT * FROM ss_transfer
-      WHERE node_id = $node_id
-      AND (flow_up >= 1024 OR flow_down >= 1024)
-      ORDER BY active_at DESC
-    ) AS temp GROUP BY user_id
-    ORDER BY active_at DESC
-    LIMIT 10`;
-  let users = yield sequelize.query(sql, {
-    bind: {node_id},
-    type: sequelize.QueryTypes.SELECT,
-    model: TransferModel,
+  let users = yield TransferModel.findAll({
+    attributes: [
+      'user_id',
+      [sequelize.fn('MAX', sequelize.col('active_at')), 'active_at'],
+    ],
+    where: {
+      node_id,
+      $or: {
+        flow_up: {
+          $gte: 1024,
+        },
+        flow_down: {
+          $gte: 1024,
+        },
+      },
+    },
+    group: 'user_id',
+    limit: 10,
   });
 
   let res = [];
