@@ -19,11 +19,15 @@ get:
           type: object
           required:
             - user_id
+            - name
             - active_at
           properties:
             user_id:
               type: string
               example: abc123
+            name:
+              type: string
+              example: 张三
             active_at:
               type: string
               example: 2017-03-02T15:10:37.000Z

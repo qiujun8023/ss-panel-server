@@ -201,8 +201,12 @@ ss.findNodeUserAsync = function* (node_id) {
   let users = yield TransferModel.findAll({
     attributes: [
       'user_id',
-      [sequelize.fn('MAX', sequelize.col('active_at')), 'active_at'],
+      [sequelize.fn('MAX', sequelize.col('transfer.active_at')), 'active_at'],
     ],
+    include: [{
+      model: UserModel,
+      attributes: ['name'],
+    }],
     where: {
       node_id,
       $or: {
@@ -215,12 +219,18 @@ ss.findNodeUserAsync = function* (node_id) {
       },
     },
     group: 'user_id',
-    limit: 10,
+    order: 'active_at DESC',
   });
 
   let res = [];
   for (let user of users) {
-    res.push(user.get({plain: true}));
+    user = user.get({plain: true});
+    user.user = user.user || {name: '未知'};
+    res.push({
+      user_id: user.user_id,
+      name: user.user.name,
+      active_at: user.active_at,
+    });
   }
 
   return res;
