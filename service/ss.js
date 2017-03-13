@@ -198,15 +198,11 @@ ss.getServiceAsync = function* (user_id, node_id) {
 };
 
 ss.findNodeUserAsync = function* (node_id) {
-  let users = yield TransferModel.findAll({
+  let data = yield TransferModel.findAll({
     attributes: [
       'user_id',
       [sequelize.fn('MAX', sequelize.col('transfer.active_at')), 'active_at'],
     ],
-    include: [{
-      model: UserModel,
-      attributes: ['name'],
-    }],
     where: {
       node_id,
       $or: {
@@ -221,15 +217,21 @@ ss.findNodeUserAsync = function* (node_id) {
     group: 'user_id',
     order: 'active_at DESC',
   });
+  let users = yield this.findUserAsync();
 
   let res = [];
-  for (let user of users) {
-    user = user.get({plain: true});
-    user.user = user.user || {name: '未知'};
+  for (let item of data) {
+    let name = '未知';
+    for (let user of users) {
+      if (item.user_id === user.user_id) {
+        name = user.name;
+        break;
+      }
+    }
     res.push({
-      user_id: user.user_id,
-      name: user.user.name,
-      active_at: user.active_at,
+      name,
+      user_id: item.user_id,
+      active_at: item.active_at,
     });
   }
 
