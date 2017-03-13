@@ -6,6 +6,7 @@ get:
     - name: path
       in: query
       type: string
+      required: false
       description: 文件路径
   responses:
     200:

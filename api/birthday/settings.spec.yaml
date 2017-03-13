@@ -68,11 +68,13 @@ put:
     - name: advance
       in: formData
       type: integer
+      required: false
       minimum: 0
       description: 当前/提前提醒的天数
     - name: time
       in: formData
       type: string
+      required: false
       description: 提醒的时间
   responses:
     200:

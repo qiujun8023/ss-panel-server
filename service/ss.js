@@ -200,7 +200,7 @@ ss.getServiceAsync = function* (user_id, node_id) {
 ss.findNodeUserAsync = function* (node_id) {
   // // TODO 未找到对象实现方法
   let sql = `
-    SELECT * FROM (
+    SELECT user_id, active_at FROM (
       SELECT * FROM ss_transfer
       WHERE node_id = $node_id
       AND (flow_up >= 1024 OR flow_down >= 1024)
