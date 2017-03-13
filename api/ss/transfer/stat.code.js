@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash');
+
 const ss = require('../../../service/ss');
 const errors = require('../../../lib/errors');
 const format = require('../../../lib/format').ss;
@@ -14,13 +16,13 @@ module.exports = {
       throw new errors.Forbidden('无权访问');
     }
 
-    // 查询节点
-    let node_id = req.query.node_id;
-    let node = yield ss.getNodeAsync(node_id);
-    if (!node) {
-      throw new errors.NotFound('未找到相关节点');
+    let result = [];
+    let where = _.pick(req.query, ['node_id', 'user_id']);
+    let data = yield ss.findTransferStatAsync(where);
+    for (let item of data) {
+      result.push(format.transferStat(item));
     }
 
-    res.json(format.node(node));
+    res.json(result);
   },
 };

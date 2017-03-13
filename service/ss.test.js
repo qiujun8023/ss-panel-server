@@ -137,6 +137,12 @@ describe('server/service/ss', function () {
     });
   });
 
+  describe('findNodeUserAsync', function () {
+    it('should return user list success', function* () {
+      yield ss.findNodeUserAsync(node.node_id);
+    });
+  });
+
   describe('removeNodeAsync', function () {
     it('should return false if node not found', function* () {
       let tmp_node = yield ss.removeNodeAsync(-1);
@@ -160,6 +166,14 @@ describe('server/service/ss', function () {
       yield utility.ss.removeTestUserAsync(user);
       let tmp_user = yield ss.getUserAsync(user.user_id);
       expect(tmp_user).to.be.false;
+    });
+  });
+
+  describe('findTransferStatAsync', function () {
+    it('should return transfer stat success', function* () {
+      let stat = yield ss.findTransferStatAsync();
+      expect(stat.length).to.equal(31);
+      expect(stat[0]).to.include.keys(['date', 'flow_up', 'flow_down']);
     });
   });
 

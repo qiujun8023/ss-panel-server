@@ -14,13 +14,14 @@ module.exports = {
       throw new errors.Forbidden('无权访问');
     }
 
-    // 查询节点
+    // 查询活跃用户
+    let result = [];
     let node_id = req.query.node_id;
-    let node = yield ss.getNodeAsync(node_id);
-    if (!node) {
-      throw new errors.NotFound('未找到相关节点');
+    let users = yield ss.findNodeUserAsync(node_id);
+    for (let item of users) {
+      result.push(format.nodeUser(item));
     }
 
-    res.json(format.node(node));
+    res.json(result);
   },
 };

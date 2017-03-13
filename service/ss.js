@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const moment = require('moment');
 const chance = require('chance')();
 const config = require('config');
 const Sequelize = require('sequelize');
@@ -12,9 +13,11 @@ const errors = require('../lib/errors');
 const UserModel = ssModel.User;
 const NodeModel = ssModel.Node;
 const OfferModel = ssModel.Offer;
+const TransferModel = ssModel.Transfer;
 
 let ss = module.exports = {};
 
+// 随机空闲端口
 ss.randUniquePort = function (exist_ports, min_port, max_port) {
   for (let i = 0; i < 5; i++) {
     let port = _.random(min_port, max_port);
@@ -25,6 +28,7 @@ ss.randUniquePort = function (exist_ports, min_port, max_port) {
   throw new errors.SystemError('未找到空闲端口');
 };
 
+// 创建用户
 ss.createUserAsync = function* (data) {
   return sequelize.transaction({
     isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE,
@@ -53,6 +57,7 @@ ss.createUserAsync = function* (data) {
   });
 };
 
+// 获取用户信息
 ss.getUserAsync = function* (user_id) {
   let user = yield UserModel.findById(user_id);
   if (!user) {
@@ -62,6 +67,7 @@ ss.getUserAsync = function* (user_id) {
   return user.get({plain: true});
 };
 
+// 获取用户列表
 ss.findUserAsync = function* () {
   let users = yield UserModel.findAll();
 
@@ -73,6 +79,7 @@ ss.findUserAsync = function* () {
   return res;
 };
 
+// 更新用户信息
 ss.updateUserAsync = function* (user_id, data) {
   let user = yield UserModel.findById(user_id);
   if (!user) {
@@ -85,6 +92,7 @@ ss.updateUserAsync = function* (user_id, data) {
   return user.get({plain: true});
 };
 
+// 删除用户
 ss.removeUserAsync = function* (user_id) {
   let user = yield UserModel.findById(user_id);
   if (!user) {
@@ -94,11 +102,13 @@ ss.removeUserAsync = function* (user_id) {
   return yield user.destroy();
 };
 
+// 添加节点
 ss.addNodeAsync = function* (data) {
   let node = yield NodeModel.create(data);
   return node.get({plain: true});
 };
 
+// 获取节点
 ss.getNodeAsync = function* (node_id) {
   let node = yield NodeModel.findById(node_id);
   if (!node) {
@@ -108,6 +118,7 @@ ss.getNodeAsync = function* (node_id) {
   return node.get({plain: true});
 };
 
+// 获取节点列表
 ss.findNodeAsync = function* () {
   let nodes = yield NodeModel.findAll({order: 'sort'});
 
@@ -119,6 +130,7 @@ ss.findNodeAsync = function* () {
   return res;
 };
 
+// 更新节点
 ss.updateNodeAsync = function* (node_id, data) {
   let node = yield NodeModel.findById(node_id);
   if (!node) {
@@ -129,6 +141,7 @@ ss.updateNodeAsync = function* (node_id, data) {
   return node.get({plain: true});
 };
 
+// 删除节点
 ss.removeNodeAsync = function* (node_id) {
   let node = yield NodeModel.findById(node_id);
   if (!node) {
@@ -137,6 +150,7 @@ ss.removeNodeAsync = function* (node_id) {
   return yield node.destroy();
 };
 
+// 获取服务列表
 ss.findServiceAsync = function* (user_id) {
   let user = yield this.getUserAsync(user_id);
   if (!user) {
@@ -159,6 +173,7 @@ ss.findServiceAsync = function* (user_id) {
   return res;
 };
 
+// 获取服务详情
 ss.getServiceAsync = function* (user_id, node_id) {
   let user = yield this.getUserAsync(user_id);
   if (!user) {
@@ -182,6 +197,70 @@ ss.getServiceAsync = function* (user_id, node_id) {
   };
 };
 
+ss.findNodeUserAsync = function* (node_id) {
+  // // TODO 未找到对象实现方法
+  let sql = `
+    SELECT * FROM (
+      SELECT * FROM ss_transfer
+      WHERE node_id = $node_id
+      AND (flow_up >= 1024 OR flow_down >= 1024)
+      ORDER BY active_at DESC
+    ) AS temp GROUP BY user_id
+    ORDER BY active_at DESC
+    LIMIT 10`;
+  let users = yield sequelize.query(sql, {
+    bind: {node_id},
+    type: sequelize.QueryTypes.SELECT,
+    model: TransferModel,
+  });
+
+  let res = [];
+  for (let user of users) {
+    res.push(user.get({plain: true}));
+  }
+
+  return res;
+};
+
+ss.findTransferStatAsync = function* (where) {
+  let date = moment();
+  where = where || {};
+  where.active_at = {$gt: date.subtract(30, 'days').toDate()};
+  let data = yield TransferModel.findAll({
+    where,
+    attributes: [
+      [sequelize.fn('SUM', sequelize.col('flow_up')), 'flow_up'],
+      [sequelize.fn('SUM', sequelize.col('flow_down')), 'flow_down'],
+      [sequelize.fn('DATE_FORMAT', sequelize.col('active_at'), '%m-%d'), 'date'],
+    ],
+    group: 'date',
+  });
+
+  let res = [];
+  let dates = [];
+  for (let item of data) {
+    item = item.get({plain: true});
+    res.push(item);
+    dates.push(item.date);
+  }
+
+  // 填写不存在的日期
+  for (let i = 0; i <= 30; i++) {
+    let tmp_date = date.format('MM-DD');
+    if (dates[i] !== tmp_date) {
+      res.splice(i, 0, {
+        flow_up: 0,
+        flow_down: 0,
+        date: tmp_date,
+      });
+      dates.splice(i, 0, tmp_date);
+    }
+    date.add(1, 'day');
+  }
+  return res;
+};
+
+// 获取赞助信息
 ss.findOfferAsync = function* () {
   let offers = yield OfferModel.findAll();
 
