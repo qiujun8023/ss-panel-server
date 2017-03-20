@@ -35,7 +35,7 @@ module.exports = sequelize.define('transfer', {
     comment: '下载流量',
   },
   active_at: {
-    type: Sequelize.DATE,
+    type: 'TIMESTAMP',
     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     allowNull: false,
     comment: '活跃时间',
