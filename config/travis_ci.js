@@ -6,12 +6,12 @@ let config = {
 
   redis: {
     session: {
-      host: 'redis',
+      host: 'localhost',
       port: 6379,
       keyPrefix: 'shard:session:',
     },
     wechat: {
-      host: 'redis',
+      host: 'localhost',
       port: 6379,
       keyPrefix: 'shard:wechat:',
     },
@@ -20,7 +20,7 @@ let config = {
   mysql: {
     shard: {
       poolSize: 5,
-      host: 'mysql',
+      host: 'localhost',
       user: 'root',
       password: '',
       database: 'shard',
