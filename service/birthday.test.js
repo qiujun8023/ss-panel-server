@@ -73,12 +73,8 @@ describe('server/service/birthday', function () {
       let last_year = moment().subtract(1, 'year');
       last_year = [last_year.year(), last_year.month() + 1, last_year.date()];
       last_year = solarLunar.solar2lunar.apply(this, last_year);
-      let res1 = birthday.getAge(today, last_year, 'SOLAR');
-      expect(res1).to.equal(1);
-      last_year = [today.lYear - 1, today.lMonth, today.lDay];
-      last_year = solarLunar.lunar2solar.apply(this, last_year);
-      let res2 = birthday.getAge(today, last_year, 'LUNAR');
-      expect(res2).to.equal(1);
+      let res = birthday.getAge(today, last_year, 'SOLAR');
+      expect(res).to.equal(1);
     });
 
     it('should return 0', function () {
