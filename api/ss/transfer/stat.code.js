@@ -13,7 +13,8 @@ module.exports = {
     let user = yield ss.getUserAsync(user_id);
     if (user.is_admin) {
       where = _.pick(req.query, ['node_id', 'user_id']);
-    } else {
+    }
+    if (!where.node_id && !where.user_id) {
       where = {user_id};
     }
 

@@ -82,7 +82,7 @@ let config = {
 
   birthday: {
     wechat: {
-      top_pic: 'https://cdn.qiujun.me/161129/105133.png!wechat',
+      top_pic: 'https://cdn.qiujun.me/images/birthday/wx-bg.png!wechat',
     },
   },
 
