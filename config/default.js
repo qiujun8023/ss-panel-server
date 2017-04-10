@@ -65,6 +65,7 @@ let config = {
     bucket: 'bucket',
     operator: 'operator',
     password: 'password',
+    endpoint: 'endpoint',
   },
 
   ss: {

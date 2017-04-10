@@ -15,6 +15,7 @@ consumes:
   - text/xml
   - application/json
   - application/x-www-form-urlencoded
+  - multipart/form-data
 # format of the responses to the client (Accepts)
 produces:
   - application/json
