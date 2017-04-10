@@ -25,6 +25,15 @@ describe(base_path, function () {
     });
   });
 
+  describe('get', function () {
+    it('should get file success', function* () {
+      let file_path = path.join(dir_name, file_name);
+      yield api.get(base_path)
+        .query({path: file_path})
+        .expect(200);
+    });
+  });
+
   describe('delete', function () {
     it('should remove file success', function* () {
       let file_path = path.join(dir_name, file_name);

@@ -66,6 +66,7 @@ let config = {
     operator: 'operator',
     password: 'password',
     endpoint: 'endpoint',
+    base_url: 'https://example.com', // 请求地址
   },
 
   ss: {

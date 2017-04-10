@@ -36,12 +36,12 @@ describe('server/service/upyun', function () {
   });
 
   describe('formatFile', function () {
-    it('should format files success', function () {
-      let files = upyun.formatFile([{
+    it('should format file success', function () {
+      let file = upyun.formatFile({
         size: '0',
         time: '1482908372',
-      }]);
-      expect(files[0]).to.include.keys(['size_v', 'time_v']);
+      });
+      expect(file).to.include.keys(['size_v', 'time_v']);
     });
   });
 
@@ -58,6 +58,14 @@ describe('server/service/upyun', function () {
       let remote_path = path.join(dir_name, file_name);
       let res = yield upyun.putFileAsync(remote_path, buffer);
       expect(res).to.be.true;
+    });
+  });
+
+  describe('headFileAsync', function () {
+    it('should head file success', function* () {
+      let remote_path = path.join(dir_name, file_name);
+      let res = yield upyun.headFileAsync(remote_path);
+      expect(res.name).to.equal(file_name);
     });
   });
 

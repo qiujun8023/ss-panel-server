@@ -32,6 +32,7 @@ let config = {
     operator: process.env.UPYUN_OPERATOR,
     password: process.env.UPYUN_PASSWORD,
     endpoint: 'v0.api.upyun.com',
+    base_url: 'https://example.com',
   },
 };
 

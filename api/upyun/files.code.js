@@ -3,6 +3,7 @@
 const path = require('path');
 
 const co = require('co');
+const config = require('config');
 const multer = require('multer');
 const errors = require('../../lib/errors');
 const upyun = require('../../service/upyun');
@@ -11,6 +12,13 @@ const storage = multer.memoryStorage();
 const upload = multer({storage});
 
 module.exports = {
+  *get(req, res) {
+    let file_path = req.query.path;
+    let info = yield upyun.headFileAsync(file_path);
+    info.url = config.upyun.base_url + file_path;
+    res.json(info);
+  },
+
   *put(req, res, next) {
     let handle = function (err) {
       if (err) {
