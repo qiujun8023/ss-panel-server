@@ -12,37 +12,7 @@ get:
     200:
       description: 文件信息
       schema:
-        type: object
-        required:
-          - name
-          - type
-          - size
-          - time
-          - size_v
-          - time_v
-          - url
-        properties:
-          name:
-            type: string
-            example: 1.txt
-          type:
-            type: string
-            example: file
-          size:
-            type: string
-            example: 2153763
-          time:
-            type: string
-            example: 1482908373
-          size_v:
-            type: string
-            example: 2.05 MB
-          time_v:
-            type: string
-            example: 2016-12-28 14:59:33
-          url:
-            type: string
-            example: http://example.com/1.txt
+        $ref: "#/definitions/upyunFile"
     default:
       description: 错误
       schema:

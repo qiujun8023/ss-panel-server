@@ -37,11 +37,12 @@ describe('server/service/upyun', function () {
 
   describe('formatFile', function () {
     it('should format file success', function () {
-      let file = upyun.formatFile({
+      let file = upyun.formatFile('/', {
+        name: 'test',
         size: '0',
         time: '1482908372',
       });
-      expect(file).to.include.keys(['size_v', 'time_v']);
+      expect(file).to.include.keys(['size_v', 'time_v', 'url']);
     });
   });
 

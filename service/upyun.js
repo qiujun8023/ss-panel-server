@@ -38,10 +38,12 @@ upyun.sortFile = function (data) {
   return data;
 };
 
-upyun.formatFile = function (file) {
+upyun.formatFile = function (dir_path, file) {
+  let file_path = path.join(dir_path, file.name);
   let time_format = 'YYYY-MM-DD HH:mm:ss';
   file.size_v = filesize(file.size);
   file.time_v = moment.unix(file.time).format(time_format);
+  file.url = config.upyun.base_url + file_path;
   return file;
 };
 
@@ -67,7 +69,7 @@ upyun.listDirAsync = function* (remote_path) {
   }
 
   for (let file of files) {
-    this.formatFile(file);
+    this.formatFile(remote_path, file);
   }
   return this.sortFile(files);
 };
@@ -103,7 +105,8 @@ upyun.headFileAsync = function* (remote_path) {
     name: path.basename(remote_path),
     type: res.headers['x-upyun-file-type'],
   };
-  return this.formatFile(file);
+  let dir_name = path.dirname(remote_path);
+  return this.formatFile(dir_name, file);
 };
 
 let deleteFileAsync = upyun.instance.deleteFileAsync.bind(upyun.instance);
