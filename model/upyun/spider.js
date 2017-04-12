@@ -19,7 +19,8 @@ module.exports = sequelize.define('spider', {
   },
   save_path: {
     type: Sequelize.STRING,
-    allowNull: true,
+    allowNull: false,
+    unique: true,
     comment: '保存地址',
   },
   request_url: {

@@ -1,8 +1,10 @@
 'use strict';
 
 const _ = require('lodash');
+const moment = require('moment');
 
 const format = require('../../lib/format').upyun;
+const errors = require('../../lib/errors');
 const upyun = require('../../service/upyun');
 
 module.exports = {
@@ -17,10 +19,17 @@ module.exports = {
   },
 
   *post(req, res) {
+    let date = moment().format('YYYY/MM/DD/');
     let data = _.pick(req.body, ['save_name', 'request_url']);
-    let spider = yield upyun.addSpiderAsync(data);
-    let result = yield upyun.getSpiderAsync(spider.spider_id);
-    res.status(201).json(format.spider(result));
+    data.save_path = '/download/' + date + data.save_name;
+
+    try {
+      let spider = yield upyun.addSpiderAsync(data);
+      let result = yield upyun.getSpiderAsync(spider.spider_id);
+      res.status(201).json(format.spider(result));
+    } catch (err) {
+      throw new errors.BadRequest('保存失败，可能文件名已存在');
+    }
   },
 
   *delete(req, res) {

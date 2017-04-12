@@ -158,7 +158,12 @@ upyun.updateSpiderAsync = function* (spider_id, data) {
     return false;
   }
 
-  spider = yield spider.update(data);
+  // 强制更新
+  for (let key in data) {
+    spider.set(key, data[key]);
+    spider.changed(key, true);
+  }
+  spider = yield spider.save();
   return spider.get({plain: true});
 };
 

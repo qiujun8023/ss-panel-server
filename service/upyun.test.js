@@ -109,8 +109,9 @@ describe('server/service/upyun', function () {
   describe('addSpiderAsync', function () {
     it('should add spider success', function* () {
       let save_name = random.getSpiderSaveName();
+      let save_path = random.getSpiderSavePath(save_name);
       let request_url = random.getSpiderRequestUrl();
-      spider = yield upyun.addSpiderAsync({save_name, request_url});
+      spider = yield upyun.addSpiderAsync({save_name, save_path, request_url});
       expect(spider).to.include.keys(['spider_id', 'save_name', 'request_url', 'status']);
     });
   });
