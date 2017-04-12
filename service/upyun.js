@@ -8,6 +8,10 @@ const filesize = require('filesize');
 const UpYun = require('upyun');
 const Promise = require('bluebird');
 
+const upyunModel = require('../model/upyun');
+
+const SpiderModel = upyunModel.Spider;
+
 let upyun = module.exports = {};
 
 upyun.instance = Promise.promisifyAll(
@@ -114,4 +118,55 @@ upyun.deleteFileAsync = function* (remote_path) {
   let res = yield deleteFileAsync(remote_path);
   this.checkRequest(res);
   return true;
+};
+
+// 添加
+upyun.addSpiderAsync = function* (data) {
+  let spider = yield SpiderModel.create(data);
+  return spider.get({plain: true});
+};
+
+// 获取
+upyun.getSpiderAsync = function* (spider_id) {
+  let spider = yield SpiderModel.findById(spider_id);
+  if (!spider) {
+    return false;
+  }
+
+  return spider.get({plain: true});
+};
+
+// 获取列表
+upyun.findSpiderAsync = function* (where, limit) {
+  let spiders = yield SpiderModel.findAll({
+    where,
+    limit: limit || 20,
+  });
+
+  let res = [];
+  for (let spider of spiders) {
+    res.push(spider.get({plain: true}));
+  }
+
+  return res;
+};
+
+// 更新
+upyun.updateSpiderAsync = function* (spider_id, data) {
+  let spider = yield SpiderModel.findById(spider_id);
+  if (!spider) {
+    return false;
+  }
+
+  spider = yield spider.update(data);
+  return spider.get({plain: true});
+};
+
+// 删除
+upyun.removeSpiderAsync = function* (spider_id) {
+  let spider = yield SpiderModel.findById(spider_id);
+  if (!spider) {
+    return false;
+  }
+  return yield spider.destroy();
 };

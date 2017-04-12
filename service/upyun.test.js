@@ -5,11 +5,13 @@ const path = require('path');
 const expect = require('chai').expect;
 
 const upyun = require('./upyun');
+const random = require('../lib/test/random/upyun');
 
 describe('server/service/upyun', function () {
   this.timeout(10000);
   let dir_name = '/___for_test___';
   let file_name = '___for_test___.txt';
+  let spider;
 
   describe('sortFile', function () {
     it('should sort files success', function () {
@@ -103,4 +105,61 @@ describe('server/service/upyun', function () {
       expect(res).to.be.true;
     });
   });
+
+  describe('addSpiderAsync', function () {
+    it('should add spider success', function* () {
+      let save_name = random.getSpiderSaveName();
+      let request_url = random.getSpiderRequestUrl();
+      spider = yield upyun.addSpiderAsync({save_name, request_url});
+      expect(spider).to.include.keys(['spider_id', 'save_name', 'request_url', 'status']);
+    });
+  });
+
+  describe('getSpiderAsync', function () {
+    it('should return false if spider not found', function* () {
+      let tmp_spider = yield upyun.getSpiderAsync(-1);
+      expect(tmp_spider).to.be.false;
+    });
+
+    it('should get spider success', function* () {
+      let tmp_spider = yield upyun.getSpiderAsync(spider.spider_id);
+      expect(tmp_spider.spider_id).to.equal(spider.spider_id);
+      expect(tmp_spider.save_name).to.equal(spider.save_name);
+      expect(tmp_spider.request_url).to.equal(spider.request_url);
+    });
+  });
+
+  describe('findSpiderAsync', function () {
+    it('should return spider list success', function* () {
+      let spiders = yield upyun.findSpiderAsync();
+      expect(spiders.length >= 1).to.be.true;
+      expect(spiders[0]).to.include.keys(['spider_id', 'save_name', 'save_path', 'request_url', 'status']);
+    });
+  });
+
+  describe('updateSpiderAsync', function () {
+    it('should return false if spider not found', function* () {
+      let tmp_spider = yield upyun.updateSpiderAsync(-1);
+      expect(tmp_spider).to.be.false;
+    });
+
+    it('should update spider success', function* () {
+      let status = random.getSpiderStatus();
+      let tmp_spider = yield upyun.updateSpiderAsync(spider.spider_id, {status});
+      expect(tmp_spider.status).to.equal(status);
+      spider.status = status;
+    });
+  });
+
+  describe('removeSpiderAsync', function () {
+    it('should remove spider success', function* () {
+      yield upyun.removeSpiderAsync(spider.spider_id);
+    });
+
+    it('should return false if spider not found', function* () {
+      let res = yield upyun.removeSpiderAsync(-1);
+      expect(res).to.be.false;
+    });
+  });
+
 });
