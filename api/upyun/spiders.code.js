@@ -9,7 +9,7 @@ const upyun = require('../../service/upyun');
 
 module.exports = {
   *get(req, res) {
-    let spiders = yield upyun.findSpiderAsync({}, 20);
+    let spiders = yield upyun.findSpiderAsync({}, 20, 'spider_id desc');
 
     let result = [];
     for (let spider of spiders) {

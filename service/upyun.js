@@ -137,10 +137,11 @@ upyun.getSpiderAsync = function* (spider_id) {
 };
 
 // 获取列表
-upyun.findSpiderAsync = function* (where, limit) {
+upyun.findSpiderAsync = function* (where, limit, order) {
   let spiders = yield SpiderModel.findAll({
     where,
     limit: limit || 20,
+    order: order || 'spider_id asc',
   });
 
   let res = [];
