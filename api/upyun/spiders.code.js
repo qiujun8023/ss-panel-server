@@ -19,9 +19,9 @@ module.exports = {
   },
 
   *post(req, res) {
-    let date = moment().format('YYYY/MM/DD/');
+    let date = moment().format('YYYYMMDD/');
     let data = _.pick(req.body, ['save_name', 'request_url']);
-    data.save_path = '/download/' + date + data.save_name;
+    data.save_path = '/spider/' + date + data.save_name;
 
     try {
       let spider = yield upyun.addSpiderAsync(data);
