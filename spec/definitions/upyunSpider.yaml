@@ -6,7 +6,6 @@ required:
   - save_url
   - request_url
   - status
-  - from_now
   - created_at
   - updated_at
 properties:
@@ -29,12 +28,9 @@ properties:
     type: string
     enum: [ADDED, DOWNLOADING, COMPLETE, FAILURE]
     example: COMPLETE
-  from_now:
-    type: string
-    example: 1 小时前
   created_at:
     type: string
-    example: 2017-03-02T15:10:37.000Z
+    example: 1 个月前
   updated_at:
     type: string
-    example: 2017-03-02T15:10:37.000Z
+    example: 1 个月前

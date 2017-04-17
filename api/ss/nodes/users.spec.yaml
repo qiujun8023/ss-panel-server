@@ -30,7 +30,7 @@ get:
               example: 张三
             active_at:
               type: string
-              example: 2017-03-02T15:10:37.000Z
+              example: 1 个月前
     default:
       description: 错误
       schema:

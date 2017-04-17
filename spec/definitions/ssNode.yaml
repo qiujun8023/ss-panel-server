@@ -37,7 +37,7 @@ properties:
     example: true
   created_at:
     type: string
-    example: 2017-03-02T15:10:37.000Z
+    example: 1 个月前
   updated_at:
     type: string
-    example: 2017-03-02T15:10:37.000Z
+    example: 1 个月前
