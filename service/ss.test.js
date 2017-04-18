@@ -39,7 +39,7 @@ describe('server/service/ss', function () {
 
   describe('findUserAsync', function () {
     it('should return user list success', function* () {
-      let users = yield ss.findUserAsync(user.user_id);
+      let users = yield ss.findUserAsync();
       expect(users.length >= 1).to.be.true;
       expect(users[0]).to.include.keys(['user_id', 'name', 'port', 'password']);
     });
