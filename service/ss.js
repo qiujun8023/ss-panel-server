@@ -68,8 +68,8 @@ ss.getUserAsync = function* (user_id) {
 };
 
 // 获取用户列表
-ss.findUserAsync = function* () {
-  let users = yield UserModel.findAll();
+ss.findUserAsync = function* (where, order, limit) {
+  let users = yield UserModel.findAll({where, order, limit});
 
   let res = [];
   for (let user of users) {

@@ -20,7 +20,7 @@ module.exports = {
 
     yield checkAuthAsync(user_id);
 
-    let users = yield ss.findUserAsync();
+    let users = yield ss.findUserAsync({}, 'active_at desc');
     for (let i = 0; i < users.length; i++) {
       users[i] = format.user(users[i]);
     }
