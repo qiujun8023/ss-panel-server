@@ -156,6 +156,19 @@ describe('server/service/ss', function () {
     });
   });
 
+  describe('setNodeStatusAsync', function () {
+    it('should set node status success', function* () {
+      yield ss.setNodeStatusAsync(node.node_id, node);
+    });
+  });
+
+  describe('getNodeStatusAsync', function () {
+    it('should get node status success', function* () {
+      let tmp = yield ss.getNodeStatusAsync(node.node_id);
+      expect(tmp.name).to.be.equal(node.name);
+    });
+  });
+
   describe('removeUserAsync', function () {
     it('should return false if user not found', function* () {
       let tmp_user = yield ss.removeUserAsync(-1);

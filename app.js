@@ -5,12 +5,15 @@ process.env.TZ = 'Asia/Shanghai';
 
 const http = require('http');
 
+const moment = require('moment');
 const config = require('config');
 const bodyParser = require('body-parser');
 
 const express = require('./lib/express');
 const mws = require('./middleware');
 const swagger = require('./spec/swagger');
+
+moment.locale('zh-cn');
 
 let createServer = function () {
   return swagger().then((api) => {
