@@ -38,7 +38,7 @@ let cleanTransferLogs = cron('0 0 * * * *', function* () {
 
 // 节点监控
 const MAX_TIME_DIFF = 180000;
-let nodeMonitor = cron('*/3 * * * * *', function* () {
+let nodeMonitor = cron('0 * * * * *', function* () {
   let nodes = yield ssService.findNodeAsync({
     active_at: {
       $ne: null,
@@ -61,8 +61,8 @@ let nodeMonitor = cron('*/3 * * * * *', function* () {
 
     if (message) {
       let users = yield ssService.findUserAsync({is_admin: true});
-      let send_to = _.map(users, 'user_id').join('|');
-      yield wechat.sendAsync(send_to, {
+      let touser = _.map(users, 'user_id').join('|');
+      yield wechat.sendAsync({touser}, {
         msgtype: 'text',
         text: {
           content: message,
