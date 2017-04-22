@@ -4,7 +4,7 @@ const _ = require('lodash');
 const config = require('config');
 
 const cron = require('../lib/cron');
-const wechat = require('../lib/wechat')('tick', 'shard');
+const wechat = require('../lib/wechat');
 const birthday = require('../service/birthday');
 
 // 判断是否当日有提醒

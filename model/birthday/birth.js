@@ -3,7 +3,7 @@
 const moment = require('moment');
 const Sequelize = require('sequelize');
 
-const sequelize = require('../../lib/sequelize')('shard');
+const sequelize = require('../../lib/sequelize');
 
 module.exports = sequelize.define('birth', {
   birth_id: {

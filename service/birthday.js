@@ -7,7 +7,7 @@ const solarLunar = require('solarlunar');
 const constellation = require('node-constellation');
 
 const birthdayModel = require('../model/birthday');
-const sequelize = require('../lib/sequelize')('shard');
+const sequelize = require('../lib/sequelize');
 
 const UserModel = birthdayModel.User;
 const BirthModel = birthdayModel.Birth;

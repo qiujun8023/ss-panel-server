@@ -2,7 +2,7 @@
 
 const Sequelize = require('sequelize');
 
-const sequelize = require('../../lib/sequelize')('shard');
+const sequelize = require('../../lib/sequelize');
 
 module.exports = sequelize.define('offer', {
   offer_id: {

@@ -2,7 +2,7 @@
 
 const _ = require('lodash');
 const errors = require('../../lib/errors');
-const wechat = require('../../lib/wechat')('tick', 'shard');
+const wechat = require('../../lib/wechat');
 const birthday = require('../../service/birthday');
 
 module.exports = {

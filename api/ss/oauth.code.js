@@ -1,7 +1,7 @@
 'use strict';
 
 const errors = require('../../lib/errors');
-const wechat = require('../../lib/wechat')('tick', 'shard');
+const wechat = require('../../lib/wechat');
 const ssService = require('../../service/ss');
 
 module.exports = {

@@ -8,9 +8,9 @@ const birthday = require('../../service/birthday');
 
 // 微信配置信息
 let wechat_config = {
-  corpId: config.wechat.tick.corpid,
-  token: config.wechat.tick.apps.shard.token,
-  encodingAESKey: config.wechat.tick.apps.shard.aeskey,
+  corpId: config.wechat.corpid,
+  token: config.wechat.token,
+  encodingAESKey: config.wechat.aeskey,
 };
 
 let router = module.exports = {};

@@ -25,40 +25,26 @@ let config = {
   },
 
   redis: {
-    session: {
-      host: '127.0.0.1',
-      port: 6379,
-      keyPrefix: 'shard:session:',
-    },
-    wechat: {
-      host: '127.0.0.1',
-      port: 6379,
-      keyPrefix: 'shard:wechat:',
-    },
+    host: '127.0.0.1',
+    port: 6379,
+    keyPrefix: 'shard:',
   },
 
   mysql: {
-    shard: {
-      poolSize: 5,
-      host: '127.0.0.1',
-      user: 'shard',
-      password: 'FhfLaS4uzv5qwnPh',
-      database: 'shard',
-    },
+    poolSize: 5,
+    host: '127.0.0.1',
+    user: 'shard',
+    password: 'FhfLaS4uzv5qwnPh',
+    database: 'shard',
+    timezone: '+08:00',
   },
 
   wechat: {
-    tick: {
-      corpid: 'wx4e2c2b771c467c9f',
-      secret: 'k7TGD8xJLDU6-sPH3NwY0eTs2oBPyAINMdbSbGN80fuEt01UK0Z8dWzhm7crgkz7',
-      apps: {
-        shard: {
-          agentid: 0,
-          token: 'mRoQySqj2XBEORdnuOh9wei17',
-          aeskey: '6mRfWp9o1dfXHnmRBCFmTlpM3IIY377wy2iDJJjx4lM',
-        },
-      },
-    },
+    corpid: 'wx4e2c2b771c467c9f',
+    secret: 'k7TGD8xJLDU6-sPH3NwY0eTs2oBPyAINMdbSbGN80fuEt01UK0Z8dWzhm7crgkz7',
+    agentid: 0,
+    token: 'mRoQySqj2XBEORdnuOh9wei17',
+    aeskey: '6mRfWp9o1dfXHnmRBCFmTlpM3IIY377wy2iDJJjx4lM',
   },
 
   upyun: {

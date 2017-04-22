@@ -5,26 +5,18 @@ let config = {
   debug: false,
 
   redis: {
-    session: {
-      host: 'localhost',
-      port: 6379,
-      keyPrefix: 'shard:session:',
-    },
-    wechat: {
-      host: 'localhost',
-      port: 6379,
-      keyPrefix: 'shard:wechat:',
-    },
+    host: 'localhost',
+    port: 6379,
+    keyPrefix: 'shard:',
   },
 
   mysql: {
-    shard: {
-      poolSize: 5,
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'shard',
-    },
+    poolSize: 5,
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'shard',
+    timezone: '+08:00',
   },
 
   upyun: {

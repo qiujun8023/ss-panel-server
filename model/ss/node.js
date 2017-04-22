@@ -2,7 +2,7 @@
 
 const Sequelize = require('sequelize');
 
-const sequelize = require('../../lib/sequelize')('shard');
+const sequelize = require('../../lib/sequelize');
 
 module.exports = sequelize.define('node', {
   node_id: {
@@ -56,6 +56,11 @@ module.exports = sequelize.define('node', {
     set: function (is_visible) {
       this.setDataValue('is_visible', is_visible ? 'Y' : 'N');
     },
+  },
+  active_at: {
+    type: 'TIMESTAMP',
+    allowNull: true,
+    comment: '节点最后在线时间',
   },
 }, {
   underscored: true,

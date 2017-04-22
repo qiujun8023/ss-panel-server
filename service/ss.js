@@ -7,7 +7,7 @@ const config = require('config');
 const Sequelize = require('sequelize');
 
 const ssModel = require('../model/ss');
-const sequelize = require('../lib/sequelize')('shard');
+const sequelize = require('../lib/sequelize');
 const errors = require('../lib/errors');
 
 const UserModel = ssModel.User;
@@ -129,6 +129,20 @@ ss.findNodeAsync = function* () {
 
   return res;
 };
+
+// ss.getNodeStatusKey = function* (node_id) {
+//   return `ss:node:${node_id}:status`;
+// };
+//
+// // 获取节点状态（监控用）
+// ss.getNodeStatus = function* (node_id) {
+//   let key = this.getNodeStatusKey()
+// },
+//
+// // 设置节点状态（监控用）
+// ss.setNodeStatus = function* (node_id, status) {
+//
+// }
 
 // 更新节点
 ss.updateNodeAsync = function* (node_id, data) {

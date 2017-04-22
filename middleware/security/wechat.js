@@ -19,7 +19,7 @@ let getUserAsync = function* (app, user_id) {
 
 let getExtra = function (app) {
   let base = {
-    appid: config.wechat.tick.corpid,
+    appid: config.wechat.corpid,
     response_type: 'code',
     scope: 'snsapi_base',
   };
