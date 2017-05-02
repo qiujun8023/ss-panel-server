@@ -58,9 +58,10 @@ let config = {
   ss: {
     min_port: 50001,
     max_port: 50999,
+    maximum_downtime: 60, // 监控报警阈值， 单位 秒
     init_transfer_enable: 10737418240, // 10G 流量
     random_password_pool: '0123456789abcdefghijklmnopqrstuvwxyz', // 随机密码字符集
-    transfer_log_save_days: 180,
+    transfer_log_save_days: 180, // 单位 天
   },
 
   logger: {

@@ -37,7 +37,6 @@ let cleanTransferLogs = cron('0 0 * * * *', function* () {
 });
 
 // 节点监控
-const MAX_TIME_DIFF = 180000;
 let nodeMonitor = cron('0 * * * * *', function* () {
   let nodes = yield ssService.findNodeAsync({
     active_at: {
@@ -51,7 +50,7 @@ let nodeMonitor = cron('0 * * * * *', function* () {
 
     let message;
     let time_diff = moment().diff(node.active_at);
-    new_status.ok = time_diff <= MAX_TIME_DIFF;
+    new_status.ok = time_diff <= config.ss.maximum_downtime;
     if (!new_status.ok && old_status.ok) {
       message = `【${node.name}】(ID:${node.node_id})科学上网服务异常，请及时检查`;
     } else if (new_status.ok && !old_status.ok) {
