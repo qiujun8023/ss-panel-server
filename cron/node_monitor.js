@@ -31,7 +31,7 @@ let _fn = function* () {
     }
 
     if (message) {
-      let users = yield User.findAsync({is_admin: true})
+      let users = yield User.findAsync({isAdmin: true})
       let touser = _.map(users, 'userId').join('|')
       yield wechat.sendAsync({touser}, {
         msgtype: 'text',
