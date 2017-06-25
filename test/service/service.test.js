@@ -11,7 +11,7 @@ describe('service/service', function () {
 
   before(function* () {
     user = yield utility.createTestUserAsync()
-    node = yield utility.createTestNodeAsync()
+    node = yield utility.createTestNodeAsync({isVisible: true})
   })
 
   after(function* () {
@@ -34,7 +34,7 @@ describe('service/service', function () {
     })
   })
 
-  describe('getServiceAsync', function () {
+  describe('getAsync', function () {
     it('should return false if user not found', function* () {
       let service = yield Service.getAsync(-1)
       expect(service).to.be.false

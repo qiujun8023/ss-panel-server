@@ -9,14 +9,14 @@ const random = require('../lib/random')
 describe('service/node', function () {
   let node
 
-  describe('addNodeAsync', function () {
+  describe('addAsync', function () {
     it('should add node success', function* () {
       node = yield utility.createTestNodeAsync({isVisible: true})
       expect(node).to.include.keys(['name', 'avatar', 'server', 'method', 'description', 'sort', 'isVisible'])
     })
   })
 
-  describe('getNodeAsync', function () {
+  describe('getAsync', function () {
     it('should return false if node not found', function* () {
       let tmpNode = yield Node.getAsync(-1)
       expect(tmpNode).to.be.false
@@ -30,7 +30,7 @@ describe('service/node', function () {
     })
   })
 
-  describe('findNodeAsync', function () {
+  describe('findAsync', function () {
     it('should return node list success', function* () {
       let nodes = yield Node.findAsync()
       expect(nodes.length >= 1).to.be.true
@@ -38,7 +38,7 @@ describe('service/node', function () {
     })
   })
 
-  describe('updateNodeAsync', function () {
+  describe('updateAsync', function () {
     it('should return false if node not found', function* () {
       let tmpNode = yield Node.updateAsync(-1)
       expect(tmpNode).to.be.false
@@ -52,13 +52,13 @@ describe('service/node', function () {
     })
   })
 
-  describe('findNodeUserAsync', function () {
+  describe('findUserAsync', function () {
     it('should return user list success', function* () {
       yield Node.findUserAsync(node.nodeId)
     })
   })
 
-  describe('removeNodeAsync', function () {
+  describe('removeAsync', function () {
     it('should return false if node not found', function* () {
       let tmpNode = yield Node.removeAsync(-1)
       expect(tmpNode).to.be.false
@@ -71,13 +71,13 @@ describe('service/node', function () {
     })
   })
 
-  describe('setNodeStatusAsync', function () {
+  describe('setStatusAsync', function () {
     it('should set node status success', function* () {
       yield Node.setStatusAsync(node.nodeId, node)
     })
   })
 
-  describe('getNodeStatusAsync', function () {
+  describe('getStatusAsync', function () {
     it('should get node status success', function* () {
       let tmp = yield Node.getStatusAsync(node.nodeId)
       expect(tmp.name).to.be.equal(node.name)

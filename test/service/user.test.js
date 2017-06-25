@@ -28,7 +28,7 @@ describe('service/user', function () {
     })
   })
 
-  describe('findUserAsync', function () {
+  describe('findAsync', function () {
     it('should return user list success', function* () {
       let users = yield User.findAsync()
       expect(users.length >= 1).to.be.true
@@ -36,7 +36,7 @@ describe('service/user', function () {
     })
   })
 
-  describe('updateUserAsync', function () {
+  describe('updateAsync', function () {
     it('should return false if user not found', function* () {
       let tmpUser = yield User.updateAsync(-1)
       expect(tmpUser).to.be.false
@@ -47,6 +47,19 @@ describe('service/user', function () {
       let tmpUser = yield User.updateAsync(user.userId, {name})
       expect(tmpUser.name).to.equal(name)
       user.name = name
+    })
+  })
+
+  describe('removeAsync', function () {
+    it('should return false if user not found', function* () {
+      let tmpUser = yield User.removeAsync(-1)
+      expect(tmpUser).to.be.false
+    })
+
+    it('should remove user success', function* () {
+      yield utility.removeTestUserAsync(user)
+      let tmpUser = yield User.getAsync(user.userId)
+      expect(tmpUser).to.be.false
     })
   })
 })

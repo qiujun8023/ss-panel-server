@@ -1,6 +1,6 @@
 'use strict'
 
-describe('middleware/routers', function () {
+describe('middleware/router', function () {
   describe('get', function () {
     it('should get api spec success', function* () {
       yield api.get('/api').expect(200)
