@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
-const sway = require('sway');
+const sway = require('sway')
 
-const spec = require('../spec');
+const spec = require('../spec')
 
 module.exports = function () {
-  return sway.create({definition: spec});
-};
+  return sway.create({definition: spec})
+}

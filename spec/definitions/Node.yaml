@@ -1,0 +1,43 @@
+type: object
+required:
+  - nodeId
+  - name
+  - avatar
+  - server
+  - method
+  - sort
+  - description
+  - isVisible
+  - createdAt
+  - updatedAt
+properties:
+  nodeId:
+    type: integer
+    example: 1
+  name:
+    type: string
+    example: 香港节点
+  avatar:
+    type: string
+    example: http://xx.xx
+  server:
+    type: string
+    example: 1.2.3.4
+  method:
+    type: string
+    example: rc4-md5
+  sort:
+    type: integer
+    example: 0
+  description:
+    type: string
+    example: CN2 节点
+  isVisible:
+    type: boolean
+    example: true
+  createdAt:
+    type: string
+    example: 1 个月前
+  updatedAt:
+    type: string
+    example: 1 个月前

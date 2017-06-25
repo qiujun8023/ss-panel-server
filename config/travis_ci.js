@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 let config = {
   env: 'test',
@@ -7,7 +7,7 @@ let config = {
   redis: {
     host: 'localhost',
     port: 6379,
-    keyPrefix: 'shard:',
+    keyPrefix: 'shard:'
   },
 
   mysql: {
@@ -15,17 +15,9 @@ let config = {
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'shard',
-    timezone: '+08:00',
-  },
+    database: 'shadowsocks',
+    timezone: '+08:00'
+  }
+}
 
-  upyun: {
-    bucket: process.env.UPYUN_BUCKET,
-    operator: process.env.UPYUN_OPERATOR,
-    password: process.env.UPYUN_PASSWORD,
-    endpoint: 'v0.api.upyun.com',
-    base_url: 'https://example.com',
-  },
-};
-
-module.exports = config;
+module.exports = config

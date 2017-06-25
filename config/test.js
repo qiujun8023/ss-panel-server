@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 
 let config = {
   env: 'test',
-  debug: false,
-};
+  debug: false
+}
 
-module.exports = config;
+module.exports = config
