@@ -49,7 +49,7 @@ let config = {
   ss: {
     minPort: 50001,
     maxPort: 50999,
-    maxDowntime: 60, // 监控报警阈值， 单位 秒
+    maxDowntime: 120000, // 监控报警阈值， 单位 毫秒
     initTransferEnable: 10737418240, // 10G 流量
     randomPasswordPool: '0123456789abcdefghijklmnopqrstuvwxyz', // 随机密码字符集
     transferLogSaveDays: 180 // 单位 天
