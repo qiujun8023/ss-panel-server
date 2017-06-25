@@ -38,7 +38,7 @@ exports.findAsync = function* (where, order, limit) {
 }
 
 exports.getStatusKey = function (nodeId) {
-  return `ss:node:${nodeId}:status`
+  return `node:${nodeId}:status`
 }
 
 // 获取节点状态（监控用）
