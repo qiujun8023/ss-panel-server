@@ -1,8 +1,8 @@
 {
   "apps": [
     {
-      "name": "shard",
-      "script": "server/app.js",
+      "name": "ss-panel",
+      "script": "app.js",
       "env": {
         "NODE_ENV": "production"
       },
@@ -14,12 +14,12 @@
       "watch": false,
       "merge_logs": true,
       "autorestart": true,
-      "error_file": "/tmp/shard.stderr.log",
-      "out_file": "/tmp/shard.stdout.log"
+      "error_file": "/tmp/ss-panel.stderr.log",
+      "out_file": "/tmp/ss-panel.stdout.log"
     },
     {
-      "name": "shard-cron",
-      "script": "server/cron.js",
+      "name": "ss-panel-cron",
+      "script": "cron.js",
       "env": {
         "NODE_ENV": "production"
       },
@@ -27,8 +27,8 @@
       "watch": false,
       "merge_logs": true,
       "autorestart": true,
-      "error_file": "/tmp/shard-cron.stderr.log",
-      "out_file": "/tmp/shard-cron.stdout.log"
+      "error_file": "/tmp/ss-panel-cron.stderr.log",
+      "out_file": "/tmp/ss-panel-cron.stdout.log"
     }
   ]
 }

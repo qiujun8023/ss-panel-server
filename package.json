@@ -60,10 +60,5 @@
     "winston": "^2.2.0",
     "winston-daily-rotate-file": "^1.2.0",
     "z-schema": "^3.17.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
   }
 }

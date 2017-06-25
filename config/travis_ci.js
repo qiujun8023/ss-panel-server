@@ -7,7 +7,7 @@ let config = {
   redis: {
     host: 'localhost',
     port: 6379,
-    keyPrefix: 'shard:'
+    keyPrefix: 'ss-panle:'
   },
 
   mysql: {
