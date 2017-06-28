@@ -25,6 +25,11 @@ put:
       type: string
       required: true
       description: 用户 ID
+    - name: name
+      in: formData
+      type: string
+      required: false
+      description: 用户姓名
     - name: port
       in: formData
       type: integer

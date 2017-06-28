@@ -1,8 +1,5 @@
 'use strict'
 
-const _ = require('lodash')
-const config = require('config')
-
 const {User} = require('../service')
 const format = require('../lib/format')
 const errors = require('../lib/errors')
@@ -17,15 +14,13 @@ module.exports = {
   },
 
   *put (req, res) {
-    let {minPort, maxPort} = config.ss
-    let data = _.pick(req.body, ['port', 'password', 'transferEnable', 'isAdmin', 'isLocked'])
-    if (data.port && (data.port < minPort || data.port > maxPort)) {
-      throw new errors.BadRequest(`端口号需在 ${minPort} - ${maxPort} 范围内`)
-    } else if (data.transferEnable <= 0) {
-      throw new errors.BadRequest('流量限额无效')
+    let user
+    try {
+      user = yield User.updateAsync(req.body.userId, req.body)
+    } catch (err) {
+      throw new errors.BadRequest('修改失败，可能端口已存在')
     }
 
-    let user = yield User.updateAsync(req.body.userId, data)
     if (!user) {
       throw new errors.NotFound('未找到相关用户')
     }
