@@ -1,7 +1,6 @@
 'use strict'
 
 const expect = require('chai').expect
-const config = require('config')
 
 const plugins = require('../lib/plugin')
 const random = require('../lib/random')
@@ -34,24 +33,6 @@ describe(BASE_PATH, function () {
         .use(userPlugin.plugin())
         .send({userId: 'invalid user'})
         .expect(404)
-    })
-
-    it('should return error with invalid port', function* () {
-      let userId = user.userId
-      let port = config.ss.maxPort + 1
-      yield api.put(BASE_PATH)
-        .use(userPlugin.plugin())
-        .send({userId, port})
-        .expect(400)
-    })
-
-    it('should return error with invalid transfer enable', function* () {
-      let userId = user.userId
-      let transferEnable = -1
-      yield api.put(BASE_PATH)
-        .use(userPlugin.plugin())
-        .send({userId, transferEnable})
-        .expect(400)
     })
 
     it('should update user success', function* () {
