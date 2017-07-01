@@ -1,8 +1,7 @@
 'use strict'
 
-let config = {
+module.exports = {
   env: 'test',
-  debug: false,
 
   redis: {
     host: 'localhost',
@@ -19,5 +18,3 @@ let config = {
     timezone: '+08:00'
   }
 }
-
-module.exports = config

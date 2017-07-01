@@ -4,15 +4,12 @@ const path = require('path')
 
 const pkg = require('../package')
 
-let env = process.env.NODE_ENV || 'development'
-
-let config = {
-  host: '127.0.0.1',
+module.exports = {
+  host: 'localhost',
   port: '8003',
-  baseUrl: 'http://127.0.0.1:8003/',
+  baseUrl: 'http://localhost:8003/',
 
-  env,
-  debug: env === 'development',
+  env: 'development',
 
   swagger: {
     info: {
@@ -26,14 +23,14 @@ let config = {
   },
 
   redis: {
-    host: '127.0.0.1',
+    host: 'localhost',
     port: 6379,
     keyPrefix: 'ss-panle:'
   },
 
   mysql: {
     poolSize: 5,
-    host: '127.0.0.1',
+    host: 'localhost',
     user: 'shadowsocks',
     password: 'password',
     database: 'shadowsocks',
@@ -55,13 +52,5 @@ let config = {
     transferLogSaveDays: 180 // 单位 天
   },
 
-  logger: {
-    file: {
-      filename: '/tmp/ss-panle.log'
-    }
-  },
-
   clientDir: path.join(__dirname, '../../client/dist')
 }
-
-module.exports = config

@@ -14,7 +14,7 @@ module.exports = function () {
     err.type = err.type || 'SystemError'
     if (err.type === 'SystemError') {
       logger.error(err)
-    } else if (config.debug) {
+    } else if (config.env === 'development') {
       logger.error(err)
     }
 
