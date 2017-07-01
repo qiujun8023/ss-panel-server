@@ -8,6 +8,7 @@ require('moment').locale('zh-cn')
 const config = require('config')
 const bodyParser = require('body-parser')
 
+const logger = require('./lib/logger')
 const express = require('./lib/express')
 const mws = require('./middleware')
 const swagger = require('./spec/swagger')
@@ -46,8 +47,7 @@ let createServer = function () {
 
     return server
   }).catch((err) => {
-    // eslint-disable-next-line
-    console.log(err.stack);
+    logger.error(err.stack)
     process.exit(1)
   })
 }
@@ -57,8 +57,7 @@ if (!module.parent) {
   let host = process.env.HOST || config.host
   createServer().then((server) => {
     server.listen(port, host)
-    // eslint-disable-next-line
-    console.log('Server listen on ' + config.baseUrl);
+    logger.info('Server listen on ' + config.baseUrl)
   })
 } else {
   module.exports = createServer
