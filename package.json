@@ -1,6 +1,6 @@
 {
   "name": "ss-panle",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "engines": {
     "node": ">=6.9.0"
   },
@@ -16,8 +16,7 @@
     "cron": "nodemon -e js,yaml cron.js",
     "lint": "eslint --ignore-path .lintignore .",
     "test": "NODE_ENV=test nyc --reporter=lcov --reporter html --reporter text-summary mocha --require co-mocha --colors test/bootload 'test/**/*.test.js'",
-    "start": "pm2 start pm2.json",
-    "postmerge": "npm install"
+    "start": "pm2 start pm2.json"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -29,7 +28,6 @@
     "eslint-plugin-html": "^2.0.0",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
-    "husky": "^0.12.0",
     "mocha": "^3.0.0",
     "nyc": "^11.0.3",
     "supertest": "^2.0.0"
