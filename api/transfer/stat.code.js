@@ -9,7 +9,7 @@ module.exports = {
   *get (req, res) {
     let {userId} = req.session.user
 
-    let where
+    let where = {}
     let user = yield User.getAsync(userId)
     if (user.isAdmin) {
       where = _.pick(req.query, ['nodeId', 'userId'])
