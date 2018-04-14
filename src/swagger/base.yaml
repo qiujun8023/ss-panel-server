@@ -1,0 +1,45 @@
+swagger: "2.0"
+info:
+  version:
+  title: 科学上网
+# during dev, should point to your local machine
+host:
+# basePath prefixes all resource paths
+basePath: /api
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+  - application/x-www-form-urlencoded
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+tags:
+  - name: profile
+    description: 资料
+  - name: user
+    description: 用户
+  - name: node
+    description: 节点
+  - name: service
+    description: 服务
+  - name: traffic
+    description: 流量
+  - name: wechat
+    description: 微信
+securityDefinitions:
+  wechat:
+    type: apiKey
+    name: auth
+    in: header
+    x-securityHandler: wechat
+    description: 使用 Wechat OAuth 2.0 进行登陆，登陆后会设置 session，后续请求带上 session 即可
+  admin:
+    type: apiKey
+    name: auth
+    in: header
+    x-securityHandler: admin
+    description: 通过 Wechat 授权，并具有管理员权限

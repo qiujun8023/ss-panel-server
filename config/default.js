@@ -1,25 +1,27 @@
-'use strict'
-
 const path = require('path')
 
 const pkg = require('../package')
 
 module.exports = {
-  host: 'localhost',
-  port: '8003',
-  baseUrl: 'http://localhost:8003/',
-
   env: 'development',
+  debug: true,
+
+  server: {
+    host: 'localhost',
+    port: 8003,
+    clientDir: path.join(__dirname, '../../client/dist'),
+    baseUrl: 'http://localhost:8003/'
+  },
+
+  keys: [
+    'im a newer secret',
+    'i like turtle'
+  ],
 
   swagger: {
     info: {
       version: pkg.version
     }
-  },
-
-  session: {
-    secret: 'ss-panle secret',
-    name: 'SESSION'
   },
 
   redis: {
@@ -33,8 +35,7 @@ module.exports = {
     host: 'localhost',
     user: 'shadowsocks',
     password: 'password',
-    database: 'shadowsocks',
-    timezone: '+08:00'
+    database: 'shadowsocks'
   },
 
   wechat: {
@@ -47,10 +48,7 @@ module.exports = {
     minPort: 50001,
     maxPort: 50999,
     maxDowntime: 120000, // 监控报警阈值， 单位 毫秒
-    initTransferEnable: 10737418240, // 10G 流量
-    randomPasswordPool: '0123456789abcdefghijklmnopqrstuvwxyz', // 随机密码字符集
+    initTrafficLimit: 10737418240, // 10G 流量
     transferLogSaveDays: 180 // 单位 天
-  },
-
-  clientDir: path.join(__dirname, '../../client/dist')
+  }
 }

@@ -1,0 +1,41 @@
+type: object
+properties:
+  userId:
+    type: integer
+    example: 1
+  username:
+    type: string
+    example: "zhang"
+  nickname:
+    type: string
+    example: "张三"
+  port:
+    type: integer
+    example: 8388
+  password:
+    type: string
+    example: "password"
+  flowUp:
+    type: integer
+    example: 0
+  flowDown:
+    type: integer
+    example: 0
+  trafficLimit:
+    type: integer
+    example: 0
+  isAdmin:
+    type: boolean
+    example: false
+  isLocked:
+    type: boolean
+    example: false
+  activedAT:
+    type: string
+    example: "2016-09-13T20:00:34.000Z"
+  createdAt:
+    type: string
+    example: "2016-09-13T20:00:34.000Z"
+  updatedAt:
+    type: string
+    example: "2016-09-13T20:00:34.000Z"

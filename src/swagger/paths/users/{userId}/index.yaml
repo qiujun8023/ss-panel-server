@@ -1,0 +1,78 @@
+get:
+  tags: [ user ]
+  summary: 获取用户信息
+  operationId: users.detail
+  security:
+  - admin: []
+  parameters:
+    - name: userId
+      in: path
+      type: string
+      required: true
+      description: 用户 ID
+  responses:
+    200:
+      description: 用户信息
+      schema:
+        $ref: "#/models/user"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/responses/failure"
+
+put:
+  tags: [ user ]
+  summary: 修改用户信息
+  operationId: users.update
+  security:
+  - admin: []
+  parameters:
+    - name: userId
+      in: path
+      type: string
+      required: true
+      description: 用户 ID
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          username:
+            type: string
+            example: "zhang"
+            description: 用户姓名
+          nickname:
+            type: string
+            example: "张三"
+            description: 用户姓名
+          port:
+            type: integer
+            example: 8388
+            description: SS 端口
+          password:
+            type: string
+            example: "123456"
+            description: SS 密码
+          trafficLimit:
+            type: integer
+            example: 123456
+            description: 流量限额
+          isAdmin:
+            type: boolean
+            example: false
+            description: 是否管理员
+          isLocked:
+            type: boolean
+            example: false
+            description: 是否锁定
+  responses:
+    200:
+      description: 用户信息
+      schema:
+        $ref: "#/models/user"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/responses/failure"
+

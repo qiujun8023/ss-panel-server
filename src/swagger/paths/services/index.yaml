@@ -1,0 +1,17 @@
+get:
+  tags: [ service ]
+  summary: 获取服务列表
+  operationId: services.list
+  security:
+  - wechat: []
+  responses:
+    200:
+      description: 服务列表
+      schema:
+        type: array
+        items:
+          $ref: "#/models/service"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/responses/failure"

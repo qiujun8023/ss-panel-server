@@ -1,0 +1,47 @@
+get:
+  tags: [ profile ]
+  summary: 获取个人信息
+  operationId: profile.detail
+  security:
+  - wechat: []
+  responses:
+    200:
+      description: 用户信息
+      schema:
+        $ref: "#/models/user"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/responses/failure"
+
+put:
+  tags: [ profile ]
+  summary: 修改个人信息
+  operationId: profile.update
+  security:
+  - wechat: []
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          port:
+            type: integer
+            example: 8388
+            description: SS 端口
+          password:
+            type: string
+            minLength: 6
+            example: "123456"
+            description: SS 密码
+  responses:
+    200:
+      description: 修改后的结果
+      schema:
+        $ref: "#/models/user"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/responses/failure"

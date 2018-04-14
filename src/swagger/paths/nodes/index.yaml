@@ -1,0 +1,76 @@
+get:
+  tags: [ node ]
+  summary: 获取节点列表
+  operationId: nodes.list
+  security:
+  - admin: []
+  responses:
+    200:
+      description: 节点
+      schema:
+        type: array
+        items:
+          $ref: "#/models/node"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/responses/failure"
+
+post:
+  tags: [ node ]
+  summary: 新增节点
+  operationId: nodes.create
+  security:
+  - admin: []
+  parameters:
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        required:
+          - name
+          - server
+          - avatar
+          - method
+          - description
+          - isVisible
+          - sort
+        properties:
+          name:
+            type: string
+            example: "香港节点"
+            description: 节点名称
+          avatar:
+            type: string
+            example: "http://example.com"
+            description: 节点图标
+          server:
+            type: string
+            example: "example.com"
+            description: 节点地址
+          method:
+            type: string
+            example: "aes-256-cfb"
+            description: 加密方式
+          description:
+            type: string
+            example: "CN2 直连"
+            description: 节点描述
+          isVisible:
+            type: boolean
+            example: true
+            description: 是否可见
+          sort:
+            type: integer
+            example: 1
+            description: 排序 ID
+  responses:
+    201:
+      description: 节点详情
+      schema:
+        $ref: "#/models/node"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/responses/failure"

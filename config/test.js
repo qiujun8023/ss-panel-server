@@ -1,5 +1,4 @@
-'use strict'
-
 module.exports = {
-  env: 'test'
+  env: 'test',
+  debug: false
 }

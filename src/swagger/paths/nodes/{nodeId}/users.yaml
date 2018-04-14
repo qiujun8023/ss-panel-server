@@ -1,0 +1,33 @@
+get:
+  tags: [ node ]
+  summary: 获取节点用户列表
+  operationId: nodes.users
+  security:
+  - admin: []
+  parameters:
+    - name: nodeId
+      in: path
+      type: integer
+      required: true
+      description: 节点 ID
+  responses:
+    200:
+      description: 节点详情
+      schema:
+        type: array
+        items:
+          type: object
+          properties:
+            username:
+              type: string
+              example: "zhang"
+            nickname:
+              type: string
+              example: "张三"
+            activeAt:
+              type: string
+              example: "1 个月前"
+    default:
+      description: 错误
+      schema:
+        $ref: "#/responses/failure"

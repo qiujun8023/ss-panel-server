@@ -1,8 +1,0 @@
-type: object
-title: SuccessResponse
-required:
-  - result
-properties:
-  result:
-    type: boolean
-    example: true

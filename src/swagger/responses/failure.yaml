@@ -1,0 +1,25 @@
+description: 错误响应
+schema:
+  type: object
+  title: ErrorResponse
+  required:
+    - type
+    - message
+    - request
+  properties:
+    type:
+      type: string
+      description: 错误类型
+      example: BadRequest
+    message:
+      type: string
+      description: 错误详情
+      example: Something Error
+    request:
+      type: string
+      description: 当前请求 Url
+      example: /api/demo
+    extra:
+      type: object
+      description: 额外参数
+

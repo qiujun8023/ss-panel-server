@@ -1,0 +1,35 @@
+type: object
+properties:
+  nodeId:
+    type: integer
+    example: 1
+  name:
+    type: string
+    example: "香港节点"
+  avatar:
+    type: string
+    example: "http://xx.xx"
+  server:
+    type: string
+    example: "1.2.3.4"
+  method:
+    type: string
+    example: "rc4-md5"
+  sort:
+    type: integer
+    example: 0
+  description:
+    type: string
+    example: "CN2 节点"
+  isVisible:
+    type: boolean
+    example: true
+  activedAt:
+    type: string
+    example: "2017-08-19T17:08:09.000Z"
+  createdAt:
+    type: string
+    example: "2017-08-19T17:08:09.000Z"
+  updatedAt:
+    type: string
+    example: "2017-08-19T17:08:09.000Z"

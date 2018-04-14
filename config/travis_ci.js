@@ -1,7 +1,6 @@
-'use strict'
-
 module.exports = {
   env: 'test',
+  debug: false,
 
   redis: {
     host: 'localhost',
@@ -14,7 +13,6 @@ module.exports = {
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'shadowsocks',
-    timezone: '+08:00'
+    database: 'shadowsocks'
   }
 }

@@ -1,0 +1,17 @@
+get:
+  tags: [ wechat ]
+  summary: 微信授权回调
+  operationId: wechat.oauth
+  parameters:
+    - name: code
+      in: query
+      type: string
+      required: true
+      description: Code 值
+  responses:
+    302:
+      description: 授权成功重定向
+    default:
+      description: 错误
+      schema:
+        $ref: "#/responses/failure"
