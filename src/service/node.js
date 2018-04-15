@@ -1,5 +1,5 @@
 const redis = require('../lib/redis')
-const { Node } = require('../model')
+const { Node, NodeToken } = require('../model')
 
 exports.getStatusKey = (nodeId) => {
   return `node:${nodeId}:status`
@@ -53,4 +53,9 @@ exports.removeAsync = async (nodeId) => {
     return false
   }
   return node.destroy()
+}
+
+// 查询Token
+exports.findTokenAsync = async (where) => {
+  return NodeToken.find({ where })
 }

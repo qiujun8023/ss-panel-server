@@ -1,17 +1,8 @@
-const Node = require('./node')
 const User = require('./user')
+const Node = require('./node')
+const NodeToken = require('./node_token')
 const Traffic = require('./traffic')
 const sequelize = require('../lib/sequelize')
-
-// 节点与流量的关系
-Node.hasMany(Traffic, {
-  foreignKey: 'nodeId',
-  constraints: false
-})
-Traffic.belongsTo(Node, {
-  foreignKey: 'nodeId',
-  constraints: false
-})
 
 // 用户与流量的关系
 User.hasMany(Traffic, {
@@ -23,11 +14,32 @@ Traffic.belongsTo(User, {
   constraints: false
 })
 
+// 节点与流量的关系
+Node.hasMany(Traffic, {
+  foreignKey: 'nodeId',
+  constraints: false
+})
+Traffic.belongsTo(Node, {
+  foreignKey: 'nodeId',
+  constraints: false
+})
+
+// 节点与Token关系
+Node.hasMany(NodeToken, {
+  foreignKey: 'nodeId',
+  constraints: false
+})
+NodeToken.belongsTo(Node, {
+  foreignKey: 'nodeId',
+  constraints: false
+})
+
 // 同步数据到数据库
 sequelize.sync()
 
 module.exports = {
-  Node,
   User,
+  Node,
+  NodeToken,
   Traffic
 }

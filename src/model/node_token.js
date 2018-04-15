@@ -1,17 +1,15 @@
-'use strict'
-
 const Sequelize = require('sequelize')
 
 const sequelize = require('../lib/sequelize')
 
-module.exports = sequelize.define('traffic', {
-  trafficId: {
+module.exports = sequelize.define('node_token', {
+  nodeTokenId: {
     type: Sequelize.BIGINT,
     allowNull: false,
     primaryKey: true,
     autoIncrement: true,
     field: 'id',
-    comment: '流量 Id'
+    comment: '节点Token Id'
   },
   nodeId: {
     type: Sequelize.BIGINT,
@@ -19,44 +17,48 @@ module.exports = sequelize.define('traffic', {
     field: 'node_id',
     comment: '节点 Id'
   },
-  userId: {
-    type: Sequelize.BIGINT,
+  token: {
+    type: Sequelize.STRING,
     allowNull: false,
-    field: 'user_id',
-    comment: '用户 Id'
+    field: 'token',
+    comment: 'Token'
   },
-  flowUp: {
-    type: Sequelize.BIGINT,
+  isEnabled: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: true,
     allowNull: false,
-    defaultValue: 0,
-    field: 'flow_up',
-    comment: '上传流量'
+    field: 'is_enabled',
+    comment: '是否启用'
   },
-  flowDown: {
-    type: Sequelize.BIGINT,
-    allowNull: false,
-    defaultValue: 0,
-    field: 'flow_down',
-    comment: '下载流量'
+  activedAt: {
+    type: Sequelize.DATE,
+    allowNull: true,
+    field: 'actived_at',
+    comment: 'Token最后使用时间'
   },
   createdAt: {
     type: Sequelize.DATE,
     allowNull: false,
     field: 'created_at',
     comment: '创建时间'
+  },
+  updatedAt: {
+    type: Sequelize.DATE,
+    allowNull: false,
+    field: 'updated_at',
+    comment: '更新时间'
   }
 }, {
-  tableName: 'traffic',
+  tableName: 'node_token',
   timestamps: true,
-  updatedAt: false,
   indexes: [
     {
       unique: false,
       fields: ['node_id']
     },
     {
-      unique: false,
-      fields: ['user_id']
+      unique: true,
+      fields: ['token']
     }
   ]
 })

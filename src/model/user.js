@@ -16,7 +16,6 @@ module.exports = sequelize.define('user', {
   username: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: true,
     field: 'username',
     comment: '用户唯一标识'
   },
@@ -28,7 +27,6 @@ module.exports = sequelize.define('user', {
   },
   port: {
     type: Sequelize.INTEGER,
-    unique: true,
     allowNull: false,
     field: 'port',
     comment: 'SS 端口'
@@ -93,5 +91,15 @@ module.exports = sequelize.define('user', {
   }
 }, {
   tableName: 'user',
-  timestamps: true
+  timestamps: true,
+  indexes: [
+    {
+      unique: true,
+      fields: ['username']
+    },
+    {
+      unique: true,
+      fields: ['port']
+    }
+  ]
 })
