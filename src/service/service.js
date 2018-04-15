@@ -4,13 +4,13 @@ const userService = require('./user')
 const nodeService = require('./node')
 
 const USER_FILTER = ['port', 'password']
-const NODE_FILTER = ['nodeId', 'name', 'avatar', 'server', 'method', 'description']
+const NODE_FILTER = ['name', 'avatar', 'server', 'method', 'description']
 
 // 合并用户与服务信息
 exports.mergeService = (user, node) => {
-  user = _.pick(user, USER_FILTER)
-  node = _.pick(node, NODE_FILTER)
-  return Object.assign(user, node)
+  let userFiltered = _.pick(user, USER_FILTER)
+  let nodeFiltered = _.pick(node, NODE_FILTER)
+  return Object.assign({ serviceId: node.nodeId }, userFiltered, nodeFiltered)
 }
 
 // 获取服务列表

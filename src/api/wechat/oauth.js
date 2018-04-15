@@ -3,32 +3,32 @@ const wechat = require('../../lib/wechat')
 const userService = require('../../service/user')
 
 module.exports = async (ctx) => {
-  let { code, state } = req.query
+  let { code, state } = ctx.request.query
 
-  // 获取用户 ID
-  let userId
+  // 获取用户名
+  let username
   try {
-    userId = (await wechat.getUserIdByCodeAsync(code)).UserId
+    username = (await wechat.getUserIdByCodeAsync(code)).UserId
   } catch (err) {
     throw new errors.BadRequest(err.message)
   }
 
   // 获取姓名
-  let name
+  let nickname
   try {
-    name = (await wechat.getUserAsync(userId)).name
+    nickname = (await wechat.getUserAsync(username)).name
   } catch (err) {
     throw new errors.BadGateway(err.message || '请求微信服务器失败')
   }
 
   // 获取用户信息
-  let user = await userService.getAsync(userId)
+  let user = await userService.getByUserNameAsync(username)
   if (!user) {
-    user = await userService.createAsync({ userId, name })
+    user = await userService.createAsync({ username, nickname })
   } else {
-    await userService.updateAsync(userId, { name })
+    await userService.updateAsync(user.userId, { username, nickname })
   }
 
-  req.session.user = user
-  res.redirect(state || '/')
+  ctx.session.user = user
+  ctx.redirect(state || '/')
 }

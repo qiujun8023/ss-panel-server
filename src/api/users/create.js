@@ -14,4 +14,5 @@ module.exports = async (ctx) => {
   }
 
   ctx.body = await userService.createAsync(data)
+  ctx.status = 201
 }

@@ -6,6 +6,7 @@ const errorHandle = require('./middleware/error_handle')
 const document = require('./middleware/document')
 const session = require('./middleware/session')
 const swagger = require('./middleware/swagger')
+const security = require('./middleware/security')
 const validation = require('./middleware/validation')
 const router = require('./middleware/router')
 
@@ -21,7 +22,9 @@ if (config.get('debug')) {
 }
 
 app.use(errorHandle)
+
 app.use(swagger)
+app.use(security)
 app.use(validation)
 
 app.use(router.routes())

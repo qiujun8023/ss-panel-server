@@ -31,15 +31,15 @@ tags:
   - name: wechat
     description: 微信
 securityDefinitions:
-  wechat:
+  oauth:
     type: apiKey
     name: auth
     in: header
-    x-securityHandler: wechat
+    x-securityHandler: oauth
     description: 使用 Wechat OAuth 2.0 进行登陆，登陆后会设置 session，后续请求带上 session 即可
   admin:
     type: apiKey
     name: auth
     in: header
     x-securityHandler: admin
-    description: 通过 Wechat 授权，并具有管理员权限
+    description: 通过 oauth 授权，并具有管理员权限

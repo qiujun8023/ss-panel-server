@@ -5,22 +5,22 @@ properties:
     example: 1
   name:
     type: string
-    example: CN2 节点
+    example: "CN2 节点"
   avatar:
     type: string
-    example: http://xx.xx
+    example: "http://xx.xx"
   server:
     type: string
-    example: 1.2.3.4
+    example: "1.2.3.4"
   port:
     type: integer
     example: 8388
   method:
     type: string
-    example: rc4-md5
+    example: "rc4-md5"
   password:
     type: string
-    example: password
+    example: "password"
   description:
     type: string
-    example: 电信 CN2 节点
+    example: "电信 CN2 节点"

@@ -1,7 +1,16 @@
+const config = require('config')
+
 const errors = require('../lib/errors')
 const securityHandlers = {
   admin: require('./security/admin'),
-  wechat: require('./security/wechat')
+  oauth: require('./security/oauth')
+}
+
+const extra = {
+  appid: config.get('wechat.corpId'),
+  response_type: 'code',
+  scope: 'snsapi_base',
+  redirect_uri: config.get('server.baseUrl') + 'api/wechat/oauth'
 }
 
 // 检查权限校验
@@ -28,7 +37,7 @@ let accessCheck = async function (ctx) {
 module.exports = async function (ctx, next) {
   let canAccess = await accessCheck(ctx)
   if (!canAccess) {
-    throw new errors.Unauthorized('授权后访问')
+    throw new errors.Unauthorized('授权后访问', 'Unauthorized', extra)
   }
 
   await next()

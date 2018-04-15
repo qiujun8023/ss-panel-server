@@ -3,7 +3,7 @@ get:
   summary: 获取个人信息
   operationId: profile.detail
   security:
-  - wechat: []
+  - oauth: []
   responses:
     200:
       description: 用户信息
@@ -19,7 +19,7 @@ put:
   summary: 修改个人信息
   operationId: profile.update
   security:
-  - wechat: []
+  - oauth: []
   parameters:
     - in: body
       name: body

@@ -1,26 +1,16 @@
-'use strict'
-
-const co = require('co')
-
-const {User} = require('../../service')
 const errors = require('../../lib/errors')
-const wechat = require('./wechat')
+const oauthSecurity = require('./oauth')
+const userService = require('../../service/user')
 
-module.exports = function () {
-  return function* (req, res, next) {
-    yield wechat()(req, res, function (err) {
-      if (err) {
-        next(err)
-        return
-      }
+module.exports = async (ctx) => {
+  let canAccess = await oauthSecurity(ctx)
+  if (!canAccess) {
+    return false
+  }
 
-      co(function* () {
-        let {userId} = req.session.user
-        let user = yield User.getAsync(userId)
-        if (!user.isAdmin) {
-          throw new errors.Forbidden('无权访问')
-        }
-      }).then(next).catch(next)
-    })
+  let { userId } = ctx.session.user
+  let user = await userService.getAsync(userId)
+  if (!user.isAdmin) {
+    throw new errors.Forbidden('无权访问')
   }
 }

@@ -3,7 +3,7 @@ get:
   summary: 获取服务详情
   operationId: services.detail
   security:
-  - wechat: []
+  - oauth: []
   parameters:
     - name: serviceId
       in: path

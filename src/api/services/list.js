@@ -5,7 +5,7 @@ module.exports = async (ctx) => {
   let { userId } = ctx.session.user
   let services = await serviceService.findAsync(userId)
   if (!services) {
-    throw new errors.BadRequest('用户不存在')
+    throw new errors.NotFound('未找到相关服务')
   }
   ctx.body = services
 }

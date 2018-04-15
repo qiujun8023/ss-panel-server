@@ -39,9 +39,9 @@ module.exports = {
   },
 
   wechat: {
-    corpid: 'wx4e2c2b771c467c9f',
+    corpId: 'wx4e2c2b771c467c9f',
     secret: 'k7TGD8xJLDU6-sPH3NwY0eTs2oBPyAINMdbSbGN80fuEt01UK0Z8dWzhm7crgkz7',
-    agentid: 0
+    agentId: 0
   },
 
   ss: {

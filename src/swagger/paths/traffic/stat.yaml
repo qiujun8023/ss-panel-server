@@ -3,7 +3,7 @@ get:
   summary: 获取流量统计
   operationId: traffic.stat
   security:
-  - wechat: []
+  - oauth: []
   parameters:
     - name: nodeId
       in: query
