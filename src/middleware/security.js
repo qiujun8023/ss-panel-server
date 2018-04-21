@@ -1,6 +1,5 @@
 const config = require('config')
 
-const logger = require('../lib/logger')
 const errors = require('../lib/errors')
 const securityHandlers = {
   oauth: require('./security/oauth'),
@@ -21,7 +20,6 @@ let accessCheck = async (ctx) => {
     return true
   }
 
-  logger.info(`securities:`, securities)
   for (let security of securities) {
     let canAccess = true
     for (let handler in security) {

@@ -3,7 +3,7 @@ get:
   summary: 获取服务列表
   operationId: services.list
   security:
-  - oauth: []
+    - oauth: []
   responses:
     200:
       description: 服务列表
@@ -12,6 +12,4 @@ get:
         items:
           $ref: "#/models/service"
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"

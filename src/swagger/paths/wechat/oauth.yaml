@@ -12,6 +12,4 @@ get:
     302:
       description: 授权成功重定向
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"

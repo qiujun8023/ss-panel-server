@@ -1,10 +1,10 @@
 get:
   tags: [ node ]
   summary: 获取用户列表
-  operationId: users.list
+  operationId: nodes.users
   security:
-  - oauth: [ admin ]
-  - nodeToken: []
+    - oauth: [ admin ]
+    - nodeToken: []
   parameters:
     - name: nodeId
       in: path
@@ -19,6 +19,4 @@ get:
         items:
           $ref: "#/models/user"
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"

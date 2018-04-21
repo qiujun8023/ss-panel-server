@@ -3,7 +3,7 @@ get:
   summary: 获取节点详情
   operationId: nodes.detail
   security:
-  - oauth: [ admin ]
+    - oauth: [ admin ]
   parameters:
     - name: nodeId
       in: path
@@ -16,16 +16,14 @@ get:
       schema:
         $ref: "#/models/node"
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"
 
 put:
   tags: [ node ]
   summary: 修改节点
   operationId: nodes.update
   security:
-  - oauth: [ admin ]
+    - oauth: [ admin ]
   parameters:
     - name: nodeId
       in: path
@@ -72,16 +70,14 @@ put:
       schema:
         $ref: "#/models/node"
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"
 
 delete:
   tags: [ node ]
   summary: 删除节点
   operationId: nodes.delete
   security:
-  - oauth: [ admin ]
+    - oauth: [ admin ]
   parameters:
     - name: nodeId
       in: path
@@ -90,10 +86,6 @@ delete:
       description: 节点 ID
   responses:
     200:
-      description: 删除节点
-      schema:
-        $ref: "#/definitions/SuccessResponse"
+      $ref: "#/responses/success"
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"

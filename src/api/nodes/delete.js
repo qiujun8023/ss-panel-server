@@ -8,6 +8,6 @@ module.exports = async (ctx) => {
     throw new errors.NotFound('未找到相关节点')
   }
 
-  await nodeService.removeAsync(nodeId)
+  await nodeService.deleteAsync(nodeId)
   ctx.body = { result: true }
 }

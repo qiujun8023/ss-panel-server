@@ -3,7 +3,7 @@ get:
   summary: 获取服务详情
   operationId: services.detail
   security:
-  - oauth: []
+    - oauth: []
   parameters:
     - name: serviceId
       in: path
@@ -16,6 +16,4 @@ get:
       schema:
         $ref: "#/models/service"
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"

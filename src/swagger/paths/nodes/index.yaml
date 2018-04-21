@@ -3,7 +3,7 @@ get:
   summary: 获取节点列表
   operationId: nodes.list
   security:
-  - oauth: [ admin ]
+    - oauth: [ admin ]
   responses:
     200:
       description: 节点
@@ -12,16 +12,14 @@ get:
         items:
           $ref: "#/models/node"
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"
 
 post:
   tags: [ node ]
   summary: 新增节点
   operationId: nodes.create
   security:
-  - oauth: [ admin ]
+    - oauth: [ admin ]
   parameters:
     - in: body
       name: body
@@ -71,6 +69,4 @@ post:
       schema:
         $ref: "#/models/node"
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"

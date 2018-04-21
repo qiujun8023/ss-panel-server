@@ -3,8 +3,8 @@ post:
   summary: 上传用户流量
   operationId: nodes.traffic
   security:
-  - oauth: [ admin ]
-  - nodeToken: []
+    - oauth: [ admin ]
+    - nodeToken: []
   parameters:
     - name: nodeId
       in: path
@@ -39,12 +39,6 @@ post:
               description: 下载流量
   responses:
     200:
-      description: 成功
-      schema:
-        type: array
-        items:
-          $ref: "#/responses/success"
+      $ref: "#/responses/success"
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"

@@ -3,7 +3,7 @@ get:
   summary: 获取流量统计
   operationId: traffic.stat
   security:
-  - oauth: []
+    - oauth: []
   parameters:
     - name: nodeId
       in: query
@@ -33,6 +33,4 @@ get:
               type: integer
               example: 0
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"

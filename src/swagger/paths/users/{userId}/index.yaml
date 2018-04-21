@@ -3,7 +3,7 @@ get:
   summary: 获取用户详情
   operationId: users.detail
   security:
-  - oauth: [ admin ]
+    - oauth: [ admin ]
   parameters:
     - name: userId
       in: path
@@ -16,16 +16,14 @@ get:
       schema:
         $ref: "#/models/user"
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"
 
 put:
   tags: [ user ]
   summary: 修改用户
   operationId: users.update
   security:
-  - oauth: [ admin ]
+    - oauth: [ admin ]
   parameters:
     - name: userId
       in: path
@@ -72,7 +70,5 @@ put:
       schema:
         $ref: "#/models/user"
     default:
-      description: 错误
-      schema:
-        $ref: "#/responses/failure"
+      $ref: "#/responses/failure"
 

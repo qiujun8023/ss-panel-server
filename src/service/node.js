@@ -19,7 +19,7 @@ exports.setStatusAsync = async (nodeId, status) => {
 }
 
 // 添加节点
-exports.addAsync = async (data) => {
+exports.createAsync = async (data) => {
   return Node.create(data)
 }
 
@@ -46,8 +46,23 @@ exports.updateAsync = async (nodeId, data) => {
   return node.update(data)
 }
 
+// 更新节点活跃时间
+exports.updateActivedAtAsync = async (nodeId) => {
+  let node = await Node.findById(nodeId)
+  if (!node) {
+    return false
+  }
+
+  // 更新活跃时间
+  return node.update({
+    activedAt: new Date()
+  }, {
+    silent: true
+  })
+}
+
 // 删除节点
-exports.removeAsync = async (nodeId) => {
+exports.deleteAsync = async (nodeId) => {
   let node = await Node.findById(nodeId)
   if (!node) {
     return false
@@ -60,14 +75,25 @@ exports.findTokenAsync = async (where) => {
   return NodeToken.find({ where })
 }
 
-// 检查 Toekn 是否有效
+// 检查 Toekn 是否有效并更新活跃时间
 exports.isTokenValidAsync = async (nodeId, token) => {
-  let count = await NodeToken.count({
+  let nodeToken = await NodeToken.findOne({
     where: {
       nodeId,
       token,
       isEnabled: true
     }
   })
-  return count === 1
+  if (!nodeToken) {
+    return false
+  }
+
+  // 更新活跃时间
+  await nodeToken.update({
+    activedAt: new Date()
+  }, {
+    silent: true
+  })
+
+  return true
 }

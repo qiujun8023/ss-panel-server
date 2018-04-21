@@ -4,6 +4,10 @@ const moment = require('moment')
 const { Traffic, User } = require('../model')
 const sequelize = require('../lib/sequelize')
 
+exports.createAsync = async (data) => {
+  return Traffic.create(data)
+}
+
 exports.findStatAsync = async (where) => {
   let data = await Traffic.findAll({
     where: Object.assign(where || {}, {

@@ -75,8 +75,28 @@ exports.updateAsync = async (userId, data) => {
   return user.update(data)
 }
 
+// 更新用户流量数据
+exports.updateTrafficAsync = async (userId, flowUp, flowDown) => {
+  let user = await User.findById(userId)
+  if (!user) {
+    return false
+  }
+
+  // 更新用户流量数据
+  await user.increment({ flowUp, flowDown }, {
+    silent: true
+  })
+
+  // 更新活跃时间
+  return user.update({
+    activedAt: new Date()
+  }, {
+    silent: true
+  })
+}
+
 // 删除用户
-exports.removeAsync = async (userId) => {
+exports.deleteAsync = async (userId) => {
   let user = await User.findById(userId)
   if (!user) {
     return false
