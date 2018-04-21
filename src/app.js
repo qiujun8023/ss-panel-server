@@ -17,10 +17,7 @@ app.keys = config.get('keys')
 app.use(koaBody())
 app.use(session)
 
-if (config.get('debug')) {
-  app.use(document)
-}
-
+app.use(document)
 app.use(errorHandle)
 
 app.use(swagger)

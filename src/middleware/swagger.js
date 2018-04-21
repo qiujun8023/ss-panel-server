@@ -3,9 +3,9 @@ const sway = require('sway')
 const definition = require('../swagger')
 
 // 单例模式
-let getSwaggerAsync = (function () {
+let getSwaggerAsync = (() => {
   let swagger = null
-  return async function () {
+  return async () => {
     if (!swagger) {
       swagger = await sway.create({definition})
     }
@@ -13,7 +13,7 @@ let getSwaggerAsync = (function () {
   }
 })()
 
-module.exports = async function (ctx, next) {
+module.exports = async (ctx, next) => {
   let swagger = await getSwaggerAsync()
   ctx.operation = swagger.getOperation(ctx.request)
   await next()

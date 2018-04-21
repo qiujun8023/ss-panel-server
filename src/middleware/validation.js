@@ -3,7 +3,7 @@ const _ = require('lodash')
 const errors = require('../lib/errors')
 
 // 获取request
-let getRequest = function (ctx) {
+let getRequest = (ctx) => {
   let filter = ['body', 'headers', 'query', 'url']
   let request = _.pick(ctx.request, filter)
   if (ctx.is('multipart')) {
@@ -14,7 +14,7 @@ let getRequest = function (ctx) {
 }
 
 // 获取错误原因
-let getValidationError = function (error, preField = '') {
+let getValidationError = (error, preField = '') => {
   let field = error.name
   if (!field) {
     field = (error.path && error.path.join('.')) || preField
@@ -28,7 +28,7 @@ let getValidationError = function (error, preField = '') {
   return {field, reason}
 }
 
-module.exports = async function (ctx, next) {
+module.exports = async (ctx, next) => {
   if (ctx.operation) {
     let request = getRequest(ctx)
     let validationReq = ctx.operation.validateRequest(request)

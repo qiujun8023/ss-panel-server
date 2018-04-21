@@ -3,7 +3,7 @@ get:
   summary: 获取节点详情
   operationId: nodes.detail
   security:
-  - admin: []
+  - oauth: [ admin ]
   parameters:
     - name: nodeId
       in: path
@@ -25,7 +25,7 @@ put:
   summary: 修改节点
   operationId: nodes.update
   security:
-  - admin: []
+  - oauth: [ admin ]
   parameters:
     - name: nodeId
       in: path
@@ -81,7 +81,7 @@ delete:
   summary: 删除节点
   operationId: nodes.delete
   security:
-  - admin: []
+  - oauth: [ admin ]
   parameters:
     - name: nodeId
       in: path

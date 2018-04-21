@@ -8,11 +8,11 @@ const config = require('config')
 
 const BASE_PATH = __dirname
 
-let loadYaml = function (fileName) {
+let loadYaml = (fileName) => {
   return yaml.load(fs.readFileSync(fileName, 'utf8'))
 }
 
-let loadPaths = function (dirname) {
+let loadPaths = (dirname) => {
   // 获取 yaml 文件列表
   let yamls = glob.sync(`${dirname}/**/*.yaml`, {cwd: BASE_PATH})
 
@@ -37,7 +37,7 @@ let loadPaths = function (dirname) {
   }, {})
 }
 
-let loadDefs = function (dirname) {
+let loadDefs = (dirname) => {
   // 获取 yaml 文件列表
   let yamls = glob.sync(`${dirname}/**/*.yaml`, {cwd: BASE_PATH})
 

@@ -3,7 +3,7 @@ get:
   summary: 获取用户列表
   operationId: users.list
   security:
-  - admin: []
+  - oauth: [ admin ]
   responses:
     200:
       description: 用户列表
@@ -21,7 +21,7 @@ post:
   summary: 新增用户
   operationId: users.create
   security:
-  - admin: []
+  - oauth: [ admin ]
   parameters:
     - in: body
       name: body

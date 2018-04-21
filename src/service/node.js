@@ -59,3 +59,15 @@ exports.removeAsync = async (nodeId) => {
 exports.findTokenAsync = async (where) => {
   return NodeToken.find({ where })
 }
+
+// 检查 Toekn 是否有效
+exports.isTokenValidAsync = async (nodeId, token) => {
+  let count = await NodeToken.count({
+    where: {
+      nodeId,
+      token,
+      isEnabled: true
+    }
+  })
+  return count === 1
+}

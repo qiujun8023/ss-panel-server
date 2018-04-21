@@ -9,7 +9,7 @@ const routes = new Router({prefix: '/api'})
 const BASE_PATH = path.join(__dirname, '../api')
 
 // 加载单个 API
-let loadApi = function (operationId) {
+let loadApi = (operationId) => {
   let [fileName, method] = operationId.replace(/\./g, '/').split('#', 2)
   let filePath = path.join(BASE_PATH, fileName + '.js')
 

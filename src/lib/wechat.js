@@ -6,13 +6,13 @@ const redis = require('./redis')
 
 const TOKEN_CACHE_KEY = 'wechat:access_token'
 
-let getToken = function (callback) {
-  redis.get(TOKEN_CACHE_KEY, function (err, result) {
+let getToken = (callback) => {
+  redis.get(TOKEN_CACHE_KEY, (err, result) => {
     callback(err, JSON.parse(result))
   })
 }
 
-let setToken = function (token, callback) {
+let setToken = (token, callback) => {
   let time = token.expiresIn - 600
   let data = JSON.stringify(token)
   redis.setex(TOKEN_CACHE_KEY, time, data, callback)

@@ -3,7 +3,7 @@ get:
   summary: 获取节点列表
   operationId: nodes.list
   security:
-  - admin: []
+  - oauth: [ admin ]
   responses:
     200:
       description: 节点
@@ -21,7 +21,7 @@ post:
   summary: 新增节点
   operationId: nodes.create
   security:
-  - admin: []
+  - oauth: [ admin ]
   parameters:
     - in: body
       name: body
