@@ -8,9 +8,9 @@ module.exports = {
 
   server: {
     host: 'localhost',
-    port: 8003,
+    port: 8000,
     clientDir: path.join(__dirname, '../../client/dist'),
-    baseUrl: 'http://localhost:8003/'
+    baseUrl: 'http://localhost:8000/'
   },
 
   keys: [
