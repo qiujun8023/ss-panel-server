@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const config = require('config')
 
 const errors = require('../lib/errors')
@@ -6,11 +7,12 @@ const securityHandlers = {
   nodeToken: require('./security/node_token')
 }
 
+const baseUrl = config.get('server.baseUrl')
 const extra = {
   appid: config.get('wechat.corpId'),
   response_type: 'code',
   scope: 'snsapi_base',
-  redirect_uri: config.get('server.baseUrl') + 'api/wechat/oauth'
+  redirect_uri: _.trimEnd(baseUrl, '/') + '/api/wechat/oauth'
 }
 
 // 检查权限校验

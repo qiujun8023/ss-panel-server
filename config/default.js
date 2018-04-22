@@ -7,7 +7,7 @@ module.exports = {
   debug: true,
 
   server: {
-    host: 'localhost',
+    host: '127.0.0.1',
     port: 8000,
     clientDir: path.join(__dirname, '../../client/dist'),
     baseUrl: 'http://localhost:8000/'
