@@ -87,3 +87,15 @@ exports.findActiveUserAsync = async (nodeId) => {
     }
   })
 }
+
+exports.deleteByDayAsync = async (days) => {
+  let ms = days * 24 * 60 * 60 * 1000
+  let ts = (new Date()).getTime() - ms
+  return Traffic.destroy({
+    where: {
+      activeAt: {
+        $lt: new Date(ts)
+      }
+    }
+  })
+}

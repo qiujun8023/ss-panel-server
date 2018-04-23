@@ -95,8 +95,18 @@ exports.updateTrafficAsync = async (userId, flowUp, flowDown) => {
   })
 }
 
+// 初始化用户流量
+exports.initTrafficAsync = async () => {
+  return User.update({
+    flowUp: 0,
+    flowDown: 0
+  }, {
+    silent: true
+  })
+}
+
 // 删除用户
-exports.deleteAsync = async (userId) => {
+exports.removeAsync = async (userId) => {
   let user = await User.findById(userId)
   if (!user) {
     return false

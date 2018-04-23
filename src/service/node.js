@@ -62,7 +62,7 @@ exports.updateActivedAtAsync = async (nodeId) => {
 }
 
 // 删除节点
-exports.deleteAsync = async (nodeId) => {
+exports.removeAsync = async (nodeId) => {
   let node = await Node.findById(nodeId)
   if (!node) {
     return false
