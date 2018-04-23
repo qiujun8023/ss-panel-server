@@ -11,5 +11,6 @@ module.exports = new Sequelize(mysqlConfig.database, mysqlConfig.user, mysqlConf
   dialect: 'mysql',
 
   operatorsAliases: false,
-  logging: (sql) => logger.info(sql)
+  logging: (sql) => logger.info(sql),
+  timezone: mysqlConfig.timezone
 })

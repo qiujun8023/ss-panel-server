@@ -35,7 +35,8 @@ module.exports = {
     host: 'localhost',
     user: 'shadowsocks',
     password: 'password',
-    database: 'shadowsocks'
+    database: 'shadowsocks',
+    timezone: 'Asia/Shanghai'
   },
 
   wechat: {
