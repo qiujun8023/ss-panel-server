@@ -94,7 +94,7 @@ exports.deleteByDayAsync = async (days) => {
   return Traffic.destroy({
     where: {
       activeAt: {
-        $lt: new Date(ts)
+        [Op.lt]: new Date(ts)
       }
     }
   })
