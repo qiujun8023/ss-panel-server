@@ -24,7 +24,7 @@ get:
             nickname:
               type: string
               example: "张三"
-            activeAt:
+            activedAt:
               type: string
               example: "1 个月前"
     default:
