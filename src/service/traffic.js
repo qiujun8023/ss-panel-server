@@ -12,7 +12,7 @@ exports.findStatAsync = async (where) => {
   let data = await Traffic.findAll({
     where: Object.assign(where || {}, {
       createdAt: {
-        [Op.gt]: moment().subtract(30, 'days').toDate()
+        [Op.gt]: moment().subtract(31, 'days').toDate()
       }
     }),
     attributes: [
@@ -24,7 +24,13 @@ exports.findStatAsync = async (where) => {
   })
 
   let res = data.reduce((res, item) => {
-    return Object.assign(res, { [item.date]: item })
+    item = item.get({plain: true})
+    res[item.date] = {
+      date: item.date,
+      flowUp: Number(item.flowUp),
+      flowDown: Number(item.flowDown)
+    }
+    return res
   }, {})
 
   // 填写不存在的日期

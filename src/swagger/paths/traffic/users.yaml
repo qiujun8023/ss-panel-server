@@ -6,7 +6,7 @@ get:
     - oauth: [ admin ]
   parameters:
     - name: nodeId
-      in: path
+      in: query
       type: integer
       required: true
       description: 节点 ID
