@@ -3,6 +3,7 @@ const koaBody = require('koa-bodyparser')
 const config = require('config')
 
 const errorHandle = require('./middleware/error_handle')
+const serve = require('./middleware/serve')
 const document = require('./middleware/document')
 const session = require('./middleware/session')
 const swagger = require('./middleware/swagger')
@@ -17,6 +18,7 @@ app.keys = config.get('keys')
 app.use(koaBody())
 app.use(session)
 
+app.use(serve)
 app.use(document)
 app.use(errorHandle)
 
