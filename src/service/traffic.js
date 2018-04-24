@@ -99,7 +99,7 @@ exports.deleteByDayAsync = async (days) => {
   let ts = (new Date()).getTime() - ms
   return Traffic.destroy({
     where: {
-      activedAt: {
+      createdAt: {
         [Op.lt]: new Date(ts)
       }
     }
