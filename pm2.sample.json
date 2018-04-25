@@ -12,8 +12,8 @@
       "watch": false,
       "merge_logs": true,
       "autorestart": true,
-      "error_file": "/tmp/ss-panel.stderr.log",
-      "out_file": "/tmp/ss-panel.stdout.log"
+      "error_file": "/tmp/ss-panel.log",
+      "out_file": "/tmp/ss-panel.log"
     }
   ]
 }
