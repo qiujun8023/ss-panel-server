@@ -5,7 +5,7 @@ module.exports = {
     mocha: true
   },
   globals: {
-    api: true
+    request: true
   },
   parserOptions: {
     ecmaVersion: 8,

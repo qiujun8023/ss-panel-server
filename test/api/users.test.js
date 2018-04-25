@@ -1,48 +1,62 @@
-'use strict'
+const { expect } = require('chai')
 
-const expect = require('chai').expect
-
-const plugins = require('../lib/plugin')
+const utils = require('../lib/utils')
 const random = require('../lib/random')
 
-let BASE_PATH = '/api/users'
-let userPlugin = plugins.user()
-
-describe(BASE_PATH, function () {
+describe('/api/users', () => {
   let user
 
-  before(function* () {
-    user = yield userPlugin.before({isAdmin: true})
+  before(async () => {
+    user = await utils.createTestUserAsync({
+      isAdmin: true
+    })
   })
 
-  after(function* () {
-    yield userPlugin.after()
+  after(async () => {
+    await utils.removeTestUserAsync(user)
   })
 
-  describe('get', function () {
-    it('should return user list', function* () {
-      yield api.get(BASE_PATH)
-        .use(userPlugin.plugin())
+  describe('list', () => {
+    it('should return user list', async () => {
+      await request.get('/api/users')
+        .use(utils.setUserSession(user))
         .expect(200)
     })
   })
 
-  describe('put', function () {
-    it('should return error if user not found', function* () {
-      yield api.put(BASE_PATH)
-        .use(userPlugin.plugin())
-        .send({userId: 'invalid user'})
+  describe('update', () => {
+    it('should return 404 if user not found', async () => {
+      await request.put('/api/users/0')
+        .use(utils.setUserSession(user))
+        .send({})
         .expect(404)
     })
 
-    it('should update user success', function* () {
-      let userId = user.userId
+    it('should update user success', async () => {
+      let username = random.getUsername()
+      let nickname = random.getNickname()
       let password = random.getUserPassword()
-      let res = yield api.put(BASE_PATH)
-        .use(userPlugin.plugin())
-        .send({userId, password})
+      let res = await request.put(`/api/users/${user.userId}`)
+        .use(utils.setUserSession(user))
+        .send({ username, nickname, password })
         .expect(200)
+      expect(res.body.username).to.equal(username)
+      expect(res.body.nickname).to.equal(nickname)
       expect(res.body.password).to.equal(password)
+    })
+  })
+
+  describe('detail', () => {
+    it('should return 404 if user not found', async () => {
+      await request.get('/api/users/0')
+        .use(utils.setUserSession(user))
+        .expect(404)
+    })
+
+    it('should return user detail', async () => {
+      await request.get(`/api/users/${user.userId}`)
+        .use(utils.setUserSession(user))
+        .expect(200)
     })
   })
 })

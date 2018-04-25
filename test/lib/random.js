@@ -1,15 +1,14 @@
-'use strict'
 
 const Chance = require('chance')
 
 let chance = new Chance()
 
 module.exports = {
-  getUserId () {
+  getUsername () {
     return chance.word({length: 10})
   },
 
-  getUserName () {
+  getNickname () {
     return chance.word({length: 8})
   },
 

@@ -1,85 +1,83 @@
-'use strict'
-
 const expect = require('chai').expect
 
 const {Node} = require('../../service')
 const utility = require('../lib/utility')
 const random = require('../lib/random')
 
-describe('service/node', function () {
+describe('service/node', () => {
   let node
 
-  describe('addAsync', function () {
-    it('should add node success', function* () {
-      node = yield utility.createTestNodeAsync({isVisible: true})
+  describe('addAsync', () => {
+    it('should add node success', async () => {
+      node = await utility.createTestNodeAsync({isVisible: true})
       expect(node).to.include.keys(['name', 'avatar', 'server', 'method', 'description', 'sort', 'isVisible'])
     })
   })
 
-  describe('getAsync', function () {
-    it('should return false if node not found', function* () {
-      let tmpNode = yield Node.getAsync(-1)
+  describe('getAsync', () => {
+    it('should return false if node not found', async () => {
+      let tmpNode = await Node.getAsync(-1)
       expect(tmpNode).to.be.false
     })
 
-    it('should get node success', function* () {
-      let tmpNode = yield Node.getAsync(node.nodeId)
+    it('should get node success', async () => {
+      let tmpNode = await Node.getAsync(node.nodeId)
       expect(tmpNode.name).to.equal(node.name)
       expect(tmpNode.description).to.equal(node.description)
       expect(tmpNode.isVisible).to.equal(node.isVisible)
     })
   })
 
-  describe('findAsync', function () {
-    it('should return node list success', function* () {
-      let nodes = yield Node.findAsync()
+  describe('findAsync', () => {
+    it('should return node list success', async () => {
+      let nodes = await Node.findAsync()
       expect(nodes.length >= 1).to.be.true
       expect(nodes[0]).to.include.keys(['name', 'avatar', 'server', 'method', 'description', 'sort', 'isVisible'])
     })
   })
 
-  describe('updateAsync', function () {
-    it('should return false if node not found', function* () {
-      let tmpNode = yield Node.updateAsync(-1)
+  describe('updateAsync', () => {
+    it('should return false if node not found', async () => {
+      let tmpNode = await Node.updateAsync(-1)
       expect(tmpNode).to.be.false
     })
 
-    it('should update node success', function* () {
+    it('should update node success', async () => {
       let name = random.getUserName()
-      let tmpNode = yield Node.updateAsync(node.nodeId, {name})
+      let tmpNode = await Node.updateAsync(node.nodeId, {name})
       expect(tmpNode.name).to.equal(name)
       node.name = name
     })
   })
 
-  describe('findUserAsync', function () {
-    it('should return user list success', function* () {
-      yield Node.findUserAsync(node.nodeId)
+  describe('findUserAsync', () => {
+    it('should return user list success', async () => {
+      await Node.findUserAsync(node.nodeId)
     })
   })
 
-  describe('removeAsync', function () {
-    it('should return false if node not found', function* () {
-      let tmpNode = yield Node.removeAsync(-1)
+  describe('removeAsync', () => {
+    it('should return false if node not found', async () => {
+      let tmpNode = await Node.removeAsync(-1)
       expect(tmpNode).to.be.false
     })
 
-    it('should remove node success', function* () {
-      yield utility.removeTestNodeAsync(node)
-      let tmpNode = yield Node.getAsync(node.nodeId)
+    it('should remove node success', async () => {
+      await utility.removeTestNodeAsync(node)
+      let tmpNode = await Node.getAsync(node.nodeId)
       expect(tmpNode).to.be.false
     })
   })
 
-  describe('setStatusAsync', function () {
-    it('should set node status success', function* () {
-      yield Node.setStatusAsync(node.nodeId, node)
+  describe('setStatusAsync', () => {
+    it('should set node status success', async () => {
+      await Node.setStatusAsync(node.nodeId, node)
     })
   })
 
-  describe('getStatusAsync', function () {
-    it('should get node status success', function* () {
-      let tmp = yield Node.getStatusAsync(node.nodeId)
+  describe('getStatusAsync', () => {
+    it('should get node status success', async () => {
+      let tmp = await Node.getStatusAsync(node.nodeId)
       expect(tmp.name).to.be.equal(node.name)
     })
   })

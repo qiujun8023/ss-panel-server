@@ -13,21 +13,24 @@
   },
   "scripts": {
     "dev": "nodemon -e js,yaml src/index.js",
-    "eslint": "eslint config src test",
-    "test": "NODE_ENV=test nyc --reporter=lcov --reporter html --reporter text-summary mocha --require co-mocha --colors test/bootload 'test/**/*.test.js'",
+    "eslint": "eslint --fix config src test",
+    "test": "NODE_ENV=test nyc --reporter=lcov --reporter html --reporter text-summary mocha --colors --exit test/bootload 'test/api/**/*.test.js'",
     "pm2.config": "cp pm2.sample.json pm2.json",
     "pm2.check": "[ -f pm2.json ] || (echo 'copying pm2 config' && npm run pm2.config)",
     "pm2.start": "npm run pm2.check && pm2 start pm2.json",
     "pm2.reload": "npm run pm2.check && pm2 reload pm2.json"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
-    "nodemon": "^1.17.3"
+    "mocha": "^5.1.1",
+    "nodemon": "^1.17.3",
+    "nyc": "^11.7.1"
   },
   "dependencies": {
     "bluebird": "^3.5.1",

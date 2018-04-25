@@ -1,4 +1,3 @@
-'use strict'
 
 const expect = require('chai').expect
 
@@ -6,59 +5,59 @@ const {User} = require('../../service')
 const utility = require('../lib/utility')
 const random = require('../lib/random')
 
-describe('service/user', function () {
+describe('service/user', () => {
   let user
 
-  describe('createAsync', function () {
-    it('should add user success', function* () {
-      user = yield utility.createTestUserAsync()
+  describe('createAsync', () => {
+    it('should add user success', async () => {
+      user = await utility.createTestUserAsync()
       expect(user).to.include.keys(['userId', 'name', 'port', 'password'])
     })
   })
 
-  describe('getAsync', function () {
-    it('should return false if user not found', function* () {
-      let tmpUser = yield User.getAsync('invalid user')
+  describe('getAsync', () => {
+    it('should return false if user not found', async () => {
+      let tmpUser = await User.getAsync('invalid user')
       expect(tmpUser).to.be.false
     })
 
-    it('should get user success', function* () {
-      let tmpUser = yield User.getAsync(user.userId)
+    it('should get user success', async () => {
+      let tmpUser = await User.getAsync(user.userId)
       expect(tmpUser.name).to.equal(user.name)
     })
   })
 
-  describe('findAsync', function () {
-    it('should return user list success', function* () {
-      let users = yield User.findAsync()
+  describe('findAsync', () => {
+    it('should return user list success', async () => {
+      let users = await User.findAsync()
       expect(users.length >= 1).to.be.true
       expect(users[0]).to.include.keys(['userId', 'name', 'port', 'password'])
     })
   })
 
-  describe('updateAsync', function () {
-    it('should return false if user not found', function* () {
-      let tmpUser = yield User.updateAsync(-1)
+  describe('updateAsync', () => {
+    it('should return false if user not found', async () => {
+      let tmpUser = await User.updateAsync(-1)
       expect(tmpUser).to.be.false
     })
 
-    it('should update user success', function* () {
+    it('should update user success', async () => {
       let name = random.getUserName()
-      let tmpUser = yield User.updateAsync(user.userId, {name})
+      let tmpUser = await User.updateAsync(user.userId, {name})
       expect(tmpUser.name).to.equal(name)
       user.name = name
     })
   })
 
-  describe('removeAsync', function () {
-    it('should return false if user not found', function* () {
-      let tmpUser = yield User.removeAsync(-1)
+  describe('removeAsync', () => {
+    it('should return false if user not found', async () => {
+      let tmpUser = await User.removeAsync(-1)
       expect(tmpUser).to.be.false
     })
 
-    it('should remove user success', function* () {
-      yield utility.removeTestUserAsync(user)
-      let tmpUser = yield User.getAsync(user.userId)
+    it('should remove user success', async () => {
+      await utility.removeTestUserAsync(user)
+      let tmpUser = await User.getAsync(user.userId)
       expect(tmpUser).to.be.false
     })
   })

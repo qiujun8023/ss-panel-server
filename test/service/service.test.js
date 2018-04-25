@@ -1,32 +1,31 @@
-'use strict'
 
 const expect = require('chai').expect
 
 const {Service} = require('../../service')
 const utility = require('../lib/utility')
 
-describe('service/service', function () {
+describe('service/service', () => {
   let user
   let node
 
-  before(function* () {
-    user = yield utility.createTestUserAsync()
-    node = yield utility.createTestNodeAsync({isVisible: true})
+  before(async () => {
+    user = await utility.createTestUserAsync()
+    node = await utility.createTestNodeAsync({isVisible: true})
   })
 
-  after(function* () {
-    yield utility.removeTestUserAsync(user)
-    yield utility.removeTestNodeAsync(node)
+  after(async () => {
+    await utility.removeTestUserAsync(user)
+    await utility.removeTestNodeAsync(node)
   })
 
-  describe('findAsync', function () {
-    it('should return false if user not found', function* () {
-      let tmpServie = yield Service.findAsync(-1)
+  describe('findAsync', () => {
+    it('should return false if user not found', async () => {
+      let tmpServie = await Service.findAsync(-1)
       expect(tmpServie).to.be.false
     })
 
-    it('should return service list success', function* () {
-      let services = yield Service.findAsync(user.userId)
+    it('should return service list success', async () => {
+      let services = await Service.findAsync(user.userId)
       expect(services.length >= 1).to.be.true
       expect(services[0].port).to.equal(user.port)
       expect(services[0].password).to.equal(user.password)
@@ -34,19 +33,19 @@ describe('service/service', function () {
     })
   })
 
-  describe('getAsync', function () {
-    it('should return false if user not found', function* () {
-      let service = yield Service.getAsync(-1)
+  describe('getAsync', () => {
+    it('should return false if user not found', async () => {
+      let service = await Service.getAsync(-1)
       expect(service).to.be.false
     })
 
-    it('should return false if node not found', function* () {
-      let service = yield Service.getAsync(user.userId, -1)
+    it('should return false if node not found', async () => {
+      let service = await Service.getAsync(user.userId, -1)
       expect(service).to.be.false
     })
 
-    it('should get service success', function* () {
-      let service = yield Service.getAsync(user.userId, node.nodeId)
+    it('should get service success', async () => {
+      let service = await Service.getAsync(user.userId, node.nodeId)
       expect(service.port).to.equal(user.port)
       expect(service.password).to.equal(user.password)
       expect(service.server).to.equal(node.server)
