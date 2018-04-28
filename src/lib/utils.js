@@ -13,9 +13,9 @@ exports.randUniquePort = (exists, minPort, maxPort) => {
 }
 
 // 随机密码
-exports.randPassword = () => {
+exports.randomString = (length = 6) => {
   return chance.string({
-    length: 6,
+    length,
     pool: '0123456789abcdefghijklmnopqrstuvwxyz'
   })
 }

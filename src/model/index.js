@@ -27,7 +27,8 @@ Traffic.belongsTo(Node, {
 // 节点与Token关系
 Node.hasMany(NodeToken, {
   foreignKey: 'nodeId',
-  constraints: false
+  constraints: false,
+  as: 'token'
 })
 NodeToken.belongsTo(Node, {
   foreignKey: 'nodeId',

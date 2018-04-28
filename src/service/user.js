@@ -30,7 +30,7 @@ exports.createAsync = async (data) => {
     // 创建用户
     data = Object.assign({
       port,
-      password: utils.randPassword(),
+      password: utils.randomString(),
       trafficLimit: initTrafficLimit
     }, data || {})
     let user = await User.create(data, { transaction })
