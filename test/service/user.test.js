@@ -8,56 +8,102 @@ describe('service/user', () => {
   let user
 
   describe('createAsync', () => {
-    it('should add user success', async () => {
+    it('should create user success', async () => {
       user = await utils.createTestUserAsync()
-      expect(user).to.include.keys(['userId', 'name', 'port', 'password'])
+    })
+
+    it('should throw exception if username is exist', async () => {
+      try {
+        await utils.createTestUserAsync({
+          username: user.username
+        })
+      } catch (e) {
+        return true
+      }
+      expect(true).to.equal(false)
     })
   })
 
   describe('getAsync', () => {
-    it('should return false if user not found', async () => {
-      let tmpUser = await userService.getAsync('invalid user')
-      expect(tmpUser).to.equal(false)
+    it('should return null if user not found', async () => {
+      let res = await userService.getAsync(-1)
+      expect(res).to.equal(null)
     })
 
     it('should get user success', async () => {
-      let tmpUser = await userService.getAsync(user.userId)
-      expect(tmpUser.name).to.equal(user.name)
+      let res = await userService.getAsync(user.userId)
+      expect(res.username).to.equal(user.username)
+    })
+  })
+
+  describe('getByUserNameAsync', () => {
+    it('should get user success', async () => {
+      let res = await userService.getByUserNameAsync(user.username)
+      expect(res.userId).to.equal(user.userId)
     })
   })
 
   describe('findAsync', () => {
     it('should return user list success', async () => {
       let users = await userService.findAsync()
-      expect(users.length >= 1).to.equal(false)
-      expect(users[0]).to.include.keys(['userId', 'name', 'port', 'password'])
+      expect(users.length >= 1).to.equal(true)
+      let keys = ['userId', 'username', 'port', 'password']
+      for (let user of users) {
+        user = user.get({ plain: true })
+        expect(user).to.include.keys(keys)
+      }
     })
   })
 
   describe('updateAsync', () => {
     it('should return false if user not found', async () => {
-      let tmpUser = await userService.updateAsync(-1)
-      expect(tmpUser).to.equal(false)
+      let res = await userService.updateAsync(-1)
+      expect(res).to.equal(false)
     })
 
     it('should update user success', async () => {
-      let name = random.getUserName()
-      let tmpUser = await userService.updateAsync(user.userId, {name})
-      expect(tmpUser.name).to.equal(name)
-      user.name = name
+      let username = random.getUsername()
+      let res = await userService.updateAsync(user.userId, { username })
+      expect(res.username).to.equal(username)
+      user = res
+    })
+  })
+
+  describe('updateTrafficAsync', () => {
+    it('should return false if user not found', async () => {
+      let res = await userService.updateTrafficAsync(-1)
+      expect(res).to.equal(false)
+    })
+
+    it('should update user traffic success', async () => {
+      await userService.updateTrafficAsync(user.userId, 1024, 1024)
+      let res = await userService.getAsync(user.userId)
+      expect(res.flowUp).to.equal(1024)
+      expect(res.flowDown).to.equal(1024)
+    })
+  })
+
+  describe('initTrafficAsync', () => {
+    it('should init user traffic success', async () => {
+      await userService.initTrafficAsync({
+        userId: user.userId
+      })
+      let res = await userService.getAsync(user.userId)
+      expect(res.flowUp).to.equal(0)
+      expect(res.flowDown).to.equal(0)
     })
   })
 
   describe('removeAsync', () => {
     it('should return false if user not found', async () => {
-      let tmpUser = await userService.removeAsync(-1)
-      expect(tmpUser).to.equal(false)
+      let res = await userService.removeAsync(-1)
+      expect(res).to.equal(false)
     })
 
     it('should remove user success', async () => {
       await utils.removeTestUserAsync(user)
-      let tmpUser = await userService.getAsync(user.userId)
-      expect(tmpUser).to.equal(false)
+      let res = await userService.getAsync(user.userId)
+      expect(res).to.equal(null)
     })
   })
 })

@@ -96,11 +96,12 @@ exports.updateTrafficAsync = async (userId, flowUp, flowDown) => {
 }
 
 // 初始化用户流量
-exports.initTrafficAsync = async () => {
+exports.initTrafficAsync = async (where) => {
   return User.update({
     flowUp: 0,
     flowDown: 0
   }, {
+    where: where || {},
     silent: true
   })
 }

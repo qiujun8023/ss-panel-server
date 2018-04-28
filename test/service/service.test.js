@@ -5,16 +5,19 @@ const serviceService = require('../../src/service/service')
 
 describe('service/service', () => {
   let user
-  let node
+  let node1
+  let node2
 
   before(async () => {
     user = await utils.createTestUserAsync()
-    node = await utils.createTestNodeAsync({isVisible: true})
+    node1 = await utils.createTestNodeAsync({ isVisible: true })
+    node2 = await utils.createTestNodeAsync({ isVisible: false })
   })
 
   after(async () => {
     await utils.removeTestUserAsync(user)
-    await utils.removeTestNodeAsync(node)
+    await utils.removeTestNodeAsync(node1)
+    await utils.removeTestNodeAsync(node2)
   })
 
   describe('findAsync', () => {
@@ -26,9 +29,12 @@ describe('service/service', () => {
     it('should return service list success', async () => {
       let services = await serviceService.findAsync(user.userId)
       expect(services.length >= 1).to.equal(true)
-      expect(services[0].port).to.equal(user.port)
-      expect(services[0].password).to.equal(user.password)
-      expect(services[0]).to.include.keys(['name', 'avatar', 'server', 'method', 'description'])
+      let keys = ['name', 'avatar', 'server', 'port', 'method', 'password', 'description']
+      for (let service of services) {
+        expect(service.port).to.equal(user.port)
+        expect(service.password).to.equal(user.password)
+        expect(service).to.include.keys(keys)
+      }
     })
   })
 
@@ -44,11 +50,11 @@ describe('service/service', () => {
     })
 
     it('should get service success', async () => {
-      let service = await serviceService.getAsync(user.userId, node.nodeId)
+      let service = await serviceService.getAsync(user.userId, node1.nodeId)
       expect(service.port).to.equal(user.port)
       expect(service.password).to.equal(user.password)
-      expect(service.server).to.equal(node.server)
-      expect(service.method).to.equal(node.method)
+      expect(service.server).to.equal(node1.server)
+      expect(service.method).to.equal(node1.method)
     })
   })
 })
