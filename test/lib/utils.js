@@ -10,6 +10,12 @@ exports.setUserSession = (user) => {
   }
 }
 
+exports.setTokenHeader = (nodeToken) => {
+  return (req) => {
+    req.set('node-token', nodeToken.token)
+  }
+}
+
 exports.createTestUserAsync = async (opts) => {
   let data = _.assign({
     username: random.getUsername(),
@@ -39,4 +45,12 @@ exports.createTestNodeAsync = async (opts) => {
 
 exports.removeTestNodeAsync = async (node) => {
   return nodeService.removeAsync(node.nodeId)
+}
+
+exports.createTestNodeTokenAsync = async (node) => {
+  return nodeService.genTokenAsync(node.nodeId)
+}
+
+exports.removeTestNodeTokenAsync = async (nodeToken) => {
+  return nodeService.removeTokenAsync(nodeToken.nodeTokenId)
 }

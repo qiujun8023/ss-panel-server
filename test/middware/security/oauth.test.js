@@ -1,25 +1,40 @@
+const utils = require('../../lib/utils')
 
-// const plugins = require('../../lib/plugin')
+describe('middleware/security/oauth', () => {
+  let user
+  let adminUser
 
-// let userPlugin = plugins.user()
-// let BASE_PATH = '/api/profile'
+  before(async () => {
+    user = await utils.createTestUserAsync()
+    adminUser = await utils.createTestUserAsync({
+      isAdmin: true
+    })
+  })
 
-// describe('middleware/security/wechat', () => {
-//   before(async () => {
-//     await userPlugin.before()
-//   })
+  after(async () => {
+    await utils.removeTestUserAsync(user)
+    await utils.removeTestUserAsync(adminUser)
+  })
 
-//   after(async () => {
-//     await userPlugin.after()
-//   })
+  it('should throw unauthorized error', async () => {
+    await request.get('/api/profile').expect(401)
+  })
 
-//   it('should throw unauthorized error', async () => {
-//     await request.get(BASE_PATH).expect(401)
-//   })
+  it('should return profile success', async () => {
+    await request.get('/api/profile')
+      .use(utils.setUserSession(user))
+      .expect(200)
+  })
 
-//   it('should return profile', async () => {
-//     await request.get(BASE_PATH)
-//       .use(utils.setUserSession(user))
-//       .expect(200)
-//   })
-// })
+  it('should throw forbidden error', async () => {
+    await request.get('/api/users')
+      .use(utils.setUserSession(user))
+      .expect(403)
+  })
+
+  it('should return user list success', async () => {
+    await request.get('/api/users')
+      .use(utils.setUserSession(adminUser))
+      .expect(200)
+  })
+})
