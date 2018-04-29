@@ -13,7 +13,7 @@
   },
   "scripts": {
     "dev": "nodemon -e js,yaml src/index.js",
-    "eslint": "eslint --fix config src test",
+    "eslint": "eslint config src test",
     "test": "NODE_ENV=test nyc --reporter=lcov --reporter html --reporter text-summary mocha --colors --exit test/bootload 'test/**/*.test.js'",
     "pm2.config": "cp pm2.sample.json pm2.json",
     "pm2.check": "[ -f pm2.json ] || (echo 'copying pm2 config' && npm run pm2.config)",

@@ -21,4 +21,8 @@ let setToken = (token, callback) => {
 let {corpId, secret, agentId} = config.get('wechat')
 let wechat = new WeChat(corpId, secret, agentId, getToken, setToken)
 wechat.setOpts({timeout: 15000})
-module.exports = Promise.promisifyAll(wechat)
+
+module.exports = Object.assign({
+  _getToken: getToken,
+  _setToken: setToken
+}, Promise.promisifyAll(wechat))

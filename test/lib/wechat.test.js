@@ -1,6 +1,6 @@
 const wechat = require('../../src/lib/wechat')
 
-describe.skip('lib/wechat', () => {
+describe('lib/wechat', () => {
   let token = {
     accessToken: 'abcdefghijklmn',
     expiresIn: 7200

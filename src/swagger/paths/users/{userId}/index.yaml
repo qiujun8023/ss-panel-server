@@ -72,3 +72,20 @@ put:
     default:
       $ref: "#/responses/failure"
 
+delete:
+  tags: [ user ]
+  summary: 删除用户
+  operationId: users.delete
+  security:
+    - oauth: [ admin ]
+  parameters:
+    - name: userId
+      in: path
+      type: integer
+      required: true
+      description: 用户 ID
+  responses:
+    200:
+      $ref: "#/responses/success"
+    default:
+      $ref: "#/responses/failure"
