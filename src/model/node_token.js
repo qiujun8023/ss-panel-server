@@ -9,13 +9,13 @@ module.exports = sequelize.define('node_token', {
     primaryKey: true,
     autoIncrement: true,
     field: 'id',
-    comment: '节点Token Id'
+    comment: '主键'
   },
   nodeId: {
     type: Sequelize.BIGINT,
     allowNull: false,
     field: 'node_id',
-    comment: '节点 Id'
+    comment: 'node主键'
   },
   token: {
     type: Sequelize.STRING,

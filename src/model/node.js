@@ -9,7 +9,7 @@ module.exports = sequelize.define('node', {
     primaryKey: true,
     autoIncrement: true,
     field: 'id',
-    comment: '节点 Id'
+    comment: '主键'
   },
   name: {
     type: Sequelize.STRING,

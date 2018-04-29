@@ -10,7 +10,7 @@ module.exports = sequelize.define('user', {
     primaryKey: true,
     autoIncrement: true,
     field: 'id',
-    comment: '用户 Id'
+    comment: '主键'
   },
   username: {
     type: Sequelize.STRING,

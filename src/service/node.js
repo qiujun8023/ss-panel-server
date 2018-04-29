@@ -12,14 +12,14 @@ exports.getStatusKey = (nodeId) => {
 
 // 获取节点状态（监控用）
 exports.getStatusAsync = async (nodeId) => {
-  let key = this.getStatusKey(nodeId)
+  let key = exports.getStatusKey(nodeId)
   let status = await redis.get(key)
   return status ? JSON.parse(status) : null
 }
 
 // 设置节点状态（监控用）
 exports.setStatusAsync = async (nodeId, status) => {
-  let key = this.getStatusKey(nodeId)
+  let key = exports.getStatusKey(nodeId)
   return redis.set(key, JSON.stringify(status))
 }
 

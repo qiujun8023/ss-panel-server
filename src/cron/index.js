@@ -68,6 +68,6 @@ exports.startJob = (name) => {
 
 exports.startAllJob = () => {
   for (let name in crons) {
-    this.startJob(name)
+    exports.startJob(name)
   }
 }

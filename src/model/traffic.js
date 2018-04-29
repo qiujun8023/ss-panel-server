@@ -10,19 +10,19 @@ module.exports = sequelize.define('traffic', {
     primaryKey: true,
     autoIncrement: true,
     field: 'id',
-    comment: '流量 Id'
+    comment: '主键'
   },
   nodeId: {
     type: Sequelize.BIGINT,
     allowNull: false,
     field: 'node_id',
-    comment: '节点 Id'
+    comment: 'node主键'
   },
   userId: {
     type: Sequelize.BIGINT,
     allowNull: false,
     field: 'user_id',
-    comment: '用户 Id'
+    comment: 'user主键'
   },
   flowUp: {
     type: Sequelize.BIGINT,

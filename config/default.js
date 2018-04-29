@@ -31,7 +31,6 @@ module.exports = {
   },
 
   mysql: {
-    poolSize: 5,
     host: 'localhost',
     user: 'shadowsocks',
     password: 'password',

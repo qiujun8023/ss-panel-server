@@ -24,7 +24,7 @@ exports.findAsync = async (userId) => {
   let nodes = await nodeService.findAsync()
   for (let node of nodes) {
     if (node.isVisible) {
-      res.push(this.mergeService(user, node))
+      res.push(exports.mergeService(user, node))
     }
   }
 
@@ -43,5 +43,5 @@ exports.getAsync = async (userId, nodeId) => {
     return false
   }
 
-  return this.mergeService(user, node)
+  return exports.mergeService(user, node)
 }
