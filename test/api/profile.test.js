@@ -26,7 +26,7 @@ describe('/api/profile', () => {
   })
 
   describe('update', () => {
-    it('should return error whih invalid port', async () => {
+    it('should return error with invalid port', async () => {
       let port = config.get('ss.maxPort') + 1
       let res = await request.put('/api/profile')
         .use(utils.setUserSession(user))

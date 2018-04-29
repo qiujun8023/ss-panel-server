@@ -15,7 +15,7 @@ exports.createAsync = async (data) => {
   let transaction = await sequelize.transaction({ isolationLevel })
   try {
     // 获取已使用的端口列表
-    let users = User.findAll({
+    let users = await User.findAll({
       attributes: ['port'],
       transaction
     })
