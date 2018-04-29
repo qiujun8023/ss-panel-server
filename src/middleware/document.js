@@ -1,5 +1,4 @@
 const Router = require('koa-router')
-const config = require('config')
 const koaSwagger = require('koa2-swagger-ui')
 
 const swagger = require('../swagger')
