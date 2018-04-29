@@ -30,7 +30,8 @@
     "eslint-plugin-standard": "^3.0.1",
     "mocha": "^5.1.1",
     "nodemon": "^1.17.3",
-    "nyc": "^11.7.1"
+    "nyc": "^11.7.1",
+    "supertest": "^3.0.0"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
