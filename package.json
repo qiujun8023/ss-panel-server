@@ -1,10 +1,10 @@
 {
   "name": "ss-panle",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "engines": {
-    "node": ">=6.9.0"
+    "node": ">=7.6.0"
   },
-  "description": "基于微信企业号的 shadowsocks 管理面板",
+  "description": "基于企业微信的 shadowsocks 管理面板",
   "author": "qiujun",
   "license": "MIT",
   "repository": {
