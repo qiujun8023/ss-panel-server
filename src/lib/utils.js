@@ -19,3 +19,7 @@ exports.randomString = (length = 6) => {
     pool: '0123456789abcdefghijklmnopqrstuvwxyz'
   })
 }
+
+exports.sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
