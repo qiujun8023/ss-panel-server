@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const config = require('config')
 
 const errors = require('../../lib/errors')
@@ -13,16 +14,25 @@ module.exports = async (ctx, scope) => {
     }
   }
 
-  let { user } = ctx.session
-  if (user && user.userId) {
-    // 管理员权限判断
-    if (scope && scope.indexOf('admin') !== -1) {
-      let tmpUser = await userService.getAsync(user.userId)
-      if (!tmpUser.isAdmin) {
-        throw new errors.Forbidden('无权访问')
-      }
-    }
-    return true
+  // 未设置Session
+  let userId = _.get(ctx.session, 'user.userId')
+  if (!userId) {
+    return false
   }
-  return false
+
+  // 用户不存在
+  let user = await userService.getAsync(userId)
+  if (!user) {
+    delete ctx.session.user
+    return false
+  }
+
+  // 需要管理员权限
+  if (scope && scope.indexOf('admin') !== -1) {
+    if (!user.isAdmin) {
+      throw new errors.Forbidden('无权访问')
+    }
+  }
+
+  return true
 }

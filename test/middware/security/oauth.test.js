@@ -20,6 +20,12 @@ describe('middleware/security/oauth', () => {
     await request.get('/api/profile').expect(401)
   })
 
+  it('should throw unauthorized error', async () => {
+    await request.get('/api/profile')
+      .use(utils.setUserSession({userId: -1}))
+      .expect(401)
+  })
+
   it('should return profile success', async () => {
     await request.get('/api/profile')
       .use(utils.setUserSession(user))
