@@ -1,10 +1,7 @@
 const _ = require('lodash')
-const config = require('config')
 
 const errors = require('../../lib/errors')
 const userService = require('../../service/user')
-
-const { minPort, maxPort } = config.get('ss')
 
 module.exports = async (ctx) => {
   let { userId } = ctx.params
@@ -20,6 +17,7 @@ module.exports = async (ctx) => {
   ]
   let data = _.pick(ctx.request.body, filter)
 
+  let { minPort, maxPort } = await userService.getPortRangeAsync()
   if (data.port && (data.port < minPort || data.port > maxPort)) {
     throw new errors.BadRequest(`端口号需在 ${minPort} - ${maxPort} 范围内`)
   }

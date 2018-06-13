@@ -42,13 +42,5 @@ module.exports = {
     corpId: 'wx4e2c2b771c467c9f',
     secret: 'k7TGD8xJLDU6-sPH3NwY0eTs2oBPyAINMdbSbGN80fuEt01UK0Z8dWzhm7crgkz7',
     agentId: 0
-  },
-
-  ss: {
-    minPort: 50001,
-    maxPort: 50999,
-    maxDowntime: 120000, // 监控报警阈值， 单位 毫秒
-    initTrafficLimit: 10737418240, // 10G 流量
-    transferLogSaveDays: 180 // 单位 天
   }
 }

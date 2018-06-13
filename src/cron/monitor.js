@@ -1,20 +1,17 @@
 const _ = require('lodash')
-const config = require('config')
 const moment = require('moment')
 
 const wechat = require('../lib/wechat')
 const userService = require('../service/user')
 const nodeService = require('../service/node')
-
-const MAX_DOWNTIME = config.get('ss.maxDowntime')
+const configService = require('../service/config')
 
 // 设置语言
 moment.locale('zh-cn')
 
 // 判断节点状态
-let isStatusOk = (activedAt) => {
-  let timeDiff = moment().diff(activedAt)
-  return timeDiff <= MAX_DOWNTIME
+let isStatusOk = (activedAt, maxDowntime) => {
+  return moment().diff(activedAt) <= (maxDowntime * 1000)
 }
 
 let sendMessage = async (message) => {
@@ -36,6 +33,7 @@ let sendMessage = async (message) => {
 }
 
 module.exports = async () => {
+  let maxDowntime = await configService.getByKeyAsync('max-downtime', 120, Number)
   let nodes = await nodeService.findAsync()
   for (let node of nodes) {
     if (!node.activedAt) {
@@ -44,7 +42,7 @@ module.exports = async () => {
 
     // 获取新状态
     let newStatus = {
-      ok: isStatusOk(node.activedAt),
+      ok: isStatusOk(node.activedAt, maxDowntime),
       activedAt: node.activedAt
     }
 

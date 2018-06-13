@@ -1,49 +1,49 @@
 const _ = require('lodash')
-const config = require('config')
-const Sequelize = require('sequelize')
 
-const errors = require('../lib/errors')
-const sequelize = require('../lib/sequelize')
-const utils = require('../lib/utils')
 const { User } = require('../model')
+const utils = require('../lib/utils')
+const errors = require('../lib/errors')
+const configService = require('./config')
 
-let { minPort, maxPort, initTrafficLimit } = config.get('ss')
+// 获取端口范围
+exports.getPortRangeAsync = async () => {
+  let minPort = await configService.getByKeyAsync('min-port', 50000, Number)
+  let maxPort = await configService.getByKeyAsync('max-port', 50999, Number)
+  return { minPort, maxPort }
+}
+
+// 选取空闲端口
+exports.randUniquePortAsync = async () => {
+  // 获取已使用的端口列表
+  let users = await User.findAll({
+    attributes: ['port']
+  })
+  let ports = _.map(users, 'port')
+
+  // 获取端口范围
+  let { minPort, maxPort } = await exports.getPortRangeAsync()
+
+  // 选取空闲端口
+  return utils.randUniquePort(ports, minPort, maxPort)
+}
 
 // 创建用户
 exports.createAsync = async (data) => {
-  let isolationLevel = Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE
-  let transaction = await sequelize.transaction({ isolationLevel })
-  try {
-    // 获取已使用的端口列表
-    let users = await User.findAll({
-      attributes: ['port'],
-      transaction
-    })
-    let ports = _.map(users, 'port')
-
-    // 选取空闲端口
-    let port = utils.randUniquePort(ports, minPort, maxPort)
-    if (!port) {
-      throw new errors.SystemError('未找到空闲端口')
-    }
-
-    // 创建用户
-    data = Object.assign({
-      port,
-      password: utils.randomString(),
-      trafficLimit: initTrafficLimit
-    }, data || {})
-    let user = await User.create(data, { transaction })
-
-    // 提交事物
-    await transaction.commit()
-
-    return user
-  } catch (err) {
-    // 回滚事物
-    await transaction.rollback()
-    throw err
+  // 选取空闲端口
+  let port = await exports.randUniquePortAsync()
+  if (!port) {
+    throw new errors.SystemError('未找到空闲端口')
   }
+
+  // 获取默认流量限制
+  let trafficLimitMb = await configService.getByKeyAsync('default-traffic-Limit', 10240, Number)
+
+  // 创建用户
+  return User.create(Object.assign({
+    port,
+    password: utils.randomString(),
+    trafficLimit: trafficLimitMb * 1024 * 1024
+  }, data || {}))
 }
 
 // 获取用户信息

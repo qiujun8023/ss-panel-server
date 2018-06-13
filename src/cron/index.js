@@ -3,7 +3,7 @@ const schedule = require('node-schedule')
 const redis = require('../lib/redis')
 const logger = require('../lib/logger')
 
-const LOCK_TTL = 1800
+const LOCK_TTL = 180
 const LOCK_KEY_PREFIX = 'cron:lock:'
 
 const crons = {

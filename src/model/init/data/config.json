@@ -1,0 +1,32 @@
+[
+  {
+      "key": "version",
+      "value": "-1",
+      "description": "系统版本号"
+  },
+  {
+      "key": "min-port",
+      "value": "50001",
+      "description": "最小端口号"
+  },
+  {
+      "key": "max-port",
+      "value": "50999",
+      "description": "最大端口号"
+  },
+  {
+      "key": "max-downtime",
+      "value": "120",
+      "description": "服务中断报警阈值（单位：秒）"
+  },
+  {
+      "key": "default-traffic-Limit",
+      "value": "10240",
+      "description": "默认流量限制（单位：MB）"
+  },
+  {
+      "key": "transfer-log-save-days",
+      "value": "180",
+      "description": "流量日志保留天数"
+  }
+]

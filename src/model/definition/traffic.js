@@ -1,7 +1,6 @@
-
 const Sequelize = require('sequelize')
 
-const sequelize = require('../lib/sequelize')
+const sequelize = require('../../lib/sequelize')
 
 module.exports = sequelize.define('traffic', {
   trafficId: {

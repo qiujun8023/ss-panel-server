@@ -1,8 +1,7 @@
-const config = require('config')
-const TrafficService = require('../service/traffic')
-
-const days = config.get('ss.transferLogSaveDays')
+const configService = require('../service/config')
+const trafficService = require('../service/traffic')
 
 module.exports = async () => {
-  return TrafficService.deleteByDayAsync(days)
+  let days = await configService.getByKeyAsync('transfer-log-save-days', 180, Number)
+  return trafficService.deleteByDayAsync(days)
 }
