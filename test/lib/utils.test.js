@@ -21,4 +21,13 @@ describe('lib/utils', () => {
       expect(res).to.have.lengthOf(80)
     })
   })
+
+  describe('versionCompare', () => {
+    it('should return correct results', () => {
+      expect(utils.versionCompare('1.2.3', '1.2.3')).to.equal(0)
+      expect(utils.versionCompare('1.23', '1.2.3')).to.equal(1)
+      expect(utils.versionCompare('1.23.34', '12.23.34')).to.equal(-1)
+      expect(utils.versionCompare('1.2', '12')).to.equal(-1)
+    })
+  })
 })

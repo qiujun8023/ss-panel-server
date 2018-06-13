@@ -20,6 +20,22 @@ exports.randomString = (length = 6) => {
   })
 }
 
-exports.sleep = (ms) => {
-  return new Promise(resolve => setTimeout(resolve, ms))
+// 版本号比较
+exports.versionCompare = (v1, v2) => {
+  if (v1 === v2) {
+    return 0
+  }
+
+  let v1Arr = v1.split('.')
+  let v2Arr = v2.split('.')
+  let len = Math.max(v1Arr.length, v2Arr.length)
+  for (let i = 0; i < len; i++) {
+    let v1i = ~~v1Arr[i]
+    let v2i = ~~v2Arr[i]
+    if (v1i !== v2i) {
+      return v1i > v2i ? 1 : -1
+    }
+  }
+
+  return 0
 }

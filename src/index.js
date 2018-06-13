@@ -11,9 +11,7 @@ const { version } = require('../package.json')
   await model.migrate(version)
 
   // 初始化数据库
-  await model.init()
-
-  // 更新系统版本号
+  await model.init(version)
 
   // 启动 Web 服务
   let serverConfig = config.get('server')
