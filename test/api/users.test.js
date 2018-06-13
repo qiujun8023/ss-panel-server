@@ -1,8 +1,8 @@
-const config = require('config')
 const { expect } = require('chai')
 
 const utils = require('../lib/utils')
 const random = require('../lib/random')
+const configService = require('../../src/service/config')
 
 describe('/api/users', () => {
   let user
@@ -61,10 +61,11 @@ describe('/api/users', () => {
     })
 
     it('should return 400 if port not in range', async () => {
+      let { maxPort } = await configService.getByKeyAsync('max-port', 0, Number)
       await request.put(`/api/users/0${user.userId}`)
         .use(utils.setUserSession(adminUser))
         .send({
-          port: config.get('ss.maxPort') + 1
+          port: maxPort + 1
         })
         .expect(400)
     })

@@ -1,8 +1,8 @@
-const config = require('config')
 const { expect } = require('chai')
 
 const utils = require('../lib/utils')
 const random = require('../lib/random')
+const configService = require('../../src/service/config')
 
 describe('/api/profile', () => {
   let user
@@ -27,10 +27,12 @@ describe('/api/profile', () => {
 
   describe('update', () => {
     it('should return error with invalid port', async () => {
-      let port = config.get('ss.maxPort') + 1
+      let { maxPort } = await configService.getByKeyAsync('max-port', 0, Number)
       let res = await request.put('/api/profile')
         .use(utils.setUserSession(user))
-        .send({ port })
+        .send({
+          port: maxPort + 1
+        })
         .expect(400)
       expect(res.body.type).to.equal('BadRequest')
     })
