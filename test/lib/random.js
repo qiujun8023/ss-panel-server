@@ -42,5 +42,9 @@ module.exports = {
 
   getNodeIsVisible () {
     return chance.bool()
+  },
+
+  getNodeTokenTitle () {
+    return chance.word()
   }
 }

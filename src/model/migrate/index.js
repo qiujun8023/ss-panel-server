@@ -7,7 +7,7 @@ const sequelize = require('../../lib/sequelize')
 const { Config } = require('../definition')
 
 const migrateConfig = {
-  '0.4.3': [
+  '0.5.0': [
     '20180611/alter-node-token.sql'
   ]
 }

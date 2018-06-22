@@ -68,7 +68,8 @@ describe('service/node', () => {
     })
 
     it('should gen token success', async () => {
-      nodeToken = await nodeService.genTokenAsync(node.nodeId)
+      let title = random.getNodeTokenTitle()
+      nodeToken = await nodeService.genTokenAsync(node.nodeId, title)
       expect(nodeToken).to.not.equal(false)
     })
   })

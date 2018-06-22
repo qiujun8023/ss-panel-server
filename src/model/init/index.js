@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 
 const { Config } = require('../definition')
 const sequelize = require('../../lib/sequelize')
-const initConfigs = require('./data/config.json')
+const configData = require('../data/config')
 
 // 初始化配置信息
 let initConfig = async (version) => {
@@ -17,13 +17,15 @@ let initConfig = async (version) => {
 
   // 筛选未插入的数据
   let insertConfigs = []
-  for (let config of initConfigs) {
-    if (existKeys.indexOf(config.key) !== -1) {
+  for (let key in configData) {
+    if (existKeys.indexOf(key) !== -1) {
       continue
-    } else if (config.key === 'version') {
-      config.value = version
     }
-    insertConfigs.push(config)
+    insertConfigs.push({
+      key: key,
+      value: configData[key].default,
+      description: configData[key].description
+    })
   }
 
   // 插入数据

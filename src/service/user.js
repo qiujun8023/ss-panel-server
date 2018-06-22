@@ -29,7 +29,7 @@ exports.createAsync = async (data) => {
   }
 
   // 获取默认流量限制
-  let trafficLimitMb = await configService.getByKeyAsync('default-traffic-Limit', 10240, Number)
+  let trafficLimitMb = await configService.getByKeyAsync('default-traffic-limit')
 
   // 创建用户
   return User.create(Object.assign({

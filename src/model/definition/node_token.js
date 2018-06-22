@@ -17,18 +17,17 @@ module.exports = sequelize.define('node_token', {
     field: 'node_id',
     comment: 'node主键'
   },
+  title: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    field: 'title',
+    comment: '标题'
+  },
   token: {
     type: Sequelize.STRING,
     allowNull: false,
     field: 'token',
     comment: 'Token'
-  },
-  isEnabled: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: true,
-    allowNull: false,
-    field: 'is_enabled',
-    comment: '是否启用'
   },
   activedAt: {
     type: Sequelize.DATE,

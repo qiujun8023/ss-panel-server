@@ -16,21 +16,10 @@ describe('service/config', () => {
   })
 
   describe('getByKeyAsync', () => {
-    it('should return "" if key not found', async () => {
+    it('should return false if key not found', async () => {
       let config = await configService.getByKeyAsync('which-is-not-exist')
-      expect(config).to.equal('')
+      expect(config).to.equal(false)
     })
-
-    it('should return default value if key not found', async () => {
-      let config = await configService.getByKeyAsync('which-is-not-exist', '123')
-      expect(config).to.equal('123')
-    })
-
-    it('should return default value with format if key not found', async () => {
-      let config = await configService.getByKeyAsync('which-is-not-exist', '123', Number)
-      expect(config).to.equal(123)
-    })
-
     it('should return config success', async () => {
       let config = await configService.getByKeyAsync('version')
       expect(config).not.to.equal('')

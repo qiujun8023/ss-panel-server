@@ -33,7 +33,7 @@ let sendMessage = async (message) => {
 }
 
 module.exports = async () => {
-  let maxDowntime = await configService.getByKeyAsync('max-downtime', 120, Number)
+  let maxDowntime = await configService.getByKeyAsync('max-downtime')
   let nodes = await nodeService.findAsync()
   for (let node of nodes) {
     if (!node.activedAt) {

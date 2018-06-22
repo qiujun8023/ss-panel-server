@@ -47,8 +47,9 @@ exports.removeTestNodeAsync = async (node) => {
   return nodeService.removeAsync(node.nodeId)
 }
 
-exports.createTestNodeTokenAsync = async (node) => {
-  return nodeService.genTokenAsync(node.nodeId)
+exports.createTestNodeTokenAsync = async (node, title) => {
+  title = title || random.getNodeTokenTitle()
+  return nodeService.genTokenAsync(node.nodeId, title)
 }
 
 exports.removeTestNodeTokenAsync = async (nodeToken) => {

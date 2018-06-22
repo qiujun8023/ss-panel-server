@@ -1,5 +1,6 @@
 const redis = require('../lib/redis')
 const { Config } = require('../model')
+const configData = require('../model/data/config')
 
 const CACHE_KEY = 'configs'
 const CACHE_TIME = 600
@@ -19,14 +20,14 @@ exports.findAsync = async (cache = true) => {
 }
 
 // 获取单个配置
-exports.getByKeyAsync = async (key, value = '', format = String, cache = true) => {
+exports.getByKeyAsync = async (key, cache = true) => {
   let configs = await exports.findAsync(cache)
   for (let config of configs) {
-    if (config.key === key) {
-      return format(config.value)
+    if (config.key === key && configData[key]) {
+      return configData[key].format(config.value)
     }
   }
-  return format(value)
+  return false
 }
 
 // 更新配置信息
@@ -43,7 +44,8 @@ exports.updateByKeyAsync = async (key, value) => {
 
 // 获取端口范围
 exports.getPortRangeAsync = async () => {
-  let minPort = await exports.getByKeyAsync('min-port', 50000, Number)
-  let maxPort = await exports.getByKeyAsync('max-port', 50999, Number)
-  return { minPort, maxPort }
+  return {
+    minPort: await exports.getByKeyAsync('min-port'),
+    maxPort: await exports.getByKeyAsync('max-port')
+  }
 }

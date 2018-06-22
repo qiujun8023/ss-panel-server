@@ -76,7 +76,7 @@ exports.removeAsync = async (nodeId) => {
 }
 
 // 生成Token
-exports.genTokenAsync = async (nodeId) => {
+exports.genTokenAsync = async (nodeId, title) => {
   let node = await Node.findById(nodeId)
   if (!node) {
     return false
@@ -94,7 +94,7 @@ exports.genTokenAsync = async (nodeId) => {
   for (let i = 0; i < 5; i++) {
     let token = utils.randomString(32)
     if (tokens.indexOf(token) === -1) {
-      nodeToken = await node.createToken({ token }, { transaction })
+      nodeToken = await node.createToken({ title, token }, { transaction })
       break
     }
   }
@@ -113,8 +113,7 @@ exports.isTokenValidAsync = async (nodeId, token) => {
   let nodeToken = await NodeToken.findOne({
     where: {
       nodeId,
-      token,
-      isEnabled: true
+      token
     }
   })
   if (!nodeToken) {
