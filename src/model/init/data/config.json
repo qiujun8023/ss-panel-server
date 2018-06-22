@@ -16,7 +16,7 @@
   },
   {
       "key": "max-downtime",
-      "value": "120",
+      "value": "300",
       "description": "服务中断报警阈值（单位：秒）"
   },
   {
