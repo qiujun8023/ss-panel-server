@@ -10,6 +10,10 @@ module.exports = new Sequelize(mysqlConfig.database, mysqlConfig.user, mysqlConf
   port: mysqlConfig.port,
   dialect: 'mysql',
 
+  dialectOptions: {
+    multipleStatements: true
+  },
+
   operatorsAliases: false,
   logging: (sql) => logger.info(sql),
   timezone: mysqlConfig.timezone

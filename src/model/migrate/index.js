@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 const utils = require('../../lib/utils')
 const logger = require('../../lib/logger')
 const sequelize = require('../../lib/sequelize')
@@ -32,8 +35,14 @@ const updateDbVersionAsync = async (value) => {
 }
 
 // 数据库升级一个版本
-const upgradAsync = async (v1, v2, sqls) => {
+const upgradAsync = async (v1, v2, sqlFiles) => {
   logger.info(`upgrade from version ${v1} to version ${v2}`)
+  for (let sqlFile of sqlFiles) {
+    let sqlPath = path.join(__dirname, sqlFile)
+    let sql = fs.readFileSync(sqlPath, 'utf-8')
+    await sequelize.query(sql)
+  }
+  return true
 }
 
 const migrateAsync = async (pgVersion, dbVersion) => {
