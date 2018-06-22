@@ -1,6 +1,6 @@
 {
   "name": "ss-panle",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "engines": {
     "node": ">=7.6.0"
   },
