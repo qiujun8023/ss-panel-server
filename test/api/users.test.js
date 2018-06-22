@@ -61,7 +61,7 @@ describe('/api/users', () => {
     })
 
     it('should return 400 if port not in range', async () => {
-      let { maxPort } = await configService.getByKeyAsync('max-port', 0, Number)
+      let { maxPort } = await configService.getPortRangeAsync()
       await request.put(`/api/users/0${user.userId}`)
         .use(utils.setUserSession(adminUser))
         .send({

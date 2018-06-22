@@ -5,13 +5,6 @@ const utils = require('../lib/utils')
 const errors = require('../lib/errors')
 const configService = require('./config')
 
-// 获取端口范围
-exports.getPortRangeAsync = async () => {
-  let minPort = await configService.getByKeyAsync('min-port', 50000, Number)
-  let maxPort = await configService.getByKeyAsync('max-port', 50999, Number)
-  return { minPort, maxPort }
-}
-
 // 选取空闲端口
 exports.randUniquePortAsync = async () => {
   // 获取已使用的端口列表
@@ -21,7 +14,7 @@ exports.randUniquePortAsync = async () => {
   let ports = _.map(users, 'port')
 
   // 获取端口范围
-  let { minPort, maxPort } = await exports.getPortRangeAsync()
+  let { minPort, maxPort } = await configService.getPortRangeAsync()
 
   // 选取空闲端口
   return utils.randUniquePort(ports, minPort, maxPort)
@@ -63,6 +56,12 @@ exports.findAsync = async (where) => {
     where,
     order: [['activedAt', 'desc']]
   })
+}
+
+// 是否第一个用户
+exports.isFirstUserAsync = async () => {
+  let users = await exports.findAsync()
+  return users.length === 0
 }
 
 // 更新用户信息

@@ -55,6 +55,13 @@ describe('service/user', () => {
     })
   })
 
+  describe('isFirstUserAsync', () => {
+    it('should return false if user list is not empty', async () => {
+      let isFirstUser = await userService.isFirstUserAsync()
+      expect(isFirstUser).to.equal(false)
+    })
+  })
+
   describe('updateAsync', () => {
     it('should return false if user not found', async () => {
       let res = await userService.updateAsync(-1)

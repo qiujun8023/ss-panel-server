@@ -22,10 +22,6 @@ exports.randomString = (length = 6) => {
 
 // 版本号比较
 exports.versionCompare = (v1, v2) => {
-  if (v1 === v2) {
-    return 0
-  }
-
   let v1Arr = v1.split('.')
   let v2Arr = v2.split('.')
   let len = Math.max(v1Arr.length, v2Arr.length)

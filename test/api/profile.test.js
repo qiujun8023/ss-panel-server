@@ -27,7 +27,7 @@ describe('/api/profile', () => {
 
   describe('update', () => {
     it('should return error with invalid port', async () => {
-      let { maxPort } = await configService.getByKeyAsync('max-port', 0, Number)
+      let { maxPort } = await configService.getPortRangeAsync()
       let res = await request.put('/api/profile')
         .use(utils.setUserSession(user))
         .send({

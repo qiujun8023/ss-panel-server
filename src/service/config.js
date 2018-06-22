@@ -40,3 +40,10 @@ exports.updateByKeyAsync = async (key, value) => {
 
   return config.update({ value })
 }
+
+// 获取端口范围
+exports.getPortRangeAsync = async () => {
+  let minPort = await exports.getByKeyAsync('min-port', 50000, Number)
+  let maxPort = await exports.getByKeyAsync('max-port', 50999, Number)
+  return { minPort, maxPort }
+}

@@ -24,7 +24,8 @@ module.exports = async (ctx) => {
   // 获取用户信息
   let user = await userService.getByUserNameAsync(username)
   if (!user) {
-    user = await userService.createAsync({ username, nickname })
+    let isAdmin = await userService.isFirstUserAsync()
+    user = await userService.createAsync({ username, nickname, isAdmin })
   } else {
     await userService.updateAsync(user.userId, { username, nickname })
   }
