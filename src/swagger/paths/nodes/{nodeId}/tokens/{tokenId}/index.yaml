@@ -1,0 +1,82 @@
+get:
+  tags: [ node-token ]
+  summary: 获取 Token 详情
+  operationId: nodes.token.detail
+  security:
+    - oauth: [ admin ]
+  parameters:
+    - name: nodeId
+      in: path
+      type: integer
+      required: true
+      description: 节点 ID
+    - name: tokenId
+      in: path
+      type: integer
+      required: true
+      description: Token ID
+  responses:
+    200:
+      description: Token 详情
+      schema:
+        $ref: "#/models/nodeToken"
+    default:
+      $ref: "#/responses/failure"
+
+put:
+  tags: [ node-token ]
+  summary: 修改 Token
+  operationId: nodes.token.update
+  security:
+    - oauth: [ admin ]
+  parameters:
+    - name: nodeId
+      in: path
+      type: integer
+      required: true
+      description: 节点 ID
+    - name: tokenId
+      in: path
+      type: integer
+      required: true
+      description: Token ID
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          title:
+            type: string
+            example: "token"
+            description: Token 标题
+  responses:
+    200:
+      description: 节点详情
+      schema:
+        $ref: "#/models/node-token"
+    default:
+      $ref: "#/responses/failure"
+
+delete:
+  tags: [ node-token ]
+  summary: 删除 Token
+  operationId: nodes.token.delete
+  security:
+    - oauth: [ admin ]
+  parameters:
+    - name: nodeId
+      in: path
+      type: integer
+      required: true
+      description: 节点 ID
+    - name: tokenId
+      in: path
+      type: integer
+      required: true
+      description: Token ID
+  responses:
+    200:
+      $ref: "#/responses/success"
+    default:
+      $ref: "#/responses/failure"

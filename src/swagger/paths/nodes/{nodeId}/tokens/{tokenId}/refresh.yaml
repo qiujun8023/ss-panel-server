@@ -1,0 +1,24 @@
+post:
+  tags: [ node-token ]
+  summary: 刷新 Token
+  operationId: nodes.token.refresh
+  security:
+    - oauth: [ admin ]
+  parameters:
+    - name: nodeId
+      in: path
+      type: integer
+      required: true
+      description: 节点 ID
+    - name: tokenId
+      in: path
+      type: integer
+      required: true
+      description: Token ID
+  responses:
+    201:
+      description: Token 详情
+      schema:
+        $ref: "#/models/nodeToken"
+    default:
+      $ref: "#/responses/failure"

@@ -14,6 +14,7 @@ schemes:
 consumes:
   - application/json
   - application/x-www-form-urlencoded
+  - application/octet-stream
 # format of the responses to the client (Accepts)
 produces:
   - application/json

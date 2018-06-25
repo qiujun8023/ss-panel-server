@@ -1,4 +1,4 @@
-const tokenService = require('../../service/node')
+const tokenService = require('../../../service/node_token')
 
 module.exports = async (ctx) => {
   let { tokenId } = ctx.params
