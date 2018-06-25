@@ -1,20 +1,17 @@
 type: object
 properties:
-  nodeTokenId:
+  configId:
     type: integer
     example: 1
-  nodeId:
-    type: integer
-    example: 1
-  title:
+  key:
     type: string
-    example: "token"
-  token:
+    example: "version"
+  value:
     type: string
-    example: "2585b02a9daad98a73b9a2c9ad83776c"
-  activedAt:
+    example: "0.5.0"
+  description:
     type: string
-    example: "2017-08-19T17:08:09.000Z"
+    example: "系统版本号"
   createdAt:
     type: string
     example: "2017-08-19T17:08:09.000Z"

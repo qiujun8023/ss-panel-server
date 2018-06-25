@@ -1,0 +1,29 @@
+put:
+  tags: [ config ]
+  summary: 修改配置
+  operationId: configs.update
+  security:
+    - oauth: [ admin ]
+  parameters:
+    - name: configId
+      in: path
+      type: integer
+      required: true
+      description: 配置 ID
+    - in: body
+      name: body
+      required: true
+      schema:
+        type: object
+        properties:
+          value:
+            type: string
+            example: "0.5.0"
+            description: 配置内容
+  responses:
+    200:
+      description: 节点详情
+      schema:
+        $ref: "#/models/config"
+    default:
+      $ref: "#/responses/failure"

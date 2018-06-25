@@ -54,7 +54,7 @@ put:
     200:
       description: 节点详情
       schema:
-        $ref: "#/models/node-token"
+        $ref: "#/models/nodeToken"
     default:
       $ref: "#/responses/failure"
 

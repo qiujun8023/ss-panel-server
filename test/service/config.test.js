@@ -25,17 +25,4 @@ describe('service/config', () => {
       expect(config).not.to.equal('')
     })
   })
-
-  describe('updateByKeyAsync', () => {
-    it('should return false if key not found', async () => {
-      let config = await configService.updateByKeyAsync('which-is-not-exist', 'value')
-      expect(config).to.equal(false)
-    })
-
-    it('should update config success', async () => {
-      let config = await configService.getByKeyAsync('version')
-      let res = await configService.updateByKeyAsync('version', config)
-      expect(res).to.not.equal(false)
-    })
-  })
 })

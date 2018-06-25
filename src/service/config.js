@@ -19,6 +19,17 @@ exports.findAsync = async (cache = true) => {
   return configs
 }
 
+// 刷新缓存
+exports.refreshAsync = async () => {
+  await exports.findAsync(false)
+  return true
+}
+
+// 获取配置
+exports.getAsync = async (configId) => {
+  return Config.findById(configId)
+}
+
 // 获取单个配置
 exports.getByKeyAsync = async (key, cache = true) => {
   let configs = await exports.findAsync(cache)
@@ -31,15 +42,13 @@ exports.getByKeyAsync = async (key, cache = true) => {
 }
 
 // 更新配置信息
-exports.updateByKeyAsync = async (key, value) => {
-  let config = await Config.findOne({
-    where: { key }
-  })
+exports.updateAsync = async (configId, data) => {
+  let config = await Config.findById(configId)
   if (!config) {
     return false
   }
 
-  return config.update({ value })
+  return config.update(data)
 }
 
 // 获取端口范围

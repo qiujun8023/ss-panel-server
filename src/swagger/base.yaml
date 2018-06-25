@@ -19,6 +19,8 @@ consumes:
 produces:
   - application/json
 tags:
+  - name: config
+    description: 配置
   - name: profile
     description: 资料
   - name: user

@@ -1,0 +1,15 @@
+get:
+  tags: [ config ]
+  summary: 获取配置列表
+  operationId: configs.list
+  security:
+    - oauth: [ admin ]
+  responses:
+    200:
+      description: 配置
+      schema:
+        type: array
+        items:
+          $ref: "#/models/config"
+    default:
+      $ref: "#/responses/failure"
