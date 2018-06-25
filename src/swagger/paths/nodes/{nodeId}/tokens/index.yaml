@@ -1,0 +1,19 @@
+get:
+  tags: [ node-token ]
+  summary: 获取节点Token列表
+  operationId: nodes.token.list
+  security:
+    - oauth: [ admin ]
+  parameters:
+    - name: nodeId
+      in: path
+      type: integer
+      required: true
+      description: 节点 ID
+  responses:
+    200:
+      description: Token Token 列表
+      schema:
+        $ref: "#/models/node"
+    default:
+      $ref: "#/responses/failure"

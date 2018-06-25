@@ -6,7 +6,9 @@ describe('middleware/security/node_token', () => {
 
   before(async () => {
     node = await utils.createTestNodeAsync()
-    nodeToken = await utils.createTestNodeTokenAsync(node)
+    nodeToken = await utils.createTestNodeTokenAsync({
+      nodeId: node.nodeId
+    })
   })
 
   after(async () => {

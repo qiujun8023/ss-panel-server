@@ -1,10 +1,5 @@
-const _ = require('lodash')
-const Sequelize = require('sequelize')
-
-const utils = require('../lib/utils')
 const redis = require('../lib/redis')
-const sequelize = require('../lib/sequelize')
-const { Node, NodeToken } = require('../model')
+const { Node } = require('../model')
 
 exports.getStatusKey = (nodeId) => {
   return `node:${nodeId}:status`
@@ -73,67 +68,4 @@ exports.removeAsync = async (nodeId) => {
     return false
   }
   return node.destroy()
-}
-
-// 生成Token
-exports.genTokenAsync = async (nodeId, title) => {
-  let node = await Node.findById(nodeId)
-  if (!node) {
-    return false
-  }
-
-  // 创建事物
-  let transaction = await sequelize.transaction({
-    isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE
-  })
-
-  // 生成 Token
-  let nodeToken
-  let nodeTokens = await NodeToken.findAll({ transaction })
-  let tokens = _.map(nodeTokens, 'token')
-  for (let i = 0; i < 5; i++) {
-    let token = utils.randomString(32)
-    if (tokens.indexOf(token) === -1) {
-      nodeToken = await node.createToken({ title, token }, { transaction })
-      break
-    }
-  }
-
-  await transaction.commit()
-  return nodeToken || false
-}
-
-// 查询Token
-exports.findTokenAsync = async (where) => {
-  return NodeToken.findAll({ where })
-}
-
-// 检查 Toekn 是否有效并更新活跃时间
-exports.isTokenValidAsync = async (nodeId, token) => {
-  let nodeToken = await NodeToken.findOne({
-    where: {
-      nodeId,
-      token
-    }
-  })
-  if (!nodeToken) {
-    return false
-  }
-
-  // 更新活跃时间
-  await nodeToken.update({
-    activedAt: new Date()
-  }, {
-    silent: true
-  })
-
-  return true
-}
-
-exports.removeTokenAsync = async (nodeTokenId) => {
-  let nodeToken = await NodeToken.findById(nodeTokenId)
-  if (!nodeToken) {
-    return false
-  }
-  return nodeToken.destroy()
 }

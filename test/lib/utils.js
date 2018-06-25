@@ -3,6 +3,7 @@ const _ = require('lodash')
 const random = require('./random')
 const userService = require('../../src/service/user')
 const nodeService = require('../../src/service/node')
+const TokenService = require('../../src/service/node_token')
 
 exports.setUserSession = (user) => {
   return (req) => {
@@ -47,11 +48,13 @@ exports.removeTestNodeAsync = async (node) => {
   return nodeService.removeAsync(node.nodeId)
 }
 
-exports.createTestNodeTokenAsync = async (node, title) => {
-  title = title || random.getNodeTokenTitle()
-  return nodeService.genTokenAsync(node.nodeId, title)
+exports.createTestNodeTokenAsync = async (opts) => {
+  let data = _.assign({
+    title: random.getNodeTokenTitle()
+  }, opts || {})
+  return TokenService.createAsync(data)
 }
 
 exports.removeTestNodeTokenAsync = async (nodeToken) => {
-  return nodeService.removeTokenAsync(nodeToken.nodeTokenId)
+  return TokenService.removeAsync(nodeToken.nodeTokenId)
 }

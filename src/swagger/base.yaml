@@ -24,6 +24,8 @@ tags:
     description: 用户
   - name: node
     description: 节点
+  - name: node-token
+    description: 节点Token
   - name: service
     description: 服务
   - name: traffic

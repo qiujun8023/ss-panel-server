@@ -1,4 +1,4 @@
-const nodeService = require('../../service/node')
+const tokenService = require('../../service/node_token')
 
 const regex = /\/nodes\/(\d+)(\/|$)/
 
@@ -17,5 +17,5 @@ module.exports = async (ctx) => {
     return false
   }
 
-  return nodeService.isTokenValidAsync(nodeId, token)
+  return tokenService.isValidAsync(nodeId, token)
 }

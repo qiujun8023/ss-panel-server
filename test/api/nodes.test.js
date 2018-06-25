@@ -155,7 +155,7 @@ describe('/api/nodes', () => {
         .use(utils.setUserSession(user))
         .expect(200)
 
-      await request.delete(`/api/nodes/${nodeId}`)
+      await request.get(`/api/nodes/${nodeId}`)
         .use(utils.setUserSession(user))
         .expect(404)
     })

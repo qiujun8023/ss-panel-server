@@ -113,7 +113,7 @@ describe('/api/users', () => {
         .use(utils.setUserSession(adminUser))
         .expect(200)
 
-      await request.delete(`/api/users/${user.userId}`)
+      await request.get(`/api/users/${user.userId}`)
         .use(utils.setUserSession(adminUser))
         .expect(404)
     })

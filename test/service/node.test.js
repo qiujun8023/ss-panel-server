@@ -6,7 +6,6 @@ const nodeService = require('../../src/service/node')
 
 describe('service/node', () => {
   let node
-  let nodeToken
 
   describe('createAsync', () => {
     it('should add node success', async () => {
@@ -58,70 +57,6 @@ describe('service/node', () => {
     it('should only update node active time', async () => {
       let res = await nodeService.updateActivedAtAsync(node.nodeId)
       expect(res.activedAt).to.not.equal(null)
-    })
-  })
-
-  describe('genTokenAsync', () => {
-    it('should return false if node not found', async () => {
-      let res = await nodeService.genTokenAsync(-1)
-      expect(res).to.equal(false)
-    })
-
-    it('should gen token success', async () => {
-      let title = random.getNodeTokenTitle()
-      nodeToken = await nodeService.genTokenAsync(node.nodeId, title)
-      expect(nodeToken).to.not.equal(false)
-    })
-  })
-
-  describe('findTokenAsync', () => {
-    it('should return node token list success', async () => {
-      let nodeTokens = await nodeService.findTokenAsync({
-        nodeId: node.nodeId
-      })
-      expect(nodeTokens.length >= 1).to.equal(true)
-    })
-  })
-
-  describe('findTokenAsync', () => {
-    it('should return node token list success', async () => {
-      let nodeTokens = await nodeService.findTokenAsync({
-        nodeId: node.nodeId
-      })
-      expect(nodeTokens.length >= 1).to.equal(true)
-    })
-  })
-
-  describe('isTokenValidAsync', () => {
-    it('should return false if token not found', async () => {
-      let res = await nodeService.isTokenValidAsync(node.nodeId, 'invaild token')
-      expect(res).to.equal(false)
-    })
-
-    it('should return true and update active time if token is vaild', async () => {
-      let res1 = await nodeService.isTokenValidAsync(node.nodeId, nodeToken.token)
-      let res2 = await nodeService.findTokenAsync({
-        nodeId: node.nodeId,
-        token: nodeToken.token
-      })
-      expect(res1).to.equal(true)
-      expect(res2[0].activedAt).to.not.equal(null)
-    })
-  })
-
-  describe('removeTokenAsync', () => {
-    it('should return false if node token not found', async () => {
-      let res = await nodeService.removeTokenAsync(-1)
-      expect(res).to.equal(false)
-    })
-
-    it('should remove node success', async () => {
-      await nodeService.removeTokenAsync(nodeToken.nodeTokenId)
-      let res = await nodeService.findTokenAsync({
-        nodeId: node.nodeId,
-        token: nodeToken.token
-      })
-      expect(res.length).to.equal(0)
     })
   })
 
