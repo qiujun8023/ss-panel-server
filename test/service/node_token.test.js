@@ -25,6 +25,24 @@ describe('service/node_token', () => {
       })
       expect(nodeToken).to.not.equal(false)
     })
+
+    it('should create token success', async () => {
+      let title = random.getNodeTokenTitle()
+      let token = await tokenService.genAsync()
+      nodeToken = await tokenService.createAsync({
+        nodeId: node.nodeId,
+        title,
+        token
+      })
+      expect(nodeToken).to.not.equal(false)
+    })
+  })
+
+  describe('getAsync', () => {
+    it('should return node token success', async () => {
+      let res = await tokenService.getAsync(nodeToken.nodeTokenId)
+      expect(res.token).to.equal(nodeToken.token)
+    })
   })
 
   describe('findAsync', () => {
@@ -33,6 +51,20 @@ describe('service/node_token', () => {
         nodeId: node.nodeId
       })
       expect(nodeTokens.length >= 1).to.equal(true)
+    })
+  })
+
+  describe('updateAsync', () => {
+    it('should return false if node not found', async () => {
+      let res = await tokenService.updateAsync(-1)
+      expect(res).to.equal(false)
+    })
+
+    it('should update node success', async () => {
+      let token = await tokenService.genAsync()
+      let res = await tokenService.updateAsync(nodeToken.nodeTokenId, { token })
+      expect(res.token).to.equal(token)
+      nodeToken = res
     })
   })
 
