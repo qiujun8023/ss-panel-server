@@ -12,4 +12,5 @@ module.exports = async (ctx) => {
   }
 
   ctx.body = await tokenService.createAsync({ nodeId, title })
+  ctx.status = 201
 }
