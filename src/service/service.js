@@ -4,7 +4,7 @@ const userService = require('./user')
 const nodeService = require('./node')
 
 const USER_FILTER = ['port', 'password']
-const NODE_FILTER = ['name', 'avatar', 'server', 'method', 'description']
+const NODE_FILTER = ['name', 'location', 'server', 'method', 'description']
 
 // 合并用户与服务信息
 exports.mergeService = (user, node) => {

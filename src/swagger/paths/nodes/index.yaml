@@ -29,7 +29,7 @@ post:
         required:
           - name
           - server
-          - avatar
+          - location
           - method
           - description
           - isVisible
@@ -39,10 +39,10 @@ post:
             type: string
             example: "香港节点"
             description: 节点名称
-          avatar:
+          location:
             type: string
-            example: "http://example.com"
-            description: 节点图标
+            example: "us"
+            description: 所在地区
           server:
             type: string
             example: "example.com"

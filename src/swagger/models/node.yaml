@@ -6,9 +6,9 @@ properties:
   name:
     type: string
     example: "香港节点"
-  avatar:
+  location:
     type: string
-    example: "http://xx.xx"
+    example: "us"
   server:
     type: string
     example: "1.2.3.4"

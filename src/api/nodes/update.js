@@ -5,7 +5,7 @@ const nodeService = require('../../service/node')
 
 module.exports = async (ctx) => {
   let { nodeId } = ctx.params
-  let filter = ['name', 'avatar', 'server', 'method', 'description', 'isVisible', 'sort']
+  let filter = ['name', 'location', 'server', 'method', 'description', 'isVisible', 'sort']
   let data = _.pick(ctx.request.body, filter)
 
   // 获取节点信息

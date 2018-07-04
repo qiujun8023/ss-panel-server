@@ -21,7 +21,7 @@ describe('/api/nodes', () => {
   describe('create', () => {
     it('should create node success', async () => {
       let name = random.getNodeName()
-      let avatar = random.getNodeAvatar()
+      let location = random.getNodelocation()
       let server = random.getNodeServer()
       let description = random.getNodeDescription()
       let method = random.getNodeMethod()
@@ -32,7 +32,7 @@ describe('/api/nodes', () => {
         .use(utils.setUserSession(user))
         .send({
           name,
-          avatar,
+          location,
           server,
           method,
           description,
@@ -43,7 +43,7 @@ describe('/api/nodes', () => {
 
       nodeId = res.body.nodeId
       expect(res.body.name).to.equal(name)
-      expect(res.body.avatar).to.equal(avatar)
+      expect(res.body.location).to.equal(location)
       expect(res.body.server).to.equal(server)
       expect(res.body.method).to.equal(method)
       expect(res.body.description).to.equal(description)
@@ -76,7 +76,7 @@ describe('/api/nodes', () => {
 
     it('should update node success', async () => {
       let name = random.getNodeName()
-      let avatar = random.getNodeAvatar()
+      let location = random.getNodelocation()
       let server = random.getNodeServer()
       let description = random.getNodeDescription()
       let method = random.getNodeMethod()
@@ -87,7 +87,7 @@ describe('/api/nodes', () => {
         .use(utils.setUserSession(user))
         .send({
           name,
-          avatar,
+          location,
           server,
           method,
           description,
@@ -96,7 +96,7 @@ describe('/api/nodes', () => {
         })
         .expect(200)
       expect(res.body.name).to.equal(name)
-      expect(res.body.avatar).to.equal(avatar)
+      expect(res.body.location).to.equal(location)
       expect(res.body.server).to.equal(server)
       expect(res.body.method).to.equal(method)
       expect(res.body.description).to.equal(description)

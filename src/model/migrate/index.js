@@ -9,6 +9,9 @@ const { Config } = require('../definition')
 const migrateConfig = {
   '0.5.0': [
     '20180611/alter-node-token.sql'
+  ],
+  '0.5.1': [
+    '20180704/add-location-and-remove-avatar.sql'
   ]
 }
 

@@ -20,8 +20,8 @@ module.exports = {
     return chance.word()
   },
 
-  getNodeAvatar () {
-    return chance.avatar()
+  getNodelocation () {
+    return 'us'
   },
 
   getNodeServer () {

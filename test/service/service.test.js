@@ -29,7 +29,7 @@ describe('service/service', () => {
     it('should return service list success', async () => {
       let services = await serviceService.findAsync(user.userId)
       expect(services.length >= 1).to.equal(true)
-      let keys = ['name', 'avatar', 'server', 'port', 'method', 'password', 'description']
+      let keys = ['name', 'location', 'server', 'port', 'method', 'password', 'description']
       for (let service of services) {
         expect(service.port).to.equal(user.port)
         expect(service.password).to.equal(user.password)

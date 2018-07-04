@@ -17,11 +17,11 @@ module.exports = sequelize.define('node', {
     field: 'name',
     comment: '节点名称'
   },
-  avatar: {
+  location: {
     type: Sequelize.STRING,
     allowNull: false,
-    field: 'avatar',
-    comment: '节点头像'
+    field: 'location',
+    comment: '所在地区'
   },
   server: {
     type: Sequelize.STRING,

@@ -33,7 +33,7 @@ exports.removeTestUserAsync = async (user) => {
 exports.createTestNodeAsync = async (opts) => {
   let data = _.assign({
     name: random.getNodeName(),
-    avatar: random.getNodeAvatar(),
+    location: random.getNodelocation(),
     server: random.getNodeServer(),
     method: random.getNodeMethod(),
     description: random.getNodeDescription(),
