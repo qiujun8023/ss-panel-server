@@ -4,7 +4,7 @@ module.exports = {
   'version': {
     default: version,
     format: String,
-    description: '系统版本号'
+    description: '系统版本号（请勿修改）'
   },
   'min-port': {
     default: '50001',
