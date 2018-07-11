@@ -20,7 +20,7 @@
       "description": "服务中断报警阈值（单位：秒）"
   },
   {
-      "key": "default-traffic-Limit",
+      "key": "default-traffic-limit",
       "value": "10240",
       "description": "默认流量限制（单位：MB）"
   },
