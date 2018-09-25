@@ -1,131 +1,133 @@
-### 项目状态
+# Shadowsocks 多用户管理面板
 
-###### Master
+## 说明
 
-[![Build Status](https://travis-ci.org/qious/ss-panel.svg?branch=master)](https://travis-ci.org/qious/ss-panel)
-[![Coverage Status](https://coveralls.io/repos/github/qious/ss-panel/badge.svg?branch=master)](https://coveralls.io/github/qious/ss-panel?branch=master)
+### 状态
 
+##### Master
 
-###### Develop
+[![Build Status](https://travis-ci.org/qious/ss-panel-server.svg?branch=master)](https://travis-ci.org/qious/ss-panel-server)
+[![Coverage Status](https://coveralls.io/repos/github/qious/ss-panel-server/badge.svg?branch=master)](https://coveralls.io/github/qious/ss-panel-server?branch=master)
 
-[![Build Status](https://travis-ci.org/qious/ss-panel.svg?branch=develop)](https://travis-ci.org/qious/ss-panel)
-[![Coverage Status](https://coveralls.io/repos/github/qious/ss-panel/badge.svg?branch=develop)](https://coveralls.io/github/qious/ss-panel?branch=develop)
+##### Develop
 
-### 项目介绍
+[![Build Status](https://travis-ci.org/qious/ss-panel-server.svg?branch=develop)](https://travis-ci.org/qious/ss-panel-server)
+[![Coverage Status](https://coveralls.io/repos/github/qious/ss-panel-server/badge.svg?branch=develop)](https://coveralls.io/github/qious/ss-panel-server?branch=develop)
 
-##### 用途
-
-> 使用 微信企业号/企业微信 管理 shadowsocks 用户
-
-##### 注意
+### 注意
 
 > 本项目只是管理界面及控制中心，各科学上网节点需要运行下述程序中的任意一种
 
 * [shadowsocks](https://github.com/qious/shadowsocks) : 基于 Python 版本修改而来
 * [ss-adapter](https://github.com/qious/ss-adapter) : shadowsocks udp 控制协议适配器
 
-##### 依赖
+### 特性
 
-* Node.js >= 7.6.0
-* MySQL
-* Redis
+- 基于微信企业号/企业微信授权登录
+- 新用户授权登录自动分配帐号信息
+- 节点异常时会通过 微信企业号/企业微信 发送消息给管理员
+- 数据库自动配置、自动升级（v0.5.0之后）
+- 前后端分离，完善的 swagger 接口文档（项目运行后浏览器访问 /doc 路径），方便二次开发
 
-##### 特性
+### 截图
 
-* 基于微信企业号/企业微信授权登录
-* 新用户授权登录自动分配帐号信息
-* 节点异常时会通过 微信企业号/企业微信 发送消息给管理员
-* 数据库自动配置、自动升级（v0.5.0之后）
-* 前后端分离，完善的swagger接口文档（项目运行后浏览器访问 /doc 路径），方便二次开发
-* ...
+![效果展示](https://cdn.qiujun.me/image/2018/09/25/5daa1facf56acafb7104aa4079e0fa40.gif)
 
-##### 演示
+## 部署
 
-![效果展示](screenshot/1.gif)
+### 使用 Docker + Docker Compose 部署
 
-#### 常规运行
-
-##### 下载或clone代码到任意目录
+- 获取工具文件（docker-compose.yml中用到）
 
 ```bash
-git clone https://github.com/qious/ss-panel.git
+wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
+chmod 755 wait-for-it.sh
 ```
 
-##### 安装依赖
+- 配置 docker-compose.yml
 
 ```bash
-cd /path/to/ss-panel/server
-npm i
-sudo npm i -g pm2
+cat > ./docker-compose.yml << \EOF
+version: '3'
+services:
+  redis:
+    image: redis:3
+    restart: always
+    volumes:
+      - "./redis:/data"
+  mysql:
+    image: dnhsoft/mysql-utf8:5.7
+    restart: always
+    volumes:
+      - "./mysql:/var/lib/mysql"
+    environment:
+      MYSQL_DATABASE: shadowsocks
+      MYSQL_USER: shadowsocks
+      MYSQL_PASSWORD: password
+  server:
+    image: qious/ss-panel-server
+    restart: always
+    depends_on:
+      - redis
+      - mysql
+    environment:
+      APP_DEBUG: 'true'
+      APP_SERVER_BASE_URL: http://example.com/
+      APP_KEYS_1: im a newer secret
+      APP_KEYS_2: i like turtle
+      APP_REDIS_HOST: redis
+      APP_REDIS_PORT: 6379
+      APP_REDIS_KEY_PREFIX: 'ss-panel:'
+      APP_MYSQL_HOST: mysql
+      APP_MYSQL_PORT: 3306
+      APP_MYSQL_USER: shadowsocks
+      APP_MYSQL_PASSWORD: password
+      APP_MYSQL_DATABASE: shadowsocks
+      APP_MYSQL_TIMEZONE: 'Asia/Shanghai'
+      APP_WECHAT_CORP_ID: wx4e2c2b771c467c9f
+      APP_WECHAT_AGENT_ID: 0
+      APP_WECHAT_SECRET: secret
+    volumes:
+      - "./wait-for-it.sh:/app/wait-for-it.sh"
+    command: ["./wait-for-it.sh", "-t", "0", "mysql:3306", "--", "node", "index.js"]
+  client:
+    image: qious/ss-panel-client
+    restart: always
+    ports:
+      - "8888:80"
+    depends_on:
+      - server
+EOF
 ```
 
-##### 复制并修改配置文件
-
+- 运行
 ```bash
-cd /path/to/ss-panel/server
-cp ./config/default.js ./config/local.js
-vim ./config/local.js # 根据自身需要修改配置文件
+docker-compose up -d
 ```
 
-##### 测试运行
-
-```bash
-cd /path/to/ss-panel/server
-npm run dev # 如无报错后可进入下一步
+- 访问
+```
+curl http://localhost:8888
 ```
 
-##### 正式运行
+## 配置文件说明
 
-```bash
-cd /path/to/ss-panel/server
-npm run pm2.start
-```
+| 字段   | 描述   |
+|:----|:----|
+| APP_DEBUG   | 调试模式   |
+| APP_SERVER_BASE_URL   | 外部访问地址，形如 https://example.com/   |
+| APP_KEYS_1   | 用来加密 Cookie 的随机字符串   |
+| APP_KEYS_2   | 用来加密 Cookie 的随机字符串   |
+| APP_REDIS_HOST   | Redis 地址   |
+| APP_REDIS_PORT   | Redis 端口   |
+| APP_REDIS_KEY_PREFIX   | Redis 键前缀   |
+| APP_MYSQL_HOST   | MySQL 地址   |
+| APP_MYSQL_PORT   | MySQL 端口   |
+| APP_MYSQL_USER   | MySQL 用户名   |
+| APP_MYSQL_PASSWORD   | MYSQL 密码   |
+| APP_MYSQL_DATABASE   | MySQL 数据库名   |
+| APP_MYSQL_TIMEZONE   | MySQL 时区   |
+| APP_WECHAT_CORP_ID   | 微信 cropId   |
+| APP_WECHAT_AGENT_ID   | 微信 agentId   |
+| APP_WECHAT_SECRET   | 微信 secret   |
 
-### 更新升级
-
-##### 更新代码
-
-```bash
-cd /path/to/ss-panel
-git pull
-```
-
-##### 重启服务
-
-```bash
-cd /path/to/ss-panel/server
-npm run pm2.reload
-```
-
-### 进阶配置
-
-##### 使用 Nginx 处理静态资源，Nginx示例配置如下
-
-```nginx
-upstream ss-panel {
-    server 127.0.0.1:8000;
-}
-
-server {
-    listen 80;
-    server_name ss.example.com;
-
-    root /path/to/ss-panel/client/dist;
-    index index.htm index.html;
-
-    location /api {
-        include proxy_params;
-        proxy_pass http://ss-panel/api;
-    }
-
-    # 根据需要取消注释
-    # location /doc {
-    #     include proxy_params;
-    #     proxy_pass http://ss-panel/doc;
-    # }
-
-    location /static {
-        expires 7d;
-    }
-}
-```
