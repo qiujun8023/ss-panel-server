@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cp config/docker.js config/local.js
+
+PACKAGE_VERSION=$(npm --loglevel silent run version)
+
+echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+docker build -t $DOCKER_REPOSITORY:$PACKAGE_VERSION -t $DOCKER_REPOSITORY:latest .
+
+docker push $DOCKER_REPOSITORY
