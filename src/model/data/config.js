@@ -1,8 +1,8 @@
-const { version } = require('../../../package.json')
+const config = require('config')
 
 module.exports = {
   'version': {
-    default: version,
+    default: config.get('swagger.info.version'),
     format: String,
     description: '系统版本号（请勿修改）'
   },
