@@ -1,0 +1,33 @@
+language: node_js
+
+node_js:
+  - "lts/*"
+
+services:
+  - mysql
+  - redis-server
+
+cache:
+  directories:
+    - node_modules
+
+install:
+  - cd server
+  - npm install -q
+  - cd ..
+
+before_script:
+  - mysql -e 'CREATE DATABASE shadowsocks;'
+  - cp server/config/travis_ci.js server/config/local.js
+
+script:
+  - cd server
+  - npm run eslint
+  - npm run test
+  - cd ..
+
+after_success:
+  - cd server
+  - npm install coveralls
+  - cat ./coverage/lcov.info | coveralls
+  - cd ..

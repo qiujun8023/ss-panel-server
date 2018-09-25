@@ -1,24 +1,19 @@
 {
   "name": "ss-panle",
   "version": "0.5.1",
-  "engines": {
-    "node": ">=7.6.0"
-  },
+  "private": true,
   "description": "基于企业微信的 shadowsocks 管理面板",
   "author": "qiujun",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/qious/ss-panel.git"
+    "url": "https://github.com/qious/ss-panel-server.git"
   },
   "scripts": {
     "dev": "nodemon -e js,yaml src/index.js",
     "eslint": "eslint config src test",
     "test": "NODE_ENV=test nyc --reporter=lcov --reporter html --reporter text-summary mocha --colors --exit test/bootload 'test/**/*.test.js'",
-    "pm2.config": "cp pm2.sample.json pm2.json",
-    "pm2.check": "[ -f pm2.json ] || (echo 'copying pm2 config' && npm run pm2.config)",
-    "pm2.start": "npm run pm2.check && pm2 start pm2.json",
-    "pm2.reload": "npm run pm2.check && pm2 reload pm2.json"
+    "version": "echo $npm_package_version"
   },
   "devDependencies": {
     "chai": "^4.1.2",
