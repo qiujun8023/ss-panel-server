@@ -1,11 +1,13 @@
+const config = require('config')
 const supertest = require('supertest')
 
 const app = require('../src/app')
 const model = require('../src/model')
-const { version } = require('../package.json')
 
 before(async function () {
   this.timeout(15000)
+
+  let version = config.get('swagger.info.version')
 
   // 迁移数据库
   await model.migrate(version)

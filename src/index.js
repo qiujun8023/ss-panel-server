@@ -4,9 +4,10 @@ const app = require('./app')
 const cron = require('./cron')
 const model = require('./model')
 const logger = require('./lib/logger')
-const { version } = require('../package.json')
 
 ;(async () => {
+  let version = config.get('swagger.info.version')
+
   // 迁移数据库
   await model.migrate(version)
 
