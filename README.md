@@ -72,6 +72,7 @@ services:
       - mysql
     environment:
       APP_DEBUG: 'true'
+      APP_SERVER_TIMEZONE: 'Asia/Shanghai'
       APP_SERVER_BASE_URL: http://example.com/
       APP_KEYS_1: im a newer secret
       APP_KEYS_2: i like turtle
@@ -83,7 +84,6 @@ services:
       APP_MYSQL_USER: shadowsocks
       APP_MYSQL_PASSWORD: password
       APP_MYSQL_DATABASE: shadowsocks
-      APP_MYSQL_TIMEZONE: 'Asia/Shanghai'
       APP_WECHAT_CORP_ID: wx4e2c2b771c467c9f
       APP_WECHAT_AGENT_ID: 0
       APP_WECHAT_SECRET: secret
@@ -115,6 +115,7 @@ curl http://localhost:8888
 | 字段   | 描述   |
 |:----|:----|
 | APP_DEBUG   | 调试模式   |
+| APP_SERVER_TIMEZONE   | 时区   |
 | APP_SERVER_BASE_URL   | 外部访问地址，形如 https://example.com/   |
 | APP_KEYS_1   | 用来加密 Cookie 的随机字符串   |
 | APP_KEYS_2   | 用来加密 Cookie 的随机字符串   |
@@ -126,7 +127,6 @@ curl http://localhost:8888
 | APP_MYSQL_USER   | MySQL 用户名   |
 | APP_MYSQL_PASSWORD   | MYSQL 密码   |
 | APP_MYSQL_DATABASE   | MySQL 数据库名   |
-| APP_MYSQL_TIMEZONE   | MySQL 时区   |
 | APP_WECHAT_CORP_ID   | 微信 cropId   |
 | APP_WECHAT_AGENT_ID   | 微信 agentId   |
 | APP_WECHAT_SECRET   | 微信 secret   |

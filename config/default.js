@@ -7,6 +7,7 @@ module.exports = {
   server: {
     host: '127.0.0.1',
     port: 8000, // 服务端口
+    timezone: 'Asia/Shanghai', // 时区
     baseUrl: 'http://localhost:8000/' // 对外地址信息
   },
 
@@ -32,8 +33,7 @@ module.exports = {
     port: 3306, // 数据库端口
     user: 'shadowsocks', // 数据库用户名
     password: 'password', // 数据库密码
-    database: 'shadowsocks', // 数据库库名
-    timezone: 'Asia/Shanghai' // 时区
+    database: 'shadowsocks' // 数据库库名
   },
 
   wechat: {

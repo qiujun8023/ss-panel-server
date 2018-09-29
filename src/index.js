@@ -5,6 +5,9 @@ const cron = require('./cron')
 const model = require('./model')
 const logger = require('./lib/logger')
 
+// 设置时区
+process.env.TZ = config.get('server.timezone')
+
 ;(async () => {
   let version = config.get('swagger.info.version')
 
