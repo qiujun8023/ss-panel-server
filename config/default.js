@@ -7,7 +7,6 @@ module.exports = {
   server: {
     host: '127.0.0.1',
     port: 8000, // 服务端口
-    timezone: 'Asia/Shanghai', // 时区
     baseUrl: 'http://localhost:8000/' // 对外地址信息
   },
 

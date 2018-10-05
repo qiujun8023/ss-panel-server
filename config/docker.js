@@ -5,7 +5,6 @@ module.exports = {
   server: {
     host: '0.0.0.0',
     port: 8000,
-    timezone: process.env.APP_SERVER_TIMEZONE || 'Asia/Shanghai',
     baseUrl: process.env.APP_SERVER_BASE_URL || 'http://localhost:8000/'
   },
 
