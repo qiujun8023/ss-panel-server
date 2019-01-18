@@ -41,7 +41,7 @@ exports.createAsync = async (data) => {
 
 // 获取用户信息
 exports.getAsync = async (userId) => {
-  return User.findById(userId)
+  return User.findByPk(userId)
 }
 
 exports.getByUserNameAsync = async (username) => {
@@ -66,7 +66,7 @@ exports.isFirstUserAsync = async () => {
 
 // 更新用户信息
 exports.updateAsync = async (userId, data) => {
-  let user = await User.findById(userId)
+  let user = await User.findByPk(userId)
   if (!user) {
     return false
   }
@@ -76,7 +76,7 @@ exports.updateAsync = async (userId, data) => {
 
 // 更新用户流量数据
 exports.updateTrafficAsync = async (userId, flowUp, flowDown) => {
-  let user = await User.findById(userId)
+  let user = await User.findByPk(userId)
   if (!user) {
     return false
   }
@@ -107,7 +107,7 @@ exports.initTrafficAsync = async (where) => {
 
 // 删除用户
 exports.removeAsync = async (userId) => {
-  let user = await User.findById(userId)
+  let user = await User.findByPk(userId)
   if (!user) {
     return false
   }

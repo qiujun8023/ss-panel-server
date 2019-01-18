@@ -5,7 +5,7 @@ const { NodeToken } = require('../model')
 
 // 获取Token
 exports.getAsync = async (tokenId) => {
-  return NodeToken.findById(tokenId)
+  return NodeToken.findByPk(tokenId)
 }
 
 // 产生不重复的Token
@@ -41,7 +41,7 @@ exports.findAsync = async (where) => {
 
 // 更新Token
 exports.updateAsync = async (tokenId, data) => {
-  let token = await NodeToken.findById(tokenId)
+  let token = await NodeToken.findByPk(tokenId)
   if (!token) {
     return false
   }
@@ -72,7 +72,7 @@ exports.isValidAsync = async (nodeId, token) => {
 }
 
 exports.removeAsync = async (nodeTokenId) => {
-  let nodeToken = await NodeToken.findById(nodeTokenId)
+  let nodeToken = await NodeToken.findByPk(nodeTokenId)
   if (!nodeToken) {
     return false
   }
