@@ -27,7 +27,7 @@ exports.refreshAsync = async () => {
 
 // 获取配置
 exports.getAsync = async (configId) => {
-  return Config.findById(configId)
+  return Config.findByPk(configId)
 }
 
 // 获取单个配置
@@ -43,7 +43,7 @@ exports.getByKeyAsync = async (key, cache = true) => {
 
 // 更新配置信息
 exports.updateAsync = async (configId, data) => {
-  let config = await Config.findById(configId)
+  let config = await Config.findByPk(configId)
   if (!config) {
     return false
   }

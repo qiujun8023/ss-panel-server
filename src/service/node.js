@@ -25,7 +25,7 @@ exports.createAsync = async (data) => {
 
 // 获取节点
 exports.getAsync = async (nodeId) => {
-  return Node.findById(nodeId)
+  return Node.findByPk(nodeId)
 }
 
 // 获取节点列表
@@ -38,7 +38,7 @@ exports.findAsync = async (where) => {
 
 // 更新节点
 exports.updateAsync = async (nodeId, data) => {
-  let node = await Node.findById(nodeId)
+  let node = await Node.findByPk(nodeId)
   if (!node) {
     return false
   }
@@ -48,7 +48,7 @@ exports.updateAsync = async (nodeId, data) => {
 
 // 更新节点活跃时间
 exports.updateActivedAtAsync = async (nodeId) => {
-  let node = await Node.findById(nodeId)
+  let node = await Node.findByPk(nodeId)
   if (!node) {
     return false
   }
@@ -63,7 +63,7 @@ exports.updateActivedAtAsync = async (nodeId) => {
 
 // 删除节点
 exports.removeAsync = async (nodeId) => {
-  let node = await Node.findById(nodeId)
+  let node = await Node.findByPk(nodeId)
   if (!node) {
     return false
   }
