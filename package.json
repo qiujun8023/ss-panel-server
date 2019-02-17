@@ -1,6 +1,6 @@
 {
   "name": "ss-panle",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "private": true,
   "description": "基于企业微信的 shadowsocks 管理面板",
   "author": "qiujun",

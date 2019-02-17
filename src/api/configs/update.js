@@ -11,6 +11,8 @@ module.exports = async (ctx) => {
   let config = await configService.getAsync(configId)
   if (!config) {
     throw new errors.NotFound('未找到相关配置')
+  } else if (!config.isEditable) {
+    throw new errors.Forbidden('此配置不允许修改')
   }
 
   ctx.body = await configService.updateAsync(configId, data)

@@ -29,6 +29,12 @@ module.exports = sequelize.define('config', {
     field: 'description',
     comment: '配置说明'
   },
+  isEditable: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    field: 'is_editable',
+    comment: '是否允许修改'
+  },
   createdAt: {
     type: Sequelize.DATE,
     allowNull: false,

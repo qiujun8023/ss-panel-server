@@ -24,6 +24,7 @@ let initConfig = async (version) => {
     insertConfigs.push({
       key: key,
       value: configData[key].default,
+      isEditable: configData[key].isEditable,
       description: configData[key].description
     })
   }
