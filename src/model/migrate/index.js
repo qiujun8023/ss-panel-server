@@ -1,36 +1,34 @@
 const fs = require('fs')
 const path = require('path')
 
+const glob = require('glob')
+
 const utils = require('../../lib/utils')
 const logger = require('../../lib/logger')
 const sequelize = require('../../lib/sequelize')
 const { Config } = require('../definition')
 
-const migrateConfig = {
-  '0.5.0': [
-    '20180611/alter-node-token.sql'
-  ],
-  '0.5.1': [
-    '20180704/add-location-and-remove-avatar.sql'
-  ]
-}
-
-// 获取设置信息
-const getConfigAsync = async (key) => {
-  return Config.findOne({
-    where: { key }
-  })
+let migrateConfig = {}
+let sqls = glob.sync(`**/*.sql`, {cwd: __dirname})
+for (let sql of sqls) {
+  let [version] = sql.split('/', 2)
+  migrateConfig[version] = migrateConfig[version] || []
+  migrateConfig[version].push(sql)
 }
 
 // 获取数据库版本信息
-const getDbVersionAsync = async () => {
-  let config = await getConfigAsync('version')
-  return config && config.get('value')
+const getDbVersionConfigAsync = async () => {
+  return Config.findOne({
+    attributes: ['configId', 'value'],
+    where: {
+      key: 'version'
+    }
+  })
 }
 
 // 更新数据库版本信息
-const updateDbVersionAsync = async (value) => {
-  let config = await getConfigAsync('version')
+const updateDbVersionConfigAsync = async (value) => {
+  let config = await getDbVersionConfigAsync()
   if (!config) {
     return false
   }
@@ -59,7 +57,7 @@ const migrateAsync = async (pgVersion, dbVersion) => {
 
     // 数据库升级
     await upgradAsync(dbVersion, version, migrateConfig[version])
-    await updateDbVersionAsync(version)
+    await updateDbVersionConfigAsync(version)
     dbVersion = version
   }
 }
@@ -69,9 +67,9 @@ module.exports = async (pgVersion) => {
   await sequelize.sync()
 
   // 数据库升级
-  let dbVersion = await getDbVersionAsync()
-  if (dbVersion) {
-    await migrateAsync(pgVersion, dbVersion)
-    await updateDbVersionAsync(pgVersion)
+  let dbVersionConfig = await getDbVersionConfigAsync()
+  if (dbVersionConfig) {
+    await migrateAsync(pgVersion, dbVersionConfig.get('value'))
+    await updateDbVersionConfigAsync(pgVersion)
   }
 }

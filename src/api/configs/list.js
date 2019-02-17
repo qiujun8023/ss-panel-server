@@ -1,5 +1,6 @@
 const configService = require('../../service/config')
 
 module.exports = async (ctx) => {
-  ctx.body = await configService.findAsync()
+  let configs = await configService.findAsync()
+  ctx.body = configs.filter((config) => config.isEditable)
 }

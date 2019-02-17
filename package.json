@@ -1,6 +1,6 @@
 {
   "name": "ss-panle",
-  "version": "0.5.3",
+  "version": "0.5.5",
   "private": true,
   "description": "基于企业微信的 shadowsocks 管理面板",
   "author": "qiujun",
@@ -25,7 +25,7 @@
     "eslint-plugin-standard": "^3.0.1",
     "mocha": "^5.1.1",
     "nodemon": "^1.17.3",
-    "nyc": "^11.7.1",
+    "nyc": "^13.3.0",
     "supertest": "^3.0.0"
   },
   "dependencies": {
