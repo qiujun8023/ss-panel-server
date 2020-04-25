@@ -24,7 +24,7 @@
 
 ### 截图
 
-![效果展示](https://cdn.qiujun.me/image/2018/09/25/5daa1facf56acafb7104aa4079e0fa40.gif)
+![效果展示](https://cdn.qiujun.xyz/image/2018/09/25/5daa1facf56acafb7104aa4079e0fa40.gif)
 
 ## 部署
 
