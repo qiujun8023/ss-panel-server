@@ -6,20 +6,20 @@
 
 ##### Master
 
-[![Build Status](https://travis-ci.org/qious/ss-panel-server.svg?branch=master)](https://travis-ci.org/qious/ss-panel-server)
-[![Coverage Status](https://coveralls.io/repos/github/qious/ss-panel-server/badge.svg?branch=master)](https://coveralls.io/github/qious/ss-panel-server?branch=master)
+[![Build Status](https://travis-ci.org/qiujun8023/ss-panel-server.svg?branch=master)](https://travis-ci.org/qiujun8023/ss-panel-server)
+[![Coverage Status](https://coveralls.io/repos/github/qiujun8023/ss-panel-server/badge.svg?branch=master)](https://coveralls.io/github/qiujun8023/ss-panel-server?branch=master)
 
 ##### Develop
 
-[![Build Status](https://travis-ci.org/qious/ss-panel-server.svg?branch=develop)](https://travis-ci.org/qious/ss-panel-server)
-[![Coverage Status](https://coveralls.io/repos/github/qious/ss-panel-server/badge.svg?branch=develop)](https://coveralls.io/github/qious/ss-panel-server?branch=develop)
+[![Build Status](https://travis-ci.org/qiujun8023/ss-panel-server.svg?branch=develop)](https://travis-ci.org/qiujun8023/ss-panel-server)
+[![Coverage Status](https://coveralls.io/repos/github/qiujun8023/ss-panel-server/badge.svg?branch=develop)](https://coveralls.io/github/qiujun8023/ss-panel-server?branch=develop)
 
 ### 注意
 
 > 本项目只是管理界面及控制中心，各科学上网节点需要运行下述程序中的任意一种
 
-* [shadowsocks](https://github.com/qious/shadowsocks) : 基于 Python 版本修改而来
-* [ss-adapter](https://github.com/qious/ss-adapter) : shadowsocks udp 控制协议适配器
+* [shadowsocks](https://github.com/qiujun8023/shadowsocks) : 基于 Python 版本修改而来
+* [ss-adapter](https://github.com/qiujun8023/ss-adapter) : shadowsocks udp 控制协议适配器
 
 ### 特性
 
@@ -65,7 +65,7 @@ services:
       MYSQL_USER: shadowsocks
       MYSQL_PASSWORD: password
   server:
-    image: qious/ss-panel-server
+    image: qiujun8023/ss-panel-server
     restart: always
     depends_on:
       - redis
@@ -91,7 +91,7 @@ services:
       - "./wait-for-it.sh:/app/wait-for-it.sh"
     command: ["./wait-for-it.sh", "-t", "0", "mysql:3306", "--", "node", "index.js"]
   client:
-    image: qious/ss-panel-client
+    image: qiujun8023/ss-panel-client
     restart: always
     ports:
       - "8888:80"
