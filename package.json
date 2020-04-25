@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/qious/ss-panel-server.git"
+    "url": "https://github.com/qiujun8023/ss-panel-server.git"
   },
   "scripts": {
     "dev": "nodemon -e js,yaml src/index.js",
@@ -48,6 +48,6 @@
     "pino": "^4.16.1",
     "sequelize": "^4.37.6",
     "sway": "^2.0.5",
-    "wechat-enterprise-api": "git+https://github.com/qious/wechat-enterprise-api.git"
+    "wechat-enterprise-api": "git+https://github.com/qiujun8023/wechat-enterprise-api.git"
   }
 }

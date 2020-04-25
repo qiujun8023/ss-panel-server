@@ -16,7 +16,7 @@ install:
   - npm install -q
 
 before_script:
-  - mysql -e 'CREATE DATABASE shadowsocks;'
+  - mysql -e 'CREATE DATABASE shadowsocks CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
   - cp config/travis_ci.js config/local.js
 
 script:
